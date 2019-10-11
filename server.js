@@ -5,16 +5,11 @@ const miniApp = express.Router();
 
 app.use(cors());
 
-// miniApp.get('/home', (request, response, next) =>
-// {
-//   const url = request.originalUrl;
-//   response
-//       .status(200)
-//       .send(`You are visiting /home from ${url}`)
-// });
 miniApp.get('/home', (request, response, next) =>
 {
-  response.status(200).send("You are visiting /home ");
+  const url = request.originalUrl;
+
+  response.status(200).send("You are visiting  home from " )
 });
 
 app.use('/first', miniApp);

@@ -17,24 +17,23 @@ class List extends Component
   onSubmit(e)
   {
     e.preventDefault();
-    // const send = "sent text";
+    // const send = "sent text" ;
 
-    const URL = "http://localhost:5000/first/home";
+    const URL = "/first/home";
 
     // fetch(URL)
-    // .then(res => res.text())
+    // // .then(res => res.text())
     //     .then(data => console.log(data))
     //     .catch(() => console.log("Can’t access " + URL + ". Blocked by browser?"));
     axios.get(URL)
         .then(response => console.log(response.data))
-        // .then(response => response.json())
         .catch(() => console.log("Can’t access " + URL + ". Blocked by browser?"));
 
 
     // console.log(this.state.contacts);
     // console.log(this.state);
     const text = document.getElementById("changeMe");
-    text.innerHTML = "This is some new text.";
+    text.innerHTML = " This is some new text.";
   }
 
   render()
