@@ -9,12 +9,12 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NODE_ENV=production NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "Nick Talbert",
   "license": "MIT",
-  "repository": "null",
+  "repository": "https://github.com/lifeSource-Hub/mern-app",
   "dependencies": {
     "concurrently": "^5.0.0",
     "cors": "^2.8.5",

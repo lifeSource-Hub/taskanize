@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 // const router = express.Router();
 const cors = require('cors');
 const express = require('express');
@@ -21,7 +21,7 @@ app.use(express.json());
 ////   console.log("MongoDB database connection established successfully");
 //// });
 
-const db = require("./config/keys").mongoURI;
+const db = process.env.MONGODB_ATLAS_URI;
 
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("MongoDB Connected..."))
