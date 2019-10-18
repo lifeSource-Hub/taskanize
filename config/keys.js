@@ -1,9 +1,10 @@
 module.exports = {
-  mongoURI: "mongodb+srv://" +
-      "lifeSource:66return99" +
-      "@cluster0-fokwx.mongodb.net/" +
-      "todolist" + // db name
-      "?retryWrites=true&w=majority"
+  mongoURI: "mongodb://localhost:27017/todolist"
+  // mongoURI: "mongodb+srv://" +
+  //     "lifeSource:66return99" +
+  //     "@cluster0-fokwx.mongodb.net/" +
+  //     "todolist" + // db name
+  //     "?retryWrites=true&w=majority"
 };
 
 // mongodb+srv://lifeSource:66return99@cluster0-fokwx.mongodb.net/test?retryWrites=true&w=majority

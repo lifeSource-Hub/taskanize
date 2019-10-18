@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Item = require("../../models/Item");
 
-/** @route  GET api/items
+/** @route  GET list
  *  @desc   Get all items
  *  @access Public
  */
@@ -16,29 +16,33 @@ router.get("/", (req, res) =>
       .then(items => res.json(items));
 });
 
-/** @route  POST api/items
+/** @route  POST list
  *  @desc   Create an item
  *  @access Public
  */
-// router.post("/", (req, res) =>
-// {
-//   const newItem = new Item({
-//     name: req.body.name
-//   });
-//
-//   newItem.save().then(item => res.json(item));
-// });
-//
-/** @route  POST api/items/:id
+router.post("/", (req, res) =>
+{
+  const newItem = new Item({
+    body: req.body.body
+  });
+
+  // console.log(newItem);
+  // res.status(200).send();
+  newItem.save().then(item => res.json(item));
+});
+
+/** @route  delete list/:id
  *  @desc   Delete an item
  *  @access Public
  */
-// router.delete("/:id", (req, res) =>
-// {
-//   Item.findById(req.params.id)
-//       .then(item => item.remove()
-//           .then(() => res.json({success: true})))
-//       .catch(err => res.status(404).json({success: false}));
-// });
+router.delete("/:id", (req, res) =>
+{
+  // const id = req.params.id;
+  // res.status(200).send("Deleting " + id);
+  Item.findById(req.params.id)
+      .then(item => item.remove()
+          .then(() => res.json({success: true})))
+      .catch(err => res.status(404).json({success: false}));
+});
 
 module.exports = router;

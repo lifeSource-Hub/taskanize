@@ -9,6 +9,7 @@ const items = require("./routes/api/items");
 const port = process.env.PORT || 5000;
 
 app.use(cors({credentials: true, origin: true})); //{credentials: true, origin: true}
+app.use(express.json());
 
 // const uri = process.env.ATLAS_URI;
 // mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
@@ -25,7 +26,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("MongoDB Connected..."))
     .catch(err => console.log(err));
 
-app.use("/api/items", items);
+app.use("/list", items);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production")
