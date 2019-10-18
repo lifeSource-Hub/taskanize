@@ -6,10 +6,17 @@ const itemSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
+  dateCompleted: {
     type: Date,
     default: Date.now
+  },
+  dateCreated: {
+    type: Date,
+    required: true
   }
 });
 
-module.exports = Item = mongoose.model("todolist", itemSchema, "items");
+module.exports = CompleteItem = mongoose.model(
+    "completeItems",
+    itemSchema,
+    "complete");

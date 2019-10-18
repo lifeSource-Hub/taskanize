@@ -13,11 +13,11 @@ class Nav extends Component
               {/*<Link to="/src/index" className="devNav-link">Home</Link>*/}
             </li>
             <li className="devNav-item">
-              <Link to="/zzz" className="devNav-link">404</Link>
-              {/*<Link to="/user" className="devNav-link">Create User</Link>*/}
+              <Link to="/completed" className="devNav-link">Completed Items</Link>
             </li>
             <li className="devNav-item">
-              <Link to="/" className="devNav-link">Completed Items</Link>
+              <Link to="/zzz" className="devNav-link">404</Link>
+              {/*<Link to="/user" className="devNav-link">Create User</Link>*/}
             </li>
           </ul>
         </nav>);

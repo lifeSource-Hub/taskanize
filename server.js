@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const items = require("./routes/api/items");
+const completeItems = require("./routes/api/completeItems");
 const port = process.env.PORT || 5000;
 
 app.use(cors({credentials: true, origin: true})); //{credentials: true, origin: true}
@@ -27,6 +28,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .catch(err => console.log(err));
 
 app.use("/list", items);
+app.use("/complete", completeItems);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production")

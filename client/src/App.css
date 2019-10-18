@@ -91,6 +91,10 @@ header {
   text-decoration: none;
 }
 
+.timeStamps * {
+  display: inline;
+}
+
 /*.dropNav {*/
 /*  -webkit-touch-callout: none;*/
 /*  -moz-user-select: none;*/

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Item = require("../../models/Item");
+const IncompleteItem = require("../../models/IncompleteItem");
 
 /** @route  GET list
  *  @desc   Get all items
@@ -9,10 +9,8 @@ const Item = require("../../models/Item");
  */
 router.get("/", (req, res) =>
 {
-  // const url = req.originalUrl;
-  // res.status(200).send(`Request URL: ${url}`);
-  Item.find()
-      .sort({date: -1})
+  IncompleteItem.find()
+      .sort({dateCreated: -1})
       .then(items => res.json(items));
 });
 
@@ -20,27 +18,26 @@ router.get("/", (req, res) =>
  *  @desc   Create an item
  *  @access Public
  */
-router.post("/", (req, res) =>
+router.post("*/add", (req, res) =>
 {
-  const newItem = new Item({
+  const newItem = new IncompleteItem({
     body: req.body.body
   });
 
-  // console.log(newItem);
-  // res.status(200).send();
   newItem.save().then(item => res.json(item));
 });
 
-/** @route  POST list/:id
+/** @route  PUT list/:id
  *  @desc   Update an item
  *  @access Public
  */
-router.post("/:id", (req, res) =>
+router.put("/:id", (req, res) =>
 {
-  Item.findById(req.params.id)
+  IncompleteItem.findById(req.params.id)
       .then(item =>
       {
         item.body = req.body.body;
+        item.dateModified = new Date();
         item.save().then(() => res.json({success: true}));
       })
       .catch(err => res.status(404).json({success: false}));
@@ -54,7 +51,7 @@ router.delete("/:id", (req, res) =>
 {
   // const id = req.params.id;
   // res.status(200).send("Deleting " + id);
-  Item.findById(req.params.id)
+  IncompleteItem.findById(req.params.id)
       .then(item =>
           item.remove()
               .then(() => res.json({success: true})))
