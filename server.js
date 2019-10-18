@@ -1,22 +1,53 @@
+// require("dotenv").config();
+// const router = express.Router();
 const cors = require('cors');
 const express = require('express');
+const path = require('path');
 const app = express();
-const miniApp = express.Router();
+const mongoose = require('mongoose');
+const items = require("./routes/api/items");
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({credentials: true, origin: true})); //{credentials: true, origin: true}
 
 // const uri = process.env.ATLAS_URI;
 // mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
+//// mongoose.connect('mongodb://127.0.0.1:27017/todos', {useNewUrlParser: true});
+//// const connection = mongoose.connection;
+//// connection.once('open', function ()
+//// {
+////   console.log("MongoDB database connection established successfully");
+//// });
 
-miniApp.get('/home', (request, response, next) =>
+const db = require("./config/keys").mongoURI;
+
+mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(() => console.log("MongoDB Connected..."))
+    .catch(err => console.log(err));
+
+app.use("/api/items", items);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production")
 {
-  const url = request.originalUrl;
+  // Set static folder
+  app.use(express.static("client/build"));
 
-  response.status(200).send("You are visiting  home from " )
-});
+  app.get("*", (req, res) =>
+  {
+    res.sendFile(path.join(__dirname, 'client/build/index.html'), err =>
+    {
+      if (err)
+      {
+        res.status(500).send(err)
+      }
+    })
+  });
+// Alternate
+//   app.get("*", (req, res) =>
+//   {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//   });
+}
 
-app.use('/first', miniApp);
-app.use('/second', miniApp);
-
-app.listen(port, () => console.log('Web Server running on port 5000'),);
+app.listen(port, () => console.log(`Server started on port ${port}`));
