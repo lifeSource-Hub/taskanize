@@ -27,11 +27,24 @@ class List extends Component
         .catch(() => console.log(`Can’t access '${URL}'`));
   }
 
-  editItem(e)
+  editItem = (e) =>
   {
-    console.log(`Editing element with id '${e.target.parentElement.id}'`);
+    console.log("Editing item " + e.target.parentElement.parentElement.id);
 
-  }
+    const URL = "/list/"  + e.target.parentElement.parentElement.id;
+
+    //TODO Get modal input instead of New Item input
+    const newText = {
+      body: this.state.input
+    };
+
+    // axios.post(URL, newText)
+    //     .then(res =>
+    //     {
+    //       this.refreshList();
+    //     })
+    //     .catch(() => console.log(`Can’t access '${URL}'`));
+  };
 
   deleteItem = (item) =>
   {
@@ -50,7 +63,10 @@ class List extends Component
     console.log('Complete button clicked');
   }
 
-
+  onChange = (e) =>
+  {
+    this.setState({input: e.target.value});
+  };
 
   onSubmit = (e) =>
   {
@@ -66,6 +82,7 @@ class List extends Component
       axios.post(URL, newItem)
           .then(res =>
           {
+            this.setState({input: ""});
             this.refreshList();
           })
           .catch(() => console.log(`Can’t access '${URL}'`));
@@ -77,7 +94,10 @@ class List extends Component
     return (
         <React.Fragment>
           <h3>To Do List</h3><br/>
-          <CreateItem onSubmit={this.onSubmit}/>
+          <CreateItem
+              input={this.state.input}
+              onChange={this.onChange}
+              onSubmit={this.onSubmit}/>
           <br/>
           <ListItems
               items={this.state.items}

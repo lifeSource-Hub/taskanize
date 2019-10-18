@@ -31,7 +31,22 @@ router.post("/", (req, res) =>
   newItem.save().then(item => res.json(item));
 });
 
-/** @route  delete list/:id
+/** @route  POST list/:id
+ *  @desc   Update an item
+ *  @access Public
+ */
+router.post("/:id", (req, res) =>
+{
+  Item.findById(req.params.id)
+      .then(item =>
+      {
+        item.body = req.body.body;
+        item.save().then(() => res.json({success: true}));
+      })
+      .catch(err => res.status(404).json({success: false}));
+});
+
+/** @route  DELETE list/:id
  *  @desc   Delete an item
  *  @access Public
  */
@@ -40,8 +55,9 @@ router.delete("/:id", (req, res) =>
   // const id = req.params.id;
   // res.status(200).send("Deleting " + id);
   Item.findById(req.params.id)
-      .then(item => item.remove()
-          .then(() => res.json({success: true})))
+      .then(item =>
+          item.remove()
+              .then(() => res.json({success: true})))
       .catch(err => res.status(404).json({success: false}));
 });
 

@@ -7,11 +7,6 @@ class CreateItem extends Component
     input: ""
   };
 
-  onChange = (e) =>
-  {
-    this.setState({input: e.target.value});
-  };
-
   render()
   {
     return (
@@ -22,8 +17,9 @@ class CreateItem extends Component
               bsSize="sm"
               name="input"
               id="newItemText"
-              value={this.state.input}
-              onChange={this.onChange}/>
+              className="ml-1 mr-2"
+              value={this.props.input}
+              onChange={this.props.onChange}/>
           <Button size="sm" color="primary">Add</Button>
         </Form>);
   }

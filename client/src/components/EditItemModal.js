@@ -4,6 +4,7 @@ import {
   ModalBody,
   ModalHeader,
   ModalFooter,
+  Input,
   Button,
 } from "reactstrap";
 
@@ -17,10 +18,11 @@ class EditItemModal extends Component
   render()
   {
     return (
-        <Modal>
+        <Modal isOpen={this.props.open}>
           <ModalHeader>Header</ModalHeader>
           <ModalBody>
-            Body
+            {/*Send input up like Add Item input*/}
+            <Input type="text"/>
           </ModalBody>
           <ModalFooter>
             <Button onClick={this.handleClick}>OK</Button>
