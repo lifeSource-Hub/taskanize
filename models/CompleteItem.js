@@ -19,4 +19,4 @@ const itemSchema = new Schema({
 module.exports = CompleteItem = mongoose.model(
     "completeItems",
     itemSchema,
-    "complete");
+    "completed");

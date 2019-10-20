@@ -29,6 +29,23 @@ class CompletedList extends Component
         .catch(() => console.log(`Can’t access '${URL}'`));
   }
 
+  deleteItem = (selectedItem) =>
+  {
+    const URL = "/complete/" + selectedItem._id;
+
+    axios.delete(URL)
+        .then(res =>
+        {
+          // Remove item from state, causing a re-render
+          this.setState({
+            items: this.state.items.filter(item => item._id !== selectedItem._id)
+          });
+          console.log(`Delete operation success: ${res.data.success}`);
+          this.refreshList();
+        })
+        .catch(() => console.log(`Can’t access '${URL}'`));
+  };
+
   formatCreatedDate = (dateCreated) =>
   {
     const date = new Date(dateCreated);
@@ -72,7 +89,8 @@ class CompletedList extends Component
                   <ButtonGroup>
                     <Button
                         size="sm"
-                        color="danger">
+                        color="danger"
+                    onClick={this.deleteItem.bind(null, item)}>
                       Delete
                     </Button>
                   </ButtonGroup>
