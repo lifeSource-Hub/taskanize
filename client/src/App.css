@@ -1,12 +1,12 @@
-/*@font-face {*/
-/*  font-family: Palanquin-Regular;*/
-/*  src: url(./fonts/Palanquin-Regular.ttf);*/
-/*}*/
+@font-face {
+  font-family: Palanquin-Regular;
+  src: url(./fonts/Palanquin-Regular.ttf);
+}
 
-/*@font-face {*/
-/*  font-family: BenchNine-Regular;*/
-/*  src: url(./fonts/BenchNine-Regular.ttf);*/
-/*}*/
+@font-face {
+  font-family: BenchNine-Regular;
+  src: url(./fonts/BenchNine-Regular.ttf);
+}
 
 html {
   height: 100%;
@@ -65,7 +65,7 @@ header {
   background: linear-gradient(to bottom, #517ccc 0%, #cad3ee 100%);
   border-bottom-right-radius: 11px;
   /*bottom: 50px;*/
-  font: 20px BenchNine-Regular, "Arial Narrow", sans-serif;
+  font: 24px BenchNine-Regular, "Arial Narrow", sans-serif;
   left: 0;
   padding: 0;
   position: fixed;
@@ -91,29 +91,6 @@ header {
   text-decoration: none;
 }
 
-.timeStamps * {
-  display: inline;
-}
-
-/*.dropNav {*/
-/*  -webkit-touch-callout: none;*/
-/*  -moz-user-select: none;*/
-/*  -ms-user-select: none;*/
-/*  -webkit-user-select: none;*/
-/*  user-select: none;*/
-/*}*/
-
-/*.dropNav ul {*/
-/*  display: none;*/
-/*  margin-top: 20px;*/
-/*}*/
-
-/*.dropNav li {*/
-/*  font-size: 19px;*/
-/*  margin-left: 20px;*/
-/*  margin-top: 10px;*/
-/*}*/
-
 main {
   /*background-color: #d2dae2;*/
   border-bottom-left-radius: 7px;
@@ -126,35 +103,13 @@ main {
   padding: 20px 25px 20px 20px;
 }
 
-fieldset {
-  border-color: #666666;
+.timeStamps * {
+  display: inline;
 }
 
 hr {
   margin-bottom: 18px;
   margin-top: 18px;
-}
-
-.listComponent {
-  width: 70%;
-}
-
-.listContainer {
-  background-color: #dfe8f0;
-  margin-top: 15px;
-  min-height: 30px;
-  /*border: 1px solid #000000;*/
-  /*display: flex;*/
-  /*justify-content: space-between;*/
-}
-
-.listContainer div {
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
-.listContainer div span {
-  margin-left: 8px;
 }
 
 .note {
@@ -164,15 +119,6 @@ hr {
   margin: 10px 5px 15px 0;
   padding: 0;
   vertical-align: top;
-}
-
-.form {
-  display: inline-block;
-  text-align: right;
-}
-
-#insert label {
-  margin-right: 10px;
 }
 
 #output {
@@ -191,7 +137,3 @@ hr {
   text-align: center;
   width: 100%;
 }
-
-/*main:not(p) {*/
-/*  background-color: #ebdb8d;*/
-/*}*/

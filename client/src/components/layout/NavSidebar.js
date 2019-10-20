@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 
-class Nav extends Component
+class NavSidebar extends Component
 {
   render()
   {
@@ -16,7 +16,7 @@ class Nav extends Component
               <Link to="/completed" className="devNav-link">Completed Items</Link>
             </li>
             <li className="devNav-item">
-              <Link to="/zzz" className="devNav-link">404</Link>
+              <Link to="/zzz" className="devNav-link">404 Page</Link>
               {/*<Link to="/user" className="devNav-link">Create User</Link>*/}
             </li>
           </ul>
@@ -24,4 +24,4 @@ class Nav extends Component
   }
 }
 
-export default Nav;
+export default NavSidebar;

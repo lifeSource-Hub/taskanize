@@ -4,7 +4,7 @@ const router = express.Router();
 const CompleteItem = require("../../models/CompleteItem");
 const IncompleteItem = require("../../models/IncompleteItem");
 
-/** @route  GET list
+/** @route  GET complete
  *  @desc   Get all items
  *  @access Public
  */
@@ -15,7 +15,7 @@ router.get("/", (req, res) =>
       .then(items => res.json(items));
 });
 
-/** @route  POST list/:id
+/** @route  POST complete/:id
  *  @desc   Move item from incomplete to complete collection
  *  @access Public
  */
@@ -30,6 +30,20 @@ router.post("/:id", (req, res) =>
         });
 
         completedItem.save();
+        item.remove().then(() => res.json({success: true}));
+      })
+      .catch(err => res.status(404).json({success: false}));
+});
+
+/** @route  DELETE complete/:id
+ *  @desc   Delete an item
+ *  @access Public
+ */
+router.delete("/:id", (req, res) =>
+{
+  CompleteItem.findById(req.params.id)
+      .then(item =>
+      {
         item.remove().then(() => res.json({success: true}));
       })
       .catch(err => res.status(404).json({success: false}));

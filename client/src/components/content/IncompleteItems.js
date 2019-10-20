@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Button, ButtonGroup, ListGroup, ListGroupItem} from "reactstrap";
 
-class ListItems extends Component
+class IncompleteItems extends Component
 {
   formatCreatedDate = (dateCreated) =>
   {
@@ -70,4 +70,4 @@ const options = {
   minute: "numeric"
 };
 
-export default ListItems;
+export default IncompleteItems;
