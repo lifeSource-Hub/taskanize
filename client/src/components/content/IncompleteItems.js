@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Button, ButtonGroup, ListGroup, ListGroupItem} from "reactstrap";
+import {Badge, Button, ButtonGroup, ListGroup, ListGroupItem} from "reactstrap";
+import Octicon, {Check, Pencil, X} from "@primer/octicons-react";
 
 class IncompleteItems extends Component
 {
@@ -17,6 +18,21 @@ class IncompleteItems extends Component
     return (date.toLocaleDateString(undefined, options));
   };
 
+  getPriorityColor = (priority) =>
+  {
+    switch (priority)
+    {
+      case "High":
+        return "text-danger";
+      case "Med":
+        return "text-primary";
+      case "Low":
+        return "text-success";
+      default:
+        return "text-primary";
+    }
+  };
+
   render()
   {
     return (
@@ -29,7 +45,11 @@ class IncompleteItems extends Component
                 <div>
                   <p>{item.body}</p>
                   <div className="timeStamps small">
-                    <p>Created: </p>
+                    <p>Priority: </p>
+                    <p className={this.getPriorityColor(item.priority)}>
+                      {item.priority || "Med"}
+                    </p>
+                    <p> Created: </p>
                     <time id="dateCreated" className="small">
                       {this.formatCreatedDate(item.dateCreated)}
                     </time>
@@ -39,22 +59,21 @@ class IncompleteItems extends Component
                     </time>
                   </div>
                 </div>
-                <ButtonGroup>
+                <ButtonGroup size="sm">
                   <Button
-                      size="sm"
                       color="info"
-                      onClick={this.props.editItem.bind(null, item)}>Edit</Button>
-                  <Button
-                      size="sm"
-                      color="danger"
-                      onClick={this.props.deleteItem.bind(null, item)}>
-                    Delete
+                      onClick={this.props.editItem.bind(null, item)}>
+                    <Octicon icon={Pencil}/>
                   </Button>
                   <Button
-                      size="sm"
+                      color="danger"
+                      onClick={this.props.deleteItem.bind(null, item)}>
+                    <Octicon icon={X}/>
+                  </Button>
+                  <Button
                       color="success"
                       onClick={this.props.markComplete.bind(null, item)}>
-                    Complete
+                    <Octicon icon={Check}/>
                   </Button>
                 </ButtonGroup>
               </ListGroupItem>)}
