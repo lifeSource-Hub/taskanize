@@ -21,7 +21,8 @@ router.get("/", (req, res) =>
 router.post("*/add", (req, res) =>
 {
   const newItem = new IncompleteItem({
-    body: req.body.body
+    body: req.body.body,
+    priority: req.body.priority
   });
 
   newItem.save().then(item => res.json(item));

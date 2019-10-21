@@ -1,26 +1,22 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
+import {Nav, NavItem, NavLink} from "reactstrap";
 
 class NavSidebar extends Component
 {
   render()
   {
     return (
-        <nav className="devNav">
-          <ul className="devNav-ul">
-            <li className="devNav-item">
-              <Link to="/" className="devNav-link">View List</Link>
-              {/*<Link to="/src/index" className="devNav-link">Home</Link>*/}
-            </li>
-            <li className="devNav-item">
-              <Link to="/completed" className="devNav-link">Completed Items</Link>
-            </li>
-            <li className="devNav-item">
-              <Link to="/zzz" className="devNav-link">404 Page</Link>
-              {/*<Link to="/user" className="devNav-link">Create User</Link>*/}
-            </li>
-          </ul>
-        </nav>);
+        <Nav className="nav">
+          <NavItem className="navItem w-100">
+            <NavLink href="/" className="navLink">View List</NavLink>
+          </NavItem>
+          <NavItem className="navItem w-100">
+            <NavLink href="/completed" className="navLink">Completed Items</NavLink>
+          </NavItem>
+          <NavItem className="navItem w-100">
+            <NavLink href="/zzz" className="navLink">404 Page</NavLink>
+          </NavItem>
+        </Nav>);
   }
 }
 

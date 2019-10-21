@@ -6,6 +6,10 @@ const itemSchema = new Schema({
     type: String,
     required: true
   },
+  priority: {
+    type: String,
+    required: true
+  },
   dateModified: {
     type: Date,
     default: Date.now

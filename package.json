@@ -16,6 +16,7 @@
   "license": "MIT",
   "repository": "https://github.com/lifeSource-Hub/mern-app",
   "dependencies": {
+    "@primer/octicons-react": "^9.2.0",
     "concurrently": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",

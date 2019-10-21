@@ -16,6 +16,7 @@ class TodoList extends Component
   state = {
     _isMounted: false,
     newItemInput: "",
+    priority: "Med",
     editInput: "",
     defaultInput: "",
     editId: "",
@@ -120,6 +121,11 @@ class TodoList extends Component
     this.setState({newItemInput: e.target.value});
   };
 
+  onPriorityChange = (priority) =>
+  {
+    this.setState({priority});
+  };
+
   onSubmit = (e) =>
   {
     e.preventDefault();
@@ -127,7 +133,8 @@ class TodoList extends Component
     if (this.state.newItemInput !== "")
     {
       const newItem = {
-        body: this.state.newItemInput
+        body: this.state.newItemInput,
+        priority: this.state.priority
       };
 
       const URL = "incomplete/add";
@@ -143,14 +150,17 @@ class TodoList extends Component
     }
   };
 
+  // TODO Reduce width of modal, reduce empty space
   render()
   {
     return (
         <React.Fragment>
           <h3>To Do List</h3><br/>
           <CreateItem
+              priority={this.state.priority}
               newItemInput={this.state.newItemInput}
               onChange={this.onChange}
+              onPriorityChange={this.onPriorityChange}
               onSubmit={this.onSubmit}/>
           <br/>
           <IncompleteItems
@@ -172,6 +182,7 @@ class TodoList extends Component
                       name="editInput"
                       id="newBody"
                       className="mr-2"
+                      maxLength="80"
                       defaultValue={this.state.defaultInput}
                       onChange={this.onEditChange}/>
                   <Button size="sm" color="success">OK</Button>

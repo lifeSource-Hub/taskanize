@@ -6,6 +6,7 @@ import {
   ListGroupItem,
 } from "reactstrap";
 import axios from "axios";
+import Octicon, {X} from "@primer/octicons-react";
 
 class CompletedList extends Component
 {
@@ -86,12 +87,11 @@ class CompletedList extends Component
                       </time>
                     </div>
                   </div>
-                  <ButtonGroup>
+                  <ButtonGroup size="sm">
                     <Button
-                        size="sm"
                         color="danger"
                     onClick={this.deleteItem.bind(null, item)}>
-                      Delete
+                      <Octicon icon={X}/>
                     </Button>
                   </ButtonGroup>
                 </ListGroupItem>)}
