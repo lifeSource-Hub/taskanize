@@ -4,11 +4,14 @@ import CreateItem from "./CreateItem";
 import IncompleteItems from "./IncompleteItems";
 import {
   Form,
+  Modal,
   ModalHeader,
   ModalBody,
   Input,
   Button,
-  Modal, InputGroupAddon, InputGroupText, InputGroup
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup
 } from "reactstrap";
 
 class TodoList extends Component
@@ -26,13 +29,13 @@ class TodoList extends Component
 
   componentDidMount()
   {
-    const URL = "/incomplete";
+    const URL = "/api/incomplete";
     axios.get(URL)
         .then(res =>
         {
           this.setState({items: res.data, _isMounted: true});
         })
-        .catch(() => console.log(`Can’t access '${URL}'`));
+        .catch(() => console.warn(`Can’t access GET '${URL}'`));
   }
 
   componentWillUnmount()
@@ -42,7 +45,7 @@ class TodoList extends Component
 
   markComplete = (selectedItem) =>
   {
-    const URL = "/complete/" + selectedItem._id;
+    const URL = "/api/complete/" + selectedItem._id;
     axios.post(URL)
         .then(res =>
         {
@@ -52,12 +55,12 @@ class TodoList extends Component
           });
           console.log(`Complete item operation success: ${res.data.success}`);
         })
-        .catch(() => console.log(`Can’t access '${URL}'`));
+        .catch(() => console.warn(`Can’t access POST '${URL}'`));
   };
 
   deleteItem = (selectedItem) =>
   {
-    const URL = "/incomplete/" + selectedItem._id;
+    const URL = "/api/incomplete/" + selectedItem._id;
     axios.delete(URL)
         .then(res =>
         {
@@ -67,7 +70,7 @@ class TodoList extends Component
           });
           console.log(`Delete operation success: ${res.data.success}`);
         })
-        .catch(() => console.log(`Can’t access '${URL}'`));
+        .catch(() => console.warn(`Can’t access DELETE '${URL}'`));
   };
 
   editItem = (selectedItem) =>
@@ -76,12 +79,12 @@ class TodoList extends Component
     this.toggle();
   };
 
-  onEditChange = (e) =>
+  onChangeEdit = (e) =>
   {
     this.setState({editInput: e.target.value});
   };
 
-  onEditSubmit = (e) =>
+  onSubmitEdit = (e) =>
   {
     e.preventDefault();
     this.toggle();
@@ -92,7 +95,7 @@ class TodoList extends Component
         body: this.state.editInput
       };
 
-      const URL = "/incomplete/" + this.state.editId;
+      const URL = "/api/incomplete/" + this.state.editId;
 
       axios.put(URL, newItem)
           .then(res =>
@@ -105,7 +108,7 @@ class TodoList extends Component
 
             console.log(`Edit operation success: ${res.data.success}`);
           })
-          .catch(() => console.log(`Can’t access '${URL}'`));
+          .catch(() => console.warn(`Can’t access PUT '${URL}'`));
     }
   };
 
@@ -116,7 +119,7 @@ class TodoList extends Component
   };
 
   // Set new item input into state
-  onChange = (e) =>
+  onChangeNewItem = (e) =>
   {
     this.setState({newItemInput: e.target.value});
   };
@@ -126,7 +129,7 @@ class TodoList extends Component
     this.setState({priority});
   };
 
-  onSubmit = (e) =>
+  onSubmitNewItem = (e) =>
   {
     e.preventDefault();
 
@@ -137,7 +140,7 @@ class TodoList extends Component
         priority: this.state.priority
       };
 
-      const URL = "incomplete/add";
+      const URL = "/api/incomplete/add";
       axios.post(URL, newItem)
           .then(res =>
           {
@@ -146,11 +149,10 @@ class TodoList extends Component
               items: [res.data, ...this.state.items]
             });
           })
-          .catch(() => console.log(`Can’t access '${URL}'`));
+          .catch(() => console.warn(`Can’t access POST '${URL}'`));
     }
   };
 
-  // TODO Reduce width of modal, reduce empty space
   render()
   {
     return (
@@ -159,9 +161,9 @@ class TodoList extends Component
           <CreateItem
               priority={this.state.priority}
               newItemInput={this.state.newItemInput}
-              onChange={this.onChange}
+              onChange={this.onChangeNewItem}
               onPriorityChange={this.onPriorityChange}
-              onSubmit={this.onSubmit}/>
+              onSubmit={this.onSubmitNewItem}/>
           <br/>
           <IncompleteItems
               items={this.state.items}
@@ -169,23 +171,22 @@ class TodoList extends Component
               deleteItem={this.deleteItem}
               markComplete={this.markComplete}/>
 
-          <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
+          <Modal isOpen={this.state.modalOpen} toggle={this.toggle} className="editModal">
             <ModalHeader className="bg-info" toggle={this.toggle}>Edit</ModalHeader>
             <ModalBody>
-              <Form inline onSubmit={this.onEditSubmit}>
-                <InputGroup size="sm">
+              <Form inline onSubmit={this.onSubmitEdit}>
+                <InputGroup size="sm" className="w-100">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>New Body:</InputGroupText>
                   </InputGroupAddon>
                   <Input
                       type="text"
                       name="editInput"
-                      id="newBody"
                       className="mr-2"
                       maxLength="80"
                       defaultValue={this.state.defaultInput}
-                      onChange={this.onEditChange}/>
-                  <Button size="sm" color="success">OK</Button>
+                      onChange={this.onChangeEdit}/>
+                  <Button size="sm" color="success">Submit</Button>
                 </InputGroup>
               </Form>
             </ModalBody>

@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 
-// import {Link} from "react-router-dom";
-
 class Header extends Component
 {
   render()
   {
     return (
         <header>
-          {/*<span id="headerLinks">*/}
-          {/*  <Link to="/src/components/pages/Contact.js">Contact</Link>*/}
+          {/*<span id="headerLink">*/}
+          {/*  <Link to="/login">Login</Link>*/}
           {/*</span>*/}
-          <div className="header"><h1>React Demo</h1></div>
+          <div className="header"><h1>Your Online To Do List</h1></div>
         </header>);
   }
 }

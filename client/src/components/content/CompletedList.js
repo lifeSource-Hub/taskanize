@@ -21,18 +21,18 @@ class CompletedList extends Component
 
   refreshList()
   {
-    const URL = "/complete";
+    const URL = "/api/complete";
     axios.get(URL)
         .then(res =>
         {
           this.setState({items: res.data});
         })
-        .catch(() => console.log(`Can’t access '${URL}'`));
+        .catch(() => console.log(`Can’t access GET '${URL}'`));
   }
 
   deleteItem = (selectedItem) =>
   {
-    const URL = "/complete/" + selectedItem._id;
+    const URL = "/api/complete/" + selectedItem._id;
 
     axios.delete(URL)
         .then(res =>
@@ -44,7 +44,7 @@ class CompletedList extends Component
           console.log(`Delete operation success: ${res.data.success}`);
           this.refreshList();
         })
-        .catch(() => console.log(`Can’t access '${URL}'`));
+        .catch(() => console.log(`Can’t access DELETE '${URL}'`));
   };
 
   formatCreatedDate = (dateCreated) =>
