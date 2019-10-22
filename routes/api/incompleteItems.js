@@ -3,7 +3,7 @@ const router = express.Router();
 
 const IncompleteItem = require("../../models/IncompleteItem");
 
-/** @route  GET incomplete
+/** @route  GET api/incomplete
  *  @desc   Get all items
  *  @access Public
  */
@@ -14,11 +14,11 @@ router.get("/", (req, res) =>
       .then(items => res.json(items));
 });
 
-/** @route  POST incomplete
+/** @route  POST api/incomplete
  *  @desc   Create an item
  *  @access Public
  */
-router.post("*/add", (req, res) =>
+router.post("/add", (req, res) =>
 {
   const newItem = new IncompleteItem({
     body: req.body.body,
@@ -28,7 +28,7 @@ router.post("*/add", (req, res) =>
   newItem.save().then(item => res.json(item));
 });
 
-/** @route  PUT incomplete/:id
+/** @route  PUT api/incomplete/:id
  *  @desc   Update an item
  *  @access Public
  */
@@ -39,12 +39,14 @@ router.put("/:id", (req, res) =>
       {
         item.body = req.body.body;
         item.dateModified = new Date();
-        item.save().then(() => res.json({success: true}));
+        item.save()
+            .then(() => res.json({success: true}))
+            .catch(err => res.status(404).json({success: false}));
       })
       .catch(err => res.status(404).json({success: false}));
 });
 
-/** @route  DELETE incomplete/:id
+/** @route  DELETE api/incomplete/:id
  *  @desc   Delete an item
  *  @access Public
  */

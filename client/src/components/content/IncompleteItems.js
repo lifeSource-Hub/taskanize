@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Badge, Button, ButtonGroup, ListGroup, ListGroupItem} from "reactstrap";
+import {Button, ButtonGroup, ListGroup, ListGroupItem} from "reactstrap";
 import Octicon, {Check, Pencil, X} from "@primer/octicons-react";
 
 class IncompleteItems extends Component
