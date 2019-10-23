@@ -16,9 +16,9 @@ class NavSidebar extends Component
           <NavItem className="navItem w-100">
             <NavLink href="/login" className="navLink">Login</NavLink>
           </NavItem>
-          <NavItem className="navItem w-100">
-            <NavLink href="/register" className="navLink">Register</NavLink>
-          </NavItem>
+          {/*<NavItem className="navItem w-100">*/}
+          {/*  <NavLink href="/register" className="navLink">Register</NavLink>*/}
+          {/*</NavItem>*/}
           <NavItem className="navItem w-100">
             <NavLink href="/baduri" className="navLink">404 Page</NavLink>
           </NavItem>
