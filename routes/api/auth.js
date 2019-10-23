@@ -19,14 +19,21 @@ router.post("/", (req, res) =>
   {
     if (user)
     {
-      return res.status(200).json(user);
+      if (user.password === req.body.password)
+      {
+        return res.status(200).json(user);
+      }
+
+      return res.status(200).json({msg: "Password does not match"});
     }
     else if (err)
     {
       return res.json(err);
     }
-
-    return res.json({msg: "User not found"});
+    else
+    {
+      return res.json({msg: "User not found"});
+    }
   });
 });
 
