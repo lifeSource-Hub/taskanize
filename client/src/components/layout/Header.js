@@ -9,7 +9,7 @@ class Header extends Component
           {/*<span id="headerLink">*/}
           {/*  <Link to="/login">Login</Link>*/}
           {/*</span>*/}
-          <div className="header"><h1>A MERN Stack Web Application</h1></div>
+          <div className="header"><h2>A MERN Stack Web Application</h2></div>
         </header>);
   }
 }

@@ -37,7 +37,7 @@ class CompletedList extends Component
     axios.delete(URL)
         .then(res =>
         {
-          // Remove item from state, causing a re-render
+          // Remove item from state
           this.setState({
             items: this.state.items.filter(item => item._id !== selectedItem._id)
           });

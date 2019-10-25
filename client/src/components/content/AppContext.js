@@ -1,62 +1,19 @@
-import React, {Component, createContext} from "react";
-import axios from "axios";
+import React, {useState, createContext} from "react";
 
-export const AppContext = createContext({name: "default"});
+export const AppContext = createContext({});
 
-export class AppProvider extends Component
+export const AppProvider = ({children}) =>
 {
-  state = {
-    usernameInput: "",
-    passwordInput: "",
-  };
+  const [authUser, setAuthUser] = useState(undefined);
 
-  onChangeUsername = (e) =>
-  {
-    this.setState({usernameInput: e.target.value});
-  };
+  // const setToken = (token) =>
+  // {
+  //   // console.log("Inside setToken, value received: ", token);
+  //   setAuthUser(token);
+  // };
 
-  onChangePassword = (e) =>
-  {
-    this.setState({passwordInput: e.target.value});
-  };
-
-  onSubmit = (e) =>
-  {
-    e.preventDefault();
-
-    const user = {
-      username: this.state.usernameInput,
-      password: this.state.passwordInput
-    };
-
-    console.log("Submitted user: ", user);
-
-    const URL = "/api/auth";
-    axios.post(URL, user)
-        .then(res =>
-        {
-          if (res.data)
-          {
-            console.log("User search result: ", res.data);
-          }
-          else if (res)
-          {
-            console.log(res)
-          }
-        })
-        .catch(() => console.warn(`Can’t access POST '${URL}'`));
-  };
-
-  render()
-  {
-    return (
-        <AppContext.Provider value={{
-          state: this.state,
-          onSubmit: this.onSubmit,
-          onChangeUsername: this.onChangeUsername,
-          onChangePassword: this.onChangePassword,
-        }}>
-          {this.props.children}
-        </AppContext.Provider>);
-  }
-}
+  return (
+      <AppContext.Provider value={{authUser, setAuthUser}}>
+        {children}
+      </AppContext.Provider>);
+};

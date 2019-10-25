@@ -1,16 +1,12 @@
-import React, {Component} from "react";
-import {AppContext} from "./AppContext";
+import React from "react";
 
-class PageNotFound extends Component
+const PageNotFound = () =>
 {
-  render()
-  {
-    return (
-        <div>
-          <h1>404</h1>
-          <h2>Page Not Found</h2>
-        </div>);
-  }
-}
+  return (
+      <div>
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+      </div>);
+};
 
 export default PageNotFound;

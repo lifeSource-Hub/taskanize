@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const IncompleteItem = require("../../models/IncompleteItem");
+const CompleteItem = require("../../models/CompleteItem");
 
 /** @route  GET api/incomplete
- *  @desc   Get all items
+ *  @desc   Get all to-do items
  *  @access Public
  */
 router.get("/", (req, res) =>
@@ -15,7 +16,7 @@ router.get("/", (req, res) =>
 });
 
 /** @route  POST api/incomplete
- *  @desc   Create an item
+ *  @desc   Create a to-do item
  *  @access Public
  */
 router.post("/add", (req, res) =>
@@ -28,8 +29,28 @@ router.post("/add", (req, res) =>
   newItem.save().then(item => res.json(item));
 });
 
+/** @route  POST api/complete/:id
+ *  @desc   Create completed item, delete to-do item
+ *  @access Public
+ */
+router.post("/:id", (req, res) =>
+{
+  IncompleteItem.findById(req.params.id)
+      .then(item =>
+      {
+        const completedItem = new CompleteItem({
+          body: item.body,
+          dateCreated: item.dateCreated
+        });
+
+        completedItem.save();
+        item.remove().then(() => res.json({success: true}));
+      })
+      .catch(err => res.status(404).json({success: false}));
+});
+
 /** @route  PUT api/incomplete/:id
- *  @desc   Update an item
+ *  @desc   Update a to-do item
  *  @access Public
  */
 router.put("/:id", (req, res) =>
@@ -39,7 +60,8 @@ router.put("/:id", (req, res) =>
       {
         item.body = req.body.body;
         item.dateModified = new Date();
-        item.save()
+        item
+            .save()
             .then(() => res.json({success: true}))
             .catch(err => res.status(404).json({success: false}));
       })
@@ -47,7 +69,7 @@ router.put("/:id", (req, res) =>
 });
 
 /** @route  DELETE api/incomplete/:id
- *  @desc   Delete an item
+ *  @desc   Delete a to-do item
  *  @access Public
  */
 router.delete("/:id", (req, res) =>
@@ -55,9 +77,7 @@ router.delete("/:id", (req, res) =>
   // const id = req.params.id;
   // res.status(200).send("Deleting " + id);
   IncompleteItem.findById(req.params.id)
-      .then(item =>
-          item.remove()
-              .then(() => res.json({success: true})))
+      .then(item => item.remove().then(() => res.json({success: true})))
       .catch(err => res.status(404).json({success: false}));
 });
 
