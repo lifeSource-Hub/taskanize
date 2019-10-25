@@ -23,27 +23,34 @@ body {
   top: 0;
   width: 100%;
   z-index: 1;
-}
-.nav .navBrand {
-  color: #000000;
-  font: 26px Cambria, sans-serif;
-}
-.nav .navItem {
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  width: 140px;
-}
-.nav .navLink {
-  color: #13118f;
-  font: 17px "Segoe UI Semibold", sans-serif;
-  margin: 0;
-  padding: 6px;
-  text-align: center;
-}
-.nav .navLink:hover {
-  color: #2362be;
+
+  .navBrand {
+    //background-color: #517ccc;
+    color: #000000;
+    font: 26px Cambria, sans-serif;
+  }
+
+  .navItem {
+    //background-color: #518ada;
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 140px;
+  }
+
+  .navLink {
+    //background-color: #5178c8;
+    color: #13118f;
+    font: 17px "Segoe UI Semibold", sans-serif;
+    margin: 0;
+    padding: 6px;
+    text-align: center;
+
+    &:hover {
+      color: #2362be;
+    }
+  }
 }
 
 main {
@@ -52,7 +59,7 @@ main {
   border-bottom-right-radius: 6px;
   display: block;
   font: 18px "Segoe UI", Arial, sans-serif;
-  margin: 60px auto 29px;
+  margin: 60px auto 29px ;
   max-width: 1020px;
   min-width: 240px;
   padding: 35px 55px 35px 55px;
@@ -99,5 +106,3 @@ legend {
   text-align: center;
   width: 100%;
 }
-
-/*# sourceMappingURL=App.css.map */

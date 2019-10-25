@@ -1,118 +1,121 @@
-import React, {Component} from "react";
-// import axios from "axios";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from "reactstrap";
-import {AppContext} from "./AppContext";
+import React, {useState} from "react";
+import axios from "axios";
+import {Button, Form, FormGroup, Label, Input} from "reactstrap";
+// import {AppContext} from "./AppContext";
 
-class Login extends Component
+const Login = () =>
 {
-  state = {
-    usernameInput: "",
-    passwordInput: "",
+  // const context = useContext(AppContext);
 
-    validUsername: false,
-    validPassword: false,
-    invalidUsername: false,
-    invalidPassword: false,
-    usernameFeedback: "",
-    passwordFeedback: ""
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const toggleLogged = () =>
+  {
+    setLoggedIn(!loggedIn);
   };
 
-  // onChangeUsername = (e) =>
-  // {
-  //   this.setState({usernameInput: e.target.value});
-  // };
+  const [username, setUsername] = useState({
+    input: "",
+    valid: false,
+    invalid: false,
+    feedback: ""
+  });
 
-  // onChangePassword = (e) =>
-  // {
-  //   this.setState({passwordInput: e.target.value});
-  // };
+  const [password, setPassword] = useState({
+    input: "",
+    valid: false,
+    invalid: false,
+    feedback: ""
+  });
 
-  // onSubmit = (e) =>
-  // {
-  //   e.preventDefault();
-  //
-  //   const user = {
-  //     username: this.state.usernameInput,
-  //     password: this.state.passwordInput
-  //   };
-  //
-  //   console.log("Submitted user: ", user);
-  //   const URL = "/api/auth";
-  //
-  //   axios.post(URL, user)
-  //       .then(res =>
-  //       {
-  //         if (res.data)
-  //         {
-  //           console.log("Found user: ", res.data);
-  //         }
-  //         else if (res)
-  //         {
-  //           console.log(res)
-  //         }
-  //       })
-  //       .catch(() => console.warn(`Can’t access POST '${URL}'`));
-  // };
-
-  render()
+  const onChangeUsername = e =>
   {
-    return (
-        <React.Fragment>
-          <fieldset>
-            <legend>Test User</legend>
-            <Label>Username:</Label>
-            <p className="d-inline"> nick</p>
-            <br/>
-            <Label>Password:</Label>
-            <p className="d-inline"> fury</p>
-          </fieldset>
+    setUsername({...username, input: e.target.value});
+  };
+
+  const onChangePassword = e =>
+  {
+    setPassword({...password, input: e.target.value});
+  };
+
+  const onSubmit = e =>
+  {
+    e.preventDefault();
+
+    const user = {
+      username: username.input,
+      password: password.input
+    };
+
+    console.log("Submitted credentials: ", user);
+    const URL = "/api/auth";
+
+    axios
+        .post(URL, user)
+        .then(res =>
+        {
+          if (res.status === 200)
+          {
+            // setLoggedIn(true);
+            // context.setAuthUser(res.data);
+            localStorage.setItem("token", res.data);
+            console.log("Token response data: ", res.data);
+            window.location.replace("/list");
+          }
+        })
+        .catch(() => console.warn(`Can’t access POST '${URL}'`));
+  };
+
+  return (
+      <React.Fragment>
+        <h2>Login</h2>
+        <p>Please login in order to access the to do list. New accounts cannot be created at this
+          time, but you can use the login information provided below.</p><br/>
+        <fieldset>
+          <legend>Test User</legend>
+          <Label>Username:</Label>
+          <p className="d-inline"> nick</p>
           <br/>
-          <h2>Login</h2>
+          <Label>Password:</Label>
+          <p className="d-inline"> fury</p>
+        </fieldset>
+        <br/>
 
-          <AppContext.Consumer>
-            {context => (
-                <Form className="loginForm w-50" onSubmit={context.onSubmit}>
-                  <FormGroup>
-                    <Label size="sm">Username: </Label>
-                    <Input
-                        type="text"
-                        maxLength="20"
-                        bsSize="sm"
-                        valid={this.state.validUsername}
-                        invalid={this.state.invalidUsername}
-                        value={context.state.usernameInput}
-                        onChange={context.onChangeUsername}/>
-                    {/*<FormFeedback invalid={this.state.invalidUsername.toString()}>*/}
-                    {/*  No whitespace or special characters allowed, except dash (-) and underscore (_)*/}
-                    {/*</FormFeedback>*/}
-                  </FormGroup>
-                  <FormGroup>
-                    <Label size="sm">Password: </Label>
-                    <Input
-                        type="text"
-                        maxLength="30"
-                        bsSize="sm"
-                        valid={this.state.validPassword}
-                        invalid={this.state.invalidPassword}
-                        value={context.state.passwordInput}
-                        onChange={context.onChangePassword}/>
-                    {/*<FormFeedback invalid={this.state.invalidPassword.toString()}>*/}
-                    {/*  No whitespace allowed*/}
-                    {/*</FormFeedback>*/}
-                  </FormGroup>
-                  <Button size="sm" className="bg-success">Login</Button>
-                </Form>)}
-          </AppContext.Consumer>
-
-
-        </React.Fragment>);
-  }
-}
+        <Form className="loginForm" onSubmit={onSubmit}>
+          <FormGroup>
+            <Label size="sm">Username: </Label>
+            <Input
+                autoFocus
+                type="text"
+                maxLength="20"
+                bsSize="sm"
+                valid={username.valid}
+                invalid={username.invalid}
+                value={username.input}
+                onChange={onChangeUsername}/>
+            {/*<FormFeedback invalid={this.state.invalidUsername.toString()}>*/}
+            {/*  No whitespace or special characters allowed, except dash (-) and underscore (_)*/}
+            {/*</FormFeedback>*/}
+          </FormGroup>
+          <FormGroup>
+            <Label size="sm">Password: </Label>
+            <Input
+                type="text"
+                maxLength="30"
+                bsSize="sm"
+                valid={password.valid}
+                invalid={password.invalid}
+                value={password.input}
+                onChange={onChangePassword}/>
+            {/*<FormFeedback invalid={this.state.invalidPassword.toString()}>*/}
+            {/*  No whitespace allowed*/}
+            {/*</FormFeedback>*/}
+          </FormGroup>
+          <Button size="sm" className="bg-success">
+            Login
+          </Button>
+        </Form>
+      </React.Fragment>);
+};
 
 export default Login;

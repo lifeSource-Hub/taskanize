@@ -45,11 +45,11 @@ class TodoList extends Component
 
   markComplete = (selectedItem) =>
   {
-    const URL = "/api/complete/" + selectedItem._id;
+    const URL = "/api/incomplete/" + selectedItem._id;
     axios.post(URL)
         .then(res =>
         {
-          // Remove item from state, causing a re-render
+          // Remove item from state
           this.setState({
             items: this.state.items.filter(item => item._id !== selectedItem._id)
           });
@@ -64,7 +64,7 @@ class TodoList extends Component
     axios.delete(URL)
         .then(res =>
         {
-          // Remove item from state, causing a re-render
+          // Remove item from state
           this.setState({
             items: this.state.items.filter(item => item._id !== selectedItem._id)
           });
@@ -100,7 +100,7 @@ class TodoList extends Component
       axios.put(URL, newItem)
           .then(res =>
           {
-            // Update item in state, causing a re-render
+            // Update item in state
             let newItems = this.state.items.slice();
             newItems.find(item => item._id === this.state.editId)
                 .body = this.state.editInput;
