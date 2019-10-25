@@ -16,7 +16,6 @@ import Login from "./components/content/Login";
 // import Register from "./components/content/Register";
 import PageNotFound from "./components/content/PageNotFound";
 import Footer from "./components/layout/Footer";
-import {AppProvider} from "./components/content/AppContext";
 
 const App = () =>
 {
@@ -27,25 +26,23 @@ const App = () =>
 
   return (
       <Router>
-        <AppProvider>
-          <HeaderNavbar/>
-          <main>
-            <Switch>
-              <Redirect exact from="/" to="/list"/>
-              <Route exact path="/list">
-                {isLoggedIn() ? <TodoList/> : <Redirect to="/login"/>}
-              </Route>
-              <Route exact path="/completed">
-                {isLoggedIn() ? <CompletedList/> : <Redirect to="/login"/>}
-              </Route>
-              <Route exact path="/login">
-                {isLoggedIn() ? <Redirect to="/list"/> : <Login/>}
-              </Route>
-              <Route component={PageNotFound}/>
-            </Switch>
-          </main>
-          <Footer/>
-        </AppProvider>
+        <HeaderNavbar/>
+        <main>
+          <Switch>
+            <Redirect exact from="/" to="/list"/>
+            <Route exact path="/list">
+              {isLoggedIn() ? <TodoList/> : <Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/completed">
+              {isLoggedIn() ? <CompletedList/> : <Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/login">
+              {isLoggedIn() ? <Redirect to="/list"/> : <Login/>}
+            </Route>
+            <Route component={PageNotFound}/>
+          </Switch>
+        </main>
+        <Footer/>
       </Router>);
 };
 

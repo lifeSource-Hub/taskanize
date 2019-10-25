@@ -1,12 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {Button, Form, FormGroup, Label, Input} from "reactstrap";
-// import {AppContext} from "./AppContext";
 
 const Login = () =>
 {
-  // const context = useContext(AppContext);
-
   const [loggedIn, setLoggedIn] = useState(false);
 
   const toggleLogged = () =>
@@ -50,14 +47,12 @@ const Login = () =>
     console.log("Submitted credentials: ", user);
     const URL = "/api/auth";
 
-    axios
-        .post(URL, user)
+    axios.post(URL, user)
         .then(res =>
         {
           if (res.status === 200)
           {
             // setLoggedIn(true);
-            // context.setAuthUser(res.data);
             localStorage.setItem("token", res.data);
             console.log("Token response data: ", res.data);
             window.location.replace("/list");
