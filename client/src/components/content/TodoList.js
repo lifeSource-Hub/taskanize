@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import CreateItem from "./CreateItem";
-import IncompleteItems from "./IncompleteItems";
+import IncompleteList from "./IncompleteList";
 import {
   Form,
   Modal,
@@ -14,10 +14,9 @@ import {
   InputGroup
 } from "reactstrap";
 
-class TodoList extends Component
+const TodoList = () =>
 {
-  state = {
-    _isMounted: false,
+  const [state, setState] = useState({
     newItemInput: "",
     priority: "Med",
     editInput: "",
@@ -25,86 +24,90 @@ class TodoList extends Component
     editId: "",
     modalOpen: false,
     items: []
-  };
+  });
 
-  componentDidMount()
+  useEffect(() =>
   {
     const URL = "/api/incomplete";
     axios.get(URL)
         .then(res =>
         {
-          this.setState({items: res.data, _isMounted: true});
+          setState(state => ({...state, items: res.data}));
         })
         .catch(() => console.warn(`Can’t access GET '${URL}'`));
-  }
+  }, []);
 
-  componentWillUnmount()
-  {
-    this.setState({_isMounted: false});
-  }
-
-  markComplete = (selectedItem) =>
+  const markComplete = (selectedItem) =>
   {
     const URL = "/api/incomplete/" + selectedItem._id;
     axios.post(URL)
         .then(res =>
         {
           // Remove item from state
-          this.setState({
-            items: this.state.items.filter(item => item._id !== selectedItem._id)
-          });
+          setState(state => ({
+            ...state,
+            items: state.items.filter(item => item._id !== selectedItem._id)
+          }));
+
           console.log(`Complete item operation success: ${res.data.success}`);
         })
         .catch(() => console.warn(`Can’t access POST '${URL}'`));
   };
 
-  deleteItem = (selectedItem) =>
+  const deleteItem = (selectedItem) =>
   {
     const URL = "/api/incomplete/" + selectedItem._id;
     axios.delete(URL)
         .then(res =>
         {
           // Remove item from state
-          this.setState({
-            items: this.state.items.filter(item => item._id !== selectedItem._id)
-          });
+          setState(state => ({
+            ...state,
+            items: state.items.filter(item => item._id !== selectedItem._id)
+          }));
+
           console.log(`Delete operation success: ${res.data.success}`);
         })
         .catch(() => console.warn(`Can’t access DELETE '${URL}'`));
   };
 
-  editItem = (selectedItem) =>
+  const editItem = (selectedItem) =>
   {
-    this.setState({editId: selectedItem._id, defaultInput: selectedItem.body});
-    this.toggle();
+    setState(state => ({
+      ...state,
+      editId: selectedItem._id, defaultInput: selectedItem.body
+    }));
+
+    toggle();
   };
 
-  onChangeEdit = (e) =>
+  const onChangeEdit = (e) =>
   {
-    this.setState({editInput: e.target.value});
+    e.persist();
+    setState(state => ({...state, editInput: e.target.value}));
   };
 
-  onSubmitEdit = (e) =>
+  const onSubmitEdit = (e) =>
   {
     e.preventDefault();
-    this.toggle();
+    toggle();
 
-    if (this.state.editInput !== "")
+    if (state.editInput !== "")
     {
       const newItem = {
-        body: this.state.editInput
+        body: state.editInput
       };
 
-      const URL = "/api/incomplete/" + this.state.editId;
+      const URL = "/api/incomplete/" + state.editId;
 
       axios.put(URL, newItem)
           .then(res =>
           {
             // Update item in state
-            let newItems = this.state.items.slice();
-            newItems.find(item => item._id === this.state.editId)
-                .body = this.state.editInput;
-            this.setState({items: newItems});
+            let newItems = state.items.slice();
+            newItems.find(item => item._id === state.editId)
+                .body = state.editInput;
+            setState(state => ({...state, items: newItems}));
 
             console.log(`Edit operation success: ${res.data.success}`);
           })
@@ -113,87 +116,85 @@ class TodoList extends Component
   };
 
   // Toggles item edit modal
-  toggle = () =>
+  const toggle = () =>
   {
-    this.setState({modalOpen: !(this.state.modalOpen)});
+    setState(state => ({...state, modalOpen: !(state.modalOpen)}));
   };
 
   // Set new item input into state
-  onChangeNewItem = (e) =>
+  const onChangeNewItem = (e) =>
   {
-    this.setState({newItemInput: e.target.value});
+    e.persist();
+    setState(state => ({...state, newItemInput: e.target.value}));
   };
 
-  onPriorityChange = (priority) =>
+  const onPriorityChange = (priority) =>
   {
-    this.setState({priority});
+    setState(state => ({...state, priority}));
   };
 
-  onSubmitNewItem = (e) =>
+  const onSubmitNewItem = (e) =>
   {
     e.preventDefault();
 
-    if (this.state.newItemInput !== "")
+    if (state.newItemInput !== "")
     {
       const newItem = {
-        body: this.state.newItemInput,
-        priority: this.state.priority
+        body: state.newItemInput,
+        priority: state.priority
       };
 
       const URL = "/api/incomplete/add";
       axios.post(URL, newItem)
           .then(res =>
           {
-            this.setState({
+            setState(state => ({
+              ...state,
               newItemInput: "",
-              items: [res.data, ...this.state.items]
-            });
+              items: [res.data, ...state.items]
+            }));
           })
           .catch(() => console.warn(`Can’t access POST '${URL}'`));
     }
   };
 
-  render()
-  {
-    return (
-        <React.Fragment>
-          <h3>To Do List</h3><br/>
-          <CreateItem
-              priority={this.state.priority}
-              newItemInput={this.state.newItemInput}
-              onChange={this.onChangeNewItem}
-              onPriorityChange={this.onPriorityChange}
-              onSubmit={this.onSubmitNewItem}/>
-          <br/>
-          <IncompleteItems
-              items={this.state.items}
-              editItem={this.editItem}
-              deleteItem={this.deleteItem}
-              markComplete={this.markComplete}/>
+  return (
+      <React.Fragment>
+        <h3>To Do List</h3><br/>
+        <CreateItem
+            priority={state.priority}
+            newItemInput={state.newItemInput}
+            onChange={onChangeNewItem}
+            onPriorityChange={onPriorityChange}
+            onSubmit={onSubmitNewItem}/>
+        <br/>
+        <IncompleteList
+            items={state.items}
+            editItem={editItem}
+            deleteItem={deleteItem}
+            markComplete={markComplete}/>
 
-          <Modal isOpen={this.state.modalOpen} toggle={this.toggle} className="editModal">
-            <ModalHeader className="bg-info" toggle={this.toggle}>Edit</ModalHeader>
-            <ModalBody>
-              <Form inline onSubmit={this.onSubmitEdit}>
-                <InputGroup size="sm" className="w-100">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>New Body:</InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                      type="text"
-                      name="editInput"
-                      className="mr-2"
-                      maxLength="80"
-                      defaultValue={this.state.defaultInput}
-                      onChange={this.onChangeEdit}/>
-                  <Button size="sm" color="success">Submit</Button>
-                </InputGroup>
-              </Form>
-            </ModalBody>
-          </Modal>
-        </React.Fragment>
-    );
-  }
-}
+        <Modal isOpen={state.modalOpen} toggle={toggle} className="editModal">
+          <ModalHeader className="bg-info" toggle={toggle}>Edit</ModalHeader>
+          <ModalBody>
+            <Form inline onSubmit={onSubmitEdit}>
+              <InputGroup size="sm" className="w-100">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>New Body:</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                    type="text"
+                    name="editInput"
+                    className="mr-2"
+                    maxLength="80"
+                    defaultValue={state.defaultInput}
+                    onChange={onChangeEdit}/>
+                <Button size="sm" color="success">Submit</Button>
+              </InputGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </React.Fragment>);
+};
 
 export default TodoList;

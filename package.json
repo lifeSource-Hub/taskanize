@@ -17,17 +17,18 @@
   "repository": "https://github.com/lifeSource-Hub/mern-app",
   "dependencies": {
     "@primer/octicons-react": "^9.2.0",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.1.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsrsasign": "^8.0.12",
-    "mongoose": "^5.7.5"
+    "mongoose": "^5.7.7"
   },
   "devDependencies": {
     "nodemon": "^1.19.4",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2"
   }
 }

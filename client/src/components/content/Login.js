@@ -4,13 +4,6 @@ import {Button, Form, FormGroup, Label, Input} from "reactstrap";
 
 const Login = () =>
 {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const toggleLogged = () =>
-  {
-    setLoggedIn(!loggedIn);
-  };
-
   const [username, setUsername] = useState({
     input: "",
     valid: false,
@@ -53,8 +46,8 @@ const Login = () =>
           if (res.status === 200)
           {
             // setLoggedIn(true);
-            localStorage.setItem("token", res.data);
             console.log("Token response data: ", res.data);
+            localStorage.setItem("token", res.data);
             window.location.replace("/list");
           }
         })
@@ -95,7 +88,7 @@ const Login = () =>
           <FormGroup>
             <Label size="sm">Password: </Label>
             <Input
-                type="text"
+                type="password"
                 maxLength="30"
                 bsSize="sm"
                 valid={password.valid}

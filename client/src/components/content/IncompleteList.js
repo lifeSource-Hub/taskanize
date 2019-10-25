@@ -2,7 +2,7 @@ import React from "react";
 import {Button, ButtonGroup, ListGroup, ListGroupItem} from "reactstrap";
 import Octicon, {Check, Pencil, X} from "@primer/octicons-react";
 
-const IncompleteItems = ({items, editItem, deleteItem, markComplete}) =>
+const IncompleteList = ({items, editItem, deleteItem, markComplete}) =>
 {
   const formatCreatedDate = (dateCreated) =>
   {
@@ -86,4 +86,4 @@ const IncompleteItems = ({items, editItem, deleteItem, markComplete}) =>
       </ListGroup>);
 };
 
-export default IncompleteItems;
+export default IncompleteList;

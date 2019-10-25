@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const JSRSASign = require("jsrsasign");
 
 const IncompleteItem = require("../../models/IncompleteItem");
 const CompleteItem = require("../../models/CompleteItem");
+
+// const verify = (userToken) =>
+// {
+//   return (JSRSASign.jws.JWS.verifyJWT(userToken, process.env.JWT_KEY, {alg: ["HS512"]}));
+// };
 
 /** @route  GET api/incomplete
  *  @desc   Get all to-do items

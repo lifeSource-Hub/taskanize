@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
 const Users = require("../../models/Users");
+const bcrypt = require("bcryptjs");
 
+const salt = bcrypt.genSaltSync(10);
 const jwtHeader = {
   typ: "JWT",
   alg: "HS512"
@@ -51,8 +53,9 @@ router.post("/", (req, res) =>
   {
     if (user)
     {
-      if (user.password === req.body.password)
+      if (bcrypt.compareSync(claims.password, user.password))
       {
+        // const hash = bcrypt.hashSync("plaintextPassword", salt);
         const sHeader = JSON.stringify(jwtHeader);
         const sClaims = JSON.stringify(claims);
 

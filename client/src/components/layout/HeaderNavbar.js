@@ -5,7 +5,7 @@ const HeaderNavbar = () =>
 {
   const logout = () =>
   {
-    localStorage.clear();
+    localStorage.removeItem("token");
   };
 
   return (
@@ -27,14 +27,13 @@ const HeaderNavbar = () =>
               :
               <NavItem className="navItem">
                 <NavLink active href="/login" className="navLink">Login</NavLink>
-              </NavItem>
-          }
+              </NavItem>}
           {/*<NavItem className="navItem">*/}
           {/*  <NavLink href="/register" className="navLink">Register</NavLink>*/}
           {/*</NavItem>*/}
-          <NavItem className="navItem">
-            <NavLink href="/badURI" className="navLink">404 Page</NavLink>
-          </NavItem>
+          {/*<NavItem className="navItem">*/}
+          {/*  <NavLink href="/badURI" className="navLink">404 Page</NavLink>*/}
+          {/*</NavItem>*/}
         </Navbar>
       </header>);
 };
