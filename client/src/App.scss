@@ -22,12 +22,13 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 5;
 
   .navBrand {
     //background-color: #517ccc;
     color: #000000;
-    font: 26px Cambria, sans-serif;
+    font: 28px Cambria, sans-serif;
+    text-shadow: 2px 2px 3px #363636;
   }
 
   .navItem {
@@ -83,6 +84,21 @@ legend {
   text-align: center;
 }
 
+h1, h2, h3, h4 {
+  font-family: Georgia, sans-serif;
+}
+
+.listGroup {
+  border-radius: .3rem;
+  box-shadow: 3px 3px 7px 2px #526179;
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
 .loginForm {
   width: 50%;
 }
@@ -105,4 +121,5 @@ legend {
   position: fixed;
   text-align: center;
   width: 100%;
+  z-index: 5;
 }

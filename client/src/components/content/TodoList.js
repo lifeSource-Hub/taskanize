@@ -11,18 +11,28 @@ import {
   Button,
   InputGroupAddon,
   InputGroupText,
-  InputGroup
+  InputGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
+
+(function ()
+{
+  if (localStorage.getItem("token"))
+  {
+    axios.defaults.headers.common['authToken'] = localStorage.getItem("token");
+  }
+})();
 
 const TodoList = () =>
 {
   const [state, setState] = useState({
     newItemInput: "",
     priority: "Med",
-    editInput: "",
+    bodyUpdate: "",
     defaultInput: "",
     editId: "",
     modalOpen: false,
+    priorityDropIsOpen: false,
+    priorityUpdate: "",
     items: []
   });
 
@@ -75,7 +85,9 @@ const TodoList = () =>
   {
     setState(state => ({
       ...state,
-      editId: selectedItem._id, defaultInput: selectedItem.body
+      editId: selectedItem._id,
+      defaultInput: selectedItem.body,
+      priorityUpdate: selectedItem.priority
     }));
 
     toggle();
@@ -84,7 +96,17 @@ const TodoList = () =>
   const onChangeEdit = (e) =>
   {
     e.persist();
-    setState(state => ({...state, editInput: e.target.value}));
+    setState(state => ({...state, bodyUpdate: e.target.value}));
+  };
+
+  const onChangeEditPriority = (priority) =>
+  {
+    setState(state => ({...state, priorityUpdate: priority}));
+  };
+
+  const toggleDropdown = () =>
+  {
+    setState(state => ({...state, priorityDropIsOpen: !(state.priorityDropIsOpen)}));
   };
 
   const onSubmitEdit = (e) =>
@@ -92,10 +114,11 @@ const TodoList = () =>
     e.preventDefault();
     toggle();
 
-    if (state.editInput !== "")
+    if (state.bodyUpdate !== "")
     {
       const newItem = {
-        body: state.editInput
+        body: state.bodyUpdate,
+        priority: state.priorityUpdate
       };
 
       const URL = "/api/incomplete/" + state.editId;
@@ -104,11 +127,13 @@ const TodoList = () =>
           .then(res =>
           {
             // Update item in state
-            let newItems = state.items.slice();
-            newItems.find(item => item._id === state.editId)
-                .body = state.editInput;
-            setState(state => ({...state, items: newItems}));
+            let listCopy = state.items.slice();
 
+            const index = listCopy.findIndex(item => item._id === state.editId);
+            listCopy[index].body = state.bodyUpdate;
+            listCopy[index].priority = state.priorityUpdate;
+
+            setState(state => ({...state, items: listCopy}));
             console.log(`Edit operation success: ${res.data.success}`);
           })
           .catch(() => console.warn(`Can’t access PUT '${URL}'`));
@@ -139,13 +164,16 @@ const TodoList = () =>
 
     if (state.newItemInput !== "")
     {
-      const newItem = {
-        body: state.newItemInput,
-        priority: state.priority
+      const postData = {
+        token: localStorage.getItem("token"),
+        newItem: {
+          body: state.newItemInput,
+          priority: state.priority
+        }
       };
 
       const URL = "/api/incomplete/add";
-      axios.post(URL, newItem)
+      axios.post(URL, postData)
           .then(res =>
           {
             setState(state => ({
@@ -160,7 +188,7 @@ const TodoList = () =>
 
   return (
       <React.Fragment>
-        <h3>To Do List</h3><br/>
+        <h3 className="shadowedHeading">To Do List</h3><br/>
         <CreateItem
             priority={state.priority}
             newItemInput={state.newItemInput}
@@ -184,11 +212,27 @@ const TodoList = () =>
                 </InputGroupAddon>
                 <Input
                     type="text"
-                    name="editInput"
-                    className="mr-2"
+                    name="bodyUpdate"
                     maxLength="80"
                     defaultValue={state.defaultInput}
                     onChange={onChangeEdit}/>
+
+                <InputGroupAddon className="mr-2" addonType="append">
+                  <Dropdown size="sm" isOpen={state.priorityDropIsOpen} toggle={toggleDropdown}>
+                    <DropdownToggle caret>
+                      {"Priority: " + state.priorityUpdate}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem
+                          onClick={onChangeEditPriority.bind(null, "High")}>High</DropdownItem>
+                      <DropdownItem
+                          onClick={onChangeEditPriority.bind(null, "Med")}>Medium</DropdownItem>
+                      <DropdownItem
+                          onClick={onChangeEditPriority.bind(null, "Low")}>Low</DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </InputGroupAddon>
+
                 <Button size="sm" color="success">Submit</Button>
               </InputGroup>
             </Form>

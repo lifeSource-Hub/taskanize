@@ -42,12 +42,12 @@ const IncompleteList = ({items, editItem, deleteItem, markComplete}) =>
   };
 
   return (
-      <ListGroup>
+      <ListGroup className="listGroup">
         {items.map((item) =>
             <ListGroupItem
                 id={item._id}
                 key={item._id}
-                className="d-flex justify-content-between align-items-start">
+                className="listItem">
               <div>
                 <p>{item.body}</p>
                 <div className="timeStamps small">

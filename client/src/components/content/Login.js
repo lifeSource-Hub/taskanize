@@ -38,15 +38,13 @@ const Login = () =>
     };
 
     console.log("Submitted credentials: ", user);
-    const URL = "/api/auth";
+    const URL = "/api/login";
 
     axios.post(URL, user)
         .then(res =>
         {
           if (res.status === 200)
           {
-            // setLoggedIn(true);
-            console.log("Token response data: ", res.data);
             localStorage.setItem("token", res.data);
             window.location.replace("/list");
           }

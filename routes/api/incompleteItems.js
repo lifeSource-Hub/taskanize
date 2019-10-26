@@ -5,11 +5,6 @@ const JSRSASign = require("jsrsasign");
 const IncompleteItem = require("../../models/IncompleteItem");
 const CompleteItem = require("../../models/CompleteItem");
 
-// const verify = (userToken) =>
-// {
-//   return (JSRSASign.jws.JWS.verifyJWT(userToken, process.env.JWT_KEY, {alg: ["HS512"]}));
-// };
-
 /** @route  GET api/incomplete
  *  @desc   Get all to-do items
  *  @access Public
@@ -28,8 +23,8 @@ router.get("/", (req, res) =>
 router.post("/add", (req, res) =>
 {
   const newItem = new IncompleteItem({
-    body: req.body.body,
-    priority: req.body.priority
+    body: req.body.newItem.body,
+    priority: req.body.newItem.priority
   });
 
   newItem.save().then(item => res.json(item));
@@ -52,7 +47,7 @@ router.post("/:id", (req, res) =>
         completedItem.save();
         item.remove().then(() => res.json({success: true}));
       })
-      .catch(err => res.status(404).json({success: false}));
+      .catch(err => res.status(404).json(err));
 });
 
 /** @route  PUT api/incomplete/:id
@@ -65,13 +60,14 @@ router.put("/:id", (req, res) =>
       .then(item =>
       {
         item.body = req.body.body;
+        item.priority = req.body.priority;
         item.dateModified = new Date();
         item
             .save()
             .then(() => res.json({success: true}))
-            .catch(err => res.status(404).json({success: false}));
+            .catch(err => res.status(404).json(err));
       })
-      .catch(err => res.status(404).json({success: false}));
+      .catch(err => res.status(404).json(err));
 });
 
 /** @route  DELETE api/incomplete/:id
@@ -84,7 +80,7 @@ router.delete("/:id", (req, res) =>
   // res.status(200).send("Deleting " + id);
   IncompleteItem.findById(req.params.id)
       .then(item => item.remove().then(() => res.json({success: true})))
-      .catch(err => res.status(404).json({success: false}));
+      .catch(err => res.status(404).json(err));
 });
 
 module.exports = router;

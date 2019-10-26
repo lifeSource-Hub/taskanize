@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {
   Button,
   Form,
@@ -12,21 +12,17 @@ import {
   DropdownItem
 } from "reactstrap";
 
-class CreateItem extends Component
+const CreateItem = ({priority, newItemInput, onChange, onPriorityChange, onSubmit}) =>
 {
-  state = {
-    dropdownIsOpen: false
+  const [dropIsOpen, setDropIsOpen] = useState(false);
+
+  const toggleDropdown = () =>
+  {
+    setDropIsOpen(!(dropIsOpen));
   };
 
-  toggleDropdown = () =>
-  {
-    this.setState({dropdownIsOpen: !(this.state.dropdownIsOpen)});
-  };
-
-  render()
-  {
     return (
-        <Form inline onSubmit={this.props.onSubmit}>
+        <Form inline onSubmit={onSubmit}>
           <InputGroup size="sm">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>New Item:</InputGroupText>
@@ -35,18 +31,18 @@ class CreateItem extends Component
                 type="text"
                 name="input"
                 maxLength="80"
-                value={this.props.newItemInput}
-                onChange={this.props.onChange}/>
+                value={newItemInput}
+                onChange={onChange}/>
 
             <InputGroupAddon className="mr-2" addonType="append">
-              <Dropdown size="sm" isOpen={this.state.dropdownIsOpen} toggle={this.toggleDropdown}>
+              <Dropdown size="sm" isOpen={dropIsOpen} toggle={toggleDropdown}>
                 <DropdownToggle caret>
-                  {"Priority: " + this.props.priority}
+                  {"Priority: " + priority}
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem onClick={this.props.onPriorityChange.bind(null, "High")}>High</DropdownItem>
-                  <DropdownItem onClick={this.props.onPriorityChange.bind(null, "Med")}>Medium</DropdownItem>
-                  <DropdownItem onClick={this.props.onPriorityChange.bind(null, "Low")}>Low</DropdownItem>
+                  <DropdownItem onClick={onPriorityChange.bind(null, "High")}>High</DropdownItem>
+                  <DropdownItem onClick={onPriorityChange.bind(null, "Med")}>Medium</DropdownItem>
+                  <DropdownItem onClick={onPriorityChange.bind(null, "Low")}>Low</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </InputGroupAddon>
@@ -54,7 +50,6 @@ class CreateItem extends Component
             <Button size="sm" color="primary">Add</Button>
           </InputGroup>
         </Form>);
-  }
-}
+  };
 
 export default CreateItem;
