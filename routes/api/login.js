@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 // const salt = bcrypt.genSaltSync(10);
 const jwtHeader = {
   typ: "JWT",
-  alg: process.env.JWT_ALGORITHM
+  alg: "HS512"
 };
 
 /** @route  POST api/auth

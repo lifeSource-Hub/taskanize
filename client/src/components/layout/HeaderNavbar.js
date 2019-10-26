@@ -5,7 +5,7 @@ const HeaderNavbar = () =>
 {
   const logout = () =>
   {
-    localStorage.removeItem("token");
+    localStorage.removeItem("authToken");
   };
 
   return (
@@ -20,7 +20,7 @@ const HeaderNavbar = () =>
           <NavItem className="navItem">
             <NavLink href="/completed" className="navLink">Completed</NavLink>
           </NavItem>
-          {!!(localStorage.getItem("token")) ?
+          {!!(localStorage.getItem("authToken")) ?
               <NavItem className="navItem">
                 <NavLink active href="/login" onClick={logout} className="navLink">Logout</NavLink>
               </NavItem>

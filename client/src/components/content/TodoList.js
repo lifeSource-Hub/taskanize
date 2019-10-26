@@ -14,11 +14,18 @@ import {
   InputGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
 
+
 (function ()
 {
-  if (localStorage.getItem("token"))
+  // delete axios.defaults.headers.common["authToken"];
+  // axios.defaults.headers.common = {};
+  if (localStorage.getItem("authToken"))
   {
-    axios.defaults.headers.common["authToken"] = localStorage.getItem("token");
+    axios.defaults.headers.common["authToken"] = localStorage.getItem("authToken");
+  }
+  else
+  {
+    delete axios.defaults.headers.common["authToken"];
   }
 })();
 
@@ -58,8 +65,6 @@ const TodoList = () =>
             ...state,
             items: state.items.filter(item => item._id !== selectedItem._id)
           }));
-
-          console.log(`Complete item operation success: ${res.data.success}`);
         })
         .catch(() => console.warn(`Can’t access POST '${URL}'`));
   };
@@ -70,13 +75,12 @@ const TodoList = () =>
     axios.delete(URL)
         .then(res =>
         {
+          console.log("Yes");
           // Remove item from state
           setState(state => ({
             ...state,
             items: state.items.filter(item => item._id !== selectedItem._id)
           }));
-
-          console.log(`Delete operation success: ${res.data.success}`);
         })
         .catch(() => console.warn(`Can’t access DELETE '${URL}'`));
   };
@@ -134,7 +138,6 @@ const TodoList = () =>
             listCopy[index].priority = state.priorityUpdate;
 
             setState(state => ({...state, items: listCopy}));
-            console.log(`Edit operation success: ${res.data.success}`);
           })
           .catch(() => console.warn(`Can’t access PUT '${URL}'`));
     }
@@ -165,7 +168,7 @@ const TodoList = () =>
     if (state.newItemInput !== "")
     {
       const postData = {
-        token: localStorage.getItem("token"),
+        token: localStorage.getItem("authToken"),
         newItem: {
           body: state.newItemInput,
           priority: state.priority
@@ -182,7 +185,10 @@ const TodoList = () =>
               items: [res.data, ...state.items]
             }));
           })
-          .catch(() => console.warn(`Can’t access POST '${URL}'`));
+          .catch(() =>
+          {
+            console.warn(`Can’t access POST '${URL}'`);
+          });
     }
   };
 
