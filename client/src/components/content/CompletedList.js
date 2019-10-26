@@ -15,7 +15,7 @@ const CompletedList = () =>
   useEffect(() =>
   {
     refreshList();
-  });
+  }, []);
 
   const options = {
     month: "2-digit",

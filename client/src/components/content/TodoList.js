@@ -18,7 +18,7 @@ import {
 {
   if (localStorage.getItem("token"))
   {
-    axios.defaults.headers.common['authToken'] = localStorage.getItem("token");
+    axios.defaults.headers.common["authToken"] = localStorage.getItem("token");
   }
 })();
 

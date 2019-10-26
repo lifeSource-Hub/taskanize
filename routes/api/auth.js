@@ -8,6 +8,7 @@ const JSRSASign = require("jsrsasign");
  */
 router.all("/*", (req, res, next) =>
 {
+  console.log(req.method);
   if (req.method === "GET")
   {
     next();
@@ -25,7 +26,7 @@ router.all("/*", (req, res, next) =>
         process.env.JWT_KEY,
         {alg: [process.env.JWT_ALGORITHM]}));
 
-    // console.log("Token is valid: ", tokenIsValid);
+    console.log("Token is valid: ", tokenIsValid);
 
     if (tokenIsValid)
     {

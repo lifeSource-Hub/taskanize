@@ -42,7 +42,7 @@ const IncompleteList = ({items, editItem, deleteItem, markComplete}) =>
   };
 
   return (
-      <ListGroup className="listGroup">
+      <ListGroup className={items.length > 0 ? "listGroup" : ""}>
         {items.map((item) =>
             <ListGroupItem
                 id={item._id}
