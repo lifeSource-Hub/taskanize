@@ -37,7 +37,7 @@ const Login = () =>
       password: password.input
     };
 
-    console.log("Submitted credentials: ", user);
+    // console.log("Submitted credentials: ", user);
     const URL = "/api/login";
 
     axios.post(URL, user)
@@ -45,7 +45,7 @@ const Login = () =>
         {
           if (res.status === 200)
           {
-            localStorage.setItem("token", res.data);
+            localStorage.setItem("authToken", res.data);
             window.location.replace("/list");
           }
         })

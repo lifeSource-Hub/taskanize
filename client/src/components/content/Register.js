@@ -91,7 +91,7 @@ class Register extends Component
         password: this.state.passwordInput
       };
 
-      console.log(`Submitted user: ${JSON.stringify(user)}`);
+      // console.log(`Submitted user: ${JSON.stringify(user)}`);
       // const URL = "";
       // // TODO Update the console message in catch
       // axios.post(URL, newItem)

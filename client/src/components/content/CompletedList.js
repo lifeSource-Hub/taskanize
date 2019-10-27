@@ -15,7 +15,7 @@ const CompletedList = () =>
   useEffect(() =>
   {
     refreshList();
-  });
+  }, []);
 
   const options = {
     month: "2-digit",
@@ -33,7 +33,7 @@ const CompletedList = () =>
         {
           setItems(res.data);
         })
-        .catch(() => console.log(`Can’t access GET '${URL}'`));
+        .catch(() => console.warn(`Can’t access GET '${URL}'`));
   };
 
   const deleteItem = (selectedItem) =>
@@ -46,10 +46,9 @@ const CompletedList = () =>
           // Remove item from state
           setItems(items.filter(item => item._id !== selectedItem._id));
 
-          console.log(`Delete operation success: ${res.data.success}`);
           refreshList();
         })
-        .catch(() => console.log(`Can’t access DELETE '${URL}'`));
+        .catch(() => console.warn(`Can’t access DELETE '${URL}'`));
   };
 
   const formatCreatedDate = (dateCreated) =>

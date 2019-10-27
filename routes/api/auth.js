@@ -2,15 +2,18 @@ const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
 
-/** @route  TODO
- *  @desc   TODO
+/** @route  /api/incomplete || /api/complete
+ *  @desc   Catch all list related requests and verify token for CRUD operations
  *  @access Public
  */
 router.all("/*", (req, res, next) =>
 {
+  // console.log(req.method);
+
+  // // Don't authenticate read (GET) requests
   if (req.method === "GET")
   {
-    next();
+    return next();
   }
   else if (req.get("authToken"))
   {
@@ -23,20 +26,17 @@ router.all("/*", (req, res, next) =>
     const tokenIsValid = (JSRSASign.jws.JWS.verifyJWT(
         sJWT,
         process.env.JWT_KEY,
-        {alg: [process.env.JWT_ALGORITHM]}));
-
-    // console.log("Token is valid: ", tokenIsValid);
+        {alg: ["HS512"]}));
 
     if (tokenIsValid)
     {
-      next();
-      // return res.status(200).json({valid: tokenIsValid});
+      return next();
     }
   }
-  // else
-  // {
-  //   return res.status(400).json({msg: "Invalid credentials"});
-  // }
+  else
+  {
+    res.sendStatus(401);
+  }
 });
 
 module.exports = router;

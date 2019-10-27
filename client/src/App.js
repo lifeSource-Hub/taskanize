@@ -21,7 +21,7 @@ const App = () =>
 {
   const isLoggedIn = () =>
   {
-    return !!(localStorage.getItem("token"));
+    return !!(localStorage.getItem("authToken"));
   };
 
   return (
@@ -30,12 +30,8 @@ const App = () =>
         <main>
           <Switch>
             <Redirect exact from="/" to="/list"/>
-            <Route exact path="/list">
-              {isLoggedIn() ? <TodoList/> : <Redirect to="/login"/>}
-            </Route>
-            <Route exact path="/completed">
-              {isLoggedIn() ? <CompletedList/> : <Redirect to="/login"/>}
-            </Route>
+            <Route exact path="/list" component={TodoList}/>
+            <Route exact path="/completed" component={CompletedList}/>
             <Route exact path="/login">
               {isLoggedIn() ? <Redirect to="/list"/> : <Login/>}
             </Route>
