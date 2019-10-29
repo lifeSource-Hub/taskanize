@@ -14,8 +14,36 @@ const dateSort = (property) => (obj1, obj2) =>
     return 0;
   }
 
-  return a < b;
+  return (a > b ? -1 : 1);
 };
+
+// const createdSort = (obj1, obj2) =>
+// {
+//   const a = obj1.dateCreated;
+//   const b = obj2.dateCreated;
+//
+//   // console.log("property: ", property, ",  a: ", a, ",  b: ", b);
+//   if (a === b)
+//   {
+//     return 0;
+//   }
+//
+//   return (a < b ? -1 : 1);
+// };
+//
+// const createdSortReverse = (obj1, obj2) =>
+// {
+//   const a = obj1.dateCreated;
+//   const b = obj2.dateCreated;
+//
+//   // console.log("property: ", property, ",  a: ", a, ",  b: ", b);
+//   if (a === b)
+//   {
+//     return 0;
+//   }
+//
+//   return (a > b ? -1 : 1);
+// };
 
 const completionSort = (obj1, obj2) =>
 {
@@ -27,14 +55,15 @@ const completionSort = (obj1, obj2) =>
     return 0;
   }
 
-  return a > b;
+  return (a < b ? -1 : 1);
 };
 
 const listSort = (list) =>
 {
   list.sort(dateSort("dateCreated"));
   list.sort(dateSort("dateCompleted"));
-  return list.sort(completionSort);
+  list.sort(completionSort);
+  return list;
 };
 
 /** @route  GET api/users/list
@@ -43,11 +72,11 @@ const listSort = (list) =>
  */
 router.get("/", (req, res) =>
 {
-  // console.log("Search for: ", res.locals._id);
   Users.findById(res.locals._id,
       function (err, doc)
       {
-        res.json(listSort(doc.list));
+        listSort(doc.list);
+        res.json(doc.list);
       });
 });
 
