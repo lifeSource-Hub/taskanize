@@ -60,8 +60,8 @@ main {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   display: block;
-  font: 18px "Segoe UI", Arial, sans-serif;
-  margin: 60px auto 29px ;
+  font: 16px "Segoe UI", Arial, sans-serif;
+  margin: 60px auto 29px;
   max-width: 1020px;
   min-width: 240px;
   padding: 35px 55px 35px 55px;
@@ -92,33 +92,38 @@ h1, h2, h3, h4 {
 .listGroup {
   border-radius: .3rem;
   box-shadow: 3px 3px 7px 2px #526179;
+  //font-size: 19px;
 }
 
 .listItem {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-}
 
-//.incomplete {
-//  @extend %listItem;
-//}
-//.complete {
-//  @extend %listItem;
-//  //background-color: #c3e6cb;
-//}
+  .itemBody {
+    font-size: 18px;
+  }
 
-.completed {
-  background-color: #28a745;
-  margin-left: 10px;
+  .itemInfo  {
+    p {
+      font-size: 15px;
+      display: inline;
+    }
+
+    time {
+      font-size: 14px;
+      text-transform: lowercase;
+    }
+  }
+
+  .completedBadge {
+    background-color: #28a745;
+    margin-left: 10px;
+  }
 }
 
 .loginForm {
   width: 50%;
-}
-
-.timeStamps * {
-  display: inline;
 }
 
 .editModal {

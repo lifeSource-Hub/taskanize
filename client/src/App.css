@@ -53,7 +53,7 @@ main {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   display: block;
-  font: 18px "Segoe UI", Arial, sans-serif;
+  font: 16px "Segoe UI", Arial, sans-serif;
   margin: 60px auto 29px;
   max-width: 1020px;
   min-width: 240px;
@@ -92,18 +92,24 @@ h1, h2, h3, h4 {
   align-items: flex-start;
   justify-content: space-between;
 }
-
-.completed {
+.listItem .itemBody {
+  font-size: 18px;
+}
+.listItem .itemInfo p {
+  font-size: 15px;
+  display: inline;
+}
+.listItem .itemInfo time {
+  font-size: 14px;
+  text-transform: lowercase;
+}
+.listItem .completedBadge {
   background-color: #28a745;
   margin-left: 10px;
 }
 
 .loginForm {
   width: 50%;
-}
-
-.timeStamps * {
-  display: inline;
 }
 
 .editModal {

@@ -70,7 +70,7 @@ const Login = () =>
         <Toast>
           <ToastHeader>Sample Account</ToastHeader>
           <ToastBody>
-            <p>Username: nick</p>
+            <p>Username: Nick</p>
             <p>Password: fury</p>
           </ToastBody>
         </Toast>

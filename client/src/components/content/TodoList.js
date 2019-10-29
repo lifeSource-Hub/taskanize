@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, ButtonGroup, Input, Badge, ListGroup, ListGroupItem} from "reactstrap";
+import {Button, ButtonGroup, Badge, ListGroup, ListGroupItem} from "reactstrap";
 import Octicon, {Check, Pencil, X} from "@primer/octicons-react";
 import axios from "axios";
 
@@ -38,8 +38,7 @@ const TodoList = ({listItems, setListItems, editItem}) =>
   {
     if (isComplete)
     {
-      // return <p className="completed"> <b>Complete</b></p>;
-      return <Badge className="completed">Complete</Badge>;
+      return <Badge className="completedBadge">Complete</Badge>;
     }
   };
 
@@ -75,18 +74,18 @@ const TodoList = ({listItems, setListItems, editItem}) =>
                   key={item._id}
                   className="listItem">
                 <div>
-                  <p>{item.body}</p>
-                  <div className="timeStamps small">
+                  <p className="itemBody">{item.body}</p>
+                  <div className="itemInfo">
                     <p>Priority: </p>
                     <p className={getPriorityColor(item.priority)}>
                       {item.priority}
                     </p>
                     <p> – Created: </p>
-                    <time id="dateCreated" className="small">
+                    <time>
                       {formatDate(item.dateCreated)}
                     </time>
                     <p> – {item.complete ? "Completed" : "Modified"}: </p>
-                    <time className="small text-lowercase">
+                    <time>
                       {formatDate(item.complete ? item.dateCompleted : item.dateModified)}
                     </time>
                     {getCompleteBadge(item.complete)}
