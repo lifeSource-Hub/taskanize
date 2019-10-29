@@ -5,9 +5,8 @@ const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
 const auth = require("./routes/api/auth");
+const users = require("./routes/api/users");
 const login = require("./routes/api/login");
-const incompleteItems = require("./routes/api/incompleteItems");
-const completedItems = require("./routes/api/completedItems");
 const port = process.env.PORT || 5000;
 
 app.use(cors({credentials: true, origin: true}));
@@ -19,8 +18,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("MongoDB Connected..."))
     .catch(err => console.log(err));
 
-app.use("/api/incomplete", auth, incompleteItems);
-app.use("/api/complete", auth, completedItems);
+app.use("/api/users", auth, users);
 app.use("/api/login", login);
 
 // Serve static assets if in production

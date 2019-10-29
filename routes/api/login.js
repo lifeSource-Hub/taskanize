@@ -33,6 +33,8 @@ router.post("/", (req, res) =>
     {
       if (bcrypt.compareSync(claims.password, user.password))
       {
+        claims._id = user._id;
+
         // const hash = bcrypt.hashSync("plaintextPassword", salt);
         const sHeader = JSON.stringify(jwtHeader);
         const sClaims = JSON.stringify(claims);

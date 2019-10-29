@@ -15,11 +15,11 @@ const HeaderNavbar = () =>
             A MERN Stack Web Application
           </NavbarBrand>
           <NavItem className="navItem">
-            <NavLink href="/" className="navLink">To Do</NavLink>
+            <NavLink href="/" className="navLink">My List</NavLink>
           </NavItem>
-          <NavItem className="navItem">
-            <NavLink href="/completed" className="navLink">Completed</NavLink>
-          </NavItem>
+          {/*<NavItem className="navItem">*/}
+          {/*  <NavLink href="/completed" className="navLink">Completed</NavLink>*/}
+          {/*</NavItem>*/}
           {!!(localStorage.getItem("authToken")) ?
               <NavItem className="navItem">
                 <NavLink active href="/login" onClick={logout} className="navLink">Logout</NavLink>

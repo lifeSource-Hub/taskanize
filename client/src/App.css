@@ -23,6 +23,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 5;
+  justify-content: left;
 }
 .nav .navBrand {
   color: #000000;

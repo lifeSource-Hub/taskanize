@@ -11,7 +11,6 @@ import "./App.css";
 
 import HeaderNavbar from "./components/layout/HeaderNavbar";
 import TodoList from "./components/content/TodoList";
-import CompletedList from "./components/content/CompletedList";
 import Login from "./components/content/Login";
 // import Register from "./components/content/Register";
 import PageNotFound from "./components/content/PageNotFound";
@@ -30,8 +29,10 @@ const App = () =>
         <main>
           <Switch>
             <Redirect exact from="/" to="/list"/>
-            <Route exact path="/list" component={TodoList}/>
-            <Route exact path="/completed" component={CompletedList}/>
+            {/*<Route exact path="/list" component={TodoList}/>*/}
+            <Route exact path="/list">
+              {isLoggedIn() ? <TodoList/> : <Redirect to="/login"/>}
+            </Route>
             <Route exact path="/login">
               {isLoggedIn() ? <Redirect to="/list"/> : <Login/>}
             </Route>
