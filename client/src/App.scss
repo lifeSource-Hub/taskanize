@@ -23,6 +23,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 5;
+  justify-content: left;
 
   .navBrand {
     //background-color: #517ccc;
@@ -97,6 +98,19 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+}
+
+//.incomplete {
+//  @extend %listItem;
+//}
+//.complete {
+//  @extend %listItem;
+//  //background-color: #c3e6cb;
+//}
+
+.completed {
+  background-color: #28a745;
+  margin-left: 10px;
 }
 
 .loginForm {
