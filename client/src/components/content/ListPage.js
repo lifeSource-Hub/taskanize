@@ -81,7 +81,10 @@ const ListPage = () =>
       <React.Fragment>
         <h3 className="shadowedHeading">
           {localStorage.getItem("currentUser")}'s To Do List
-        </h3><br/>
+        </h3>
+        <p>Incomplete items sorted by date created<br/>
+          Completed item sorted by date completed</p>
+        <br/>
         <CreateItem getList={getList}/>
         <br/>
         <TodoList
