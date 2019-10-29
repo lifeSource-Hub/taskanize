@@ -69,7 +69,7 @@ const EditModal = ({modalIsOpen, toggle, updateItem, setUpdateItem, update}) =>
               <InputGroupAddon className="mr-2" addonType="append">
                 <Dropdown size="sm" isOpen={updateItem.priorityDropIsOpen}
                           toggle={toggleDropdown}>
-                  <DropdownToggle caret>
+                  <DropdownToggle outline caret>
                     {"Priority: " + updateItem.priority}
                   </DropdownToggle>
                   <DropdownMenu>

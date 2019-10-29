@@ -1,97 +1,118 @@
-import React, {useState, useEffect} from 'react';
+import React from "react";
+import {Button, ButtonGroup, Input, Badge, ListGroup, ListGroupItem} from "reactstrap";
+import Octicon, {Check, Pencil, X} from "@primer/octicons-react";
 import axios from "axios";
-import CreateItem from "./CreateItem";
-import IncompleteList from "./IncompleteList";
-import EditModal from "./EditModal";
 
-(function ()
+const TodoList = ({listItems, setListItems, editItem}) =>
 {
-  // delete axios.defaults.headers.common["authToken"];
-  // axios.defaults.headers.common = {};
-  if (localStorage.getItem("authToken"))
+  const formatDate = (dateString) =>
   {
-    axios.defaults.headers.common["authToken"] = localStorage.getItem("authToken");
-  }
-  else
-  {
-    delete axios.defaults.headers.common["authToken"];
-  }
-})();
+    const options = {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric"
+    };
 
-const TodoList = () =>
-{
-  const [listItems, setListItems] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [updateItem, setUpdateItem] = useState({
-    id: "",
-    body: "",
-    priority: "",
-    prevBody: "",
-    priorityDropIsOpen: false
-  });
-
-  useEffect(() =>
-  {
-    getList();
-  }, []);
-
-  const getList = () =>
-  {
-    const URL = "/api/users";
-    axios.get(URL)
-        .then(res =>
-        {
-          setListItems(res.data);
-          // console.log(res.data)
-        })
-        .catch(() => console.warn(`Can’t access GET '${URL}'`));
+    const date = new Date(dateString);
+    return (date.toLocaleDateString(undefined, options));
   };
 
-  const toggle = () =>
+  const getPriorityColor = (priority) =>
   {
-    setModalIsOpen(!(modalIsOpen));
+    switch (priority)
+    {
+      case "High":
+        return "text-danger";
+      case "Med":
+        return "text-primary";
+      case "Low":
+        return "text-success";
+      default:
+        return "text-primary";
+    }
   };
 
-  const editItem = (selectedItem) =>
+  const getCompleteBadge = (isComplete) =>
   {
-    setUpdateItem(updateItem => ({
-      ...updateItem,
-      id: selectedItem._id,
-      prevBody: selectedItem.body,
-      priority: selectedItem.priority
-    }));
-
-    toggle();
+    if (isComplete)
+    {
+      // return <p className="completed"> <b>Complete</b></p>;
+      return <Badge className="completed">Complete</Badge>;
+    }
   };
 
-  const update = (updatedItem) =>
+  const toggleComplete = (selectedItem) =>
   {
-    const URL = "/api/users/" + updatedItem.id;
-
-    axios.put(URL, updatedItem)
+    const URL = "/api/users/list/" + selectedItem._id;
+    axios.post(URL)
         .then(res =>
         {
           setListItems(res.data);
         })
-        .catch(() => console.warn(`Can’t access PUT '${URL}'`));
+        .catch(() => console.warn(`Can’t access POST '${URL}'`));
+  };
+
+  const deleteItem = (selectedItem) =>
+  {
+    const URL = "/api/users/list/" + selectedItem._id;
+    axios.delete(URL)
+        .then(res =>
+        {
+          // Remove item from state
+          setListItems(items => (items.filter(item => item._id !== selectedItem._id)));
+        })
+        .catch(() => console.warn(`Can’t access DELETE '${URL}'`));
   };
 
   return (
       <React.Fragment>
-        <h3 className="shadowedHeading">To Do List</h3><br/>
-        <CreateItem getList={getList}/>
-        <br/>
-        <IncompleteList
-            listItems={listItems}
-            setListItems={setListItems}
-            editItem={editItem}
-            toggle={toggle}/>
-        <EditModal
-            modalIsOpen={modalIsOpen}
-            toggle={toggle}
-            updateItem={updateItem}
-            setUpdateItem={setUpdateItem}
-            update={update}/>
+        <ListGroup className={listItems.length > 0 ? "listGroup" : ""}>
+          {listItems.map((item) =>
+              <ListGroupItem
+                  id={item._id}
+                  key={item._id}
+                  className="listItem">
+                <div>
+                  <p>{item.body}</p>
+                  <div className="timeStamps small">
+                    <p>Priority: </p>
+                    <p className={getPriorityColor(item.priority)}>
+                      {item.priority}
+                    </p>
+                    <p> – Created: </p>
+                    <time id="dateCreated" className="small">
+                      {formatDate(item.dateCreated)}
+                    </time>
+                    <p> – {item.complete ? "Completed" : "Modified"}: </p>
+                    <time className="small text-lowercase">
+                      {formatDate(item.complete ? item.dateCompleted : item.dateModified)}
+                    </time>
+                    {getCompleteBadge(item.complete)}
+                  </div>
+                </div>
+                <ButtonGroup size="sm">
+                  <Button
+                      color="info"
+                      onClick={editItem.bind(null, item)}>
+                    <Octicon icon={Pencil}/>
+                  </Button>
+                  <Button
+                      color="danger"
+                      onClick={deleteItem.bind(null, item)}>
+                    <Octicon icon={X}/>
+                  </Button>
+                  <Button
+                      color="success"
+                      outline={!item.complete}
+                      onClick={toggleComplete.bind(null, item)}>
+                    <Octicon icon={Check}/>
+                  </Button>
+                </ButtonGroup>
+              </ListGroupItem>)}
+        </ListGroup>
+
       </React.Fragment>);
 };
 

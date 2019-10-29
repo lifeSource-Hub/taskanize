@@ -18,7 +18,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("MongoDB Connected..."))
     .catch(err => console.log(err));
 
-app.use("/api/users", auth, users);
+app.use("/api/users/list", auth, users);
 app.use("/api/login", login);
 
 // Serve static assets if in production

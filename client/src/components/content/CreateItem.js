@@ -44,7 +44,7 @@ const CreateItem = ({getList}) =>
 
     if (newItem.body !== "")
     {
-      const URL = "/api/users/add";
+      const URL = "/api/users/list/add";
 
       axios.post(URL, newItem)
           .then(res =>
@@ -74,7 +74,7 @@ const CreateItem = ({getList}) =>
 
           <InputGroupAddon className="mr-2" addonType="append">
             <Dropdown size="sm" isOpen={dropIsOpen} toggle={toggleDropdown}>
-              <DropdownToggle caret>
+              <DropdownToggle outline caret>
                 {"Priority: " + newItem.priority}
               </DropdownToggle>
               <DropdownMenu>

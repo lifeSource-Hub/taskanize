@@ -14,13 +14,17 @@ const listSchema = new Schema({
     type: Boolean,
     default: false
   },
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  },
   dateModified: {
     type: Date,
     default: Date.now
   },
-  dateCreated: {
+  dateCompleted: {
     type: Date,
-    default: Date.now
+    default: null
   }
 });
 

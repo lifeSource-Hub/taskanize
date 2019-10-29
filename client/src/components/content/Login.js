@@ -1,6 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {Button, Form, FormGroup, Label, Input} from "reactstrap";
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Toast,
+  ToastHeader,
+  ToastBody
+} from "reactstrap";
 
 const Login = () =>
 {
@@ -45,6 +54,7 @@ const Login = () =>
         {
           if (res.status === 200)
           {
+            localStorage.setItem("currentUser", user.username);
             localStorage.setItem("authToken", res.data);
             window.location.replace("/list");
           }
@@ -55,16 +65,15 @@ const Login = () =>
   return (
       <React.Fragment>
         <h2>Login</h2>
-        <p>Please login in order to access the to do list. New accounts cannot be created at this
-          time, but you can use the login information provided below.</p><br/>
-        <fieldset>
-          <legend>Test User</legend>
-          <Label>Username:</Label>
-          <p className="d-inline"> nick</p>
-          <br/>
-          <Label>Password:</Label>
-          <p className="d-inline"> fury</p>
-        </fieldset>
+        <p>New accounts cannot be registered at this time, please
+          use the login information provided below.</p><br/>
+        <Toast>
+          <ToastHeader>Sample Account</ToastHeader>
+          <ToastBody>
+            <p>Username: nick</p>
+            <p>Password: fury</p>
+          </ToastBody>
+        </Toast>
         <br/>
 
         <Form className="loginForm" onSubmit={onSubmit}>
