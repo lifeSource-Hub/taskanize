@@ -108,7 +108,7 @@ const Register = () =>
   {
     e.preventDefault();
 
-    if (username.valid && password.valid)
+    if (username.input && password.input)
     {
       const user = {
         username: username.input,
