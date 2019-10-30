@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
 
-const Users = require("../../models/Users");
+const User = require("../../models/User");
 
 const dateSort = (property) => (obj1, obj2) =>
 {
@@ -16,34 +16,6 @@ const dateSort = (property) => (obj1, obj2) =>
 
   return (a > b ? -1 : 1);
 };
-
-// const createdSort = (obj1, obj2) =>
-// {
-//   const a = obj1.dateCreated;
-//   const b = obj2.dateCreated;
-//
-//   // console.log("property: ", property, ",  a: ", a, ",  b: ", b);
-//   if (a === b)
-//   {
-//     return 0;
-//   }
-//
-//   return (a < b ? -1 : 1);
-// };
-//
-// const createdSortReverse = (obj1, obj2) =>
-// {
-//   const a = obj1.dateCreated;
-//   const b = obj2.dateCreated;
-//
-//   // console.log("property: ", property, ",  a: ", a, ",  b: ", b);
-//   if (a === b)
-//   {
-//     return 0;
-//   }
-//
-//   return (a > b ? -1 : 1);
-// };
 
 const completionSort = (obj1, obj2) =>
 {
@@ -66,13 +38,13 @@ const listSort = (list) =>
   return list;
 };
 
-/** @route  GET api/users/list
+/** @route  GET api/user/list
  *  @desc   Get user's list
  *  @access Public
  */
 router.get("/", (req, res) =>
 {
-  Users.findById(res.locals._id,
+  User.findById(res.locals._id,
       function (err, doc)
       {
         listSort(doc.list);
@@ -80,7 +52,7 @@ router.get("/", (req, res) =>
       });
 });
 
-/** @route  POST api/users/list/add
+/** @route  POST api/user/list/add
  *  @desc   Add new item to user's list
  *  @access Public
  */
@@ -91,18 +63,18 @@ router.post("/add", (req, res) =>
     priority: req.body.priority
   };
 
-  Users.updateOne({_id: res.locals._id}, {$push: {list: newItem}})
+  User.updateOne({_id: res.locals._id}, {$push: {list: newItem}})
       .then(() => res.json({success: true}))
       .catch(err => res.status(404).json(err));
 });
 
-/** @route  PUT api/users/list/:id
+/** @route  PUT api/user/list/:id
  *  @desc   Update item in user's list
  *  @access Public
  */
 router.put("/:id", (req, res) =>
 {
-  Users.findById(res.locals._id)
+  User.findById(res.locals._id)
       .then(doc =>
       {
         let item = doc.list.find(item => item._id.toString() === req.params.id);
@@ -118,13 +90,13 @@ router.put("/:id", (req, res) =>
       .catch(err => res.status(404).json(err));
 });
 
-/** @route  POST api/users/list/:id
+/** @route  POST api/user/list/:id
  *  @desc   Toggle completed field
  *  @access Public
  */
 router.post("/:id", (req, res) =>
 {
-  Users.findById(res.locals._id)
+  User.findById(res.locals._id)
       .then(doc =>
       {
         let item = doc.list.find(item => item._id.toString() === req.params.id);
@@ -139,13 +111,13 @@ router.post("/:id", (req, res) =>
       .catch(err => res.status(404).json(err));
 });
 
-/** @route  DELETE api/users/list/:id
+/** @route  DELETE api/user/list/:id
  *  @desc   Delete item from user's list
  *  @access Public
  */
 router.delete("/:id", (req, res) =>
 {
-  Users.updateOne({_id: res.locals._id}, {$pull: {list: {_id: req.params.id}}}, {"new": true})
+  User.updateOne({_id: res.locals._id}, {$pull: {list: {_id: req.params.id}}}, {"new": true})
       .then(() => res.json({success: true}))
       .catch(err => res.status(404).json(err));
 });

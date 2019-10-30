@@ -1,129 +1,161 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
+import axios from "axios";
 import {
   Button,
   Form,
   FormGroup,
-  FormFeedback,
+  // FormFeedback,
   Label,
   Input,
 } from "reactstrap";
 
-class Register extends Component
+const Register = () =>
 {
-  state = {
-    usernameInput: "",
-    passwordInput: "",
+  const [username, setUsername] = useState({
+    input: "",
+    valid: false,
+    invalid: false,
+    feedback: ""
+  });
 
-    validUsername: false,
-    validPassword: false,
-    invalidUsername: false,
-    invalidPassword: false,
-    usernameFeedback: "",
-    passwordFeedback: ""
+  const [password, setPassword] = useState({
+    input: "",
+    valid: false,
+    invalid: false,
+    feedback: ""
+  });
+
+  const [passwordConfirm, setPasswordConfirm] = useState({
+    input: "",
+    valid: false,
+    invalid: false,
+    feedback: ""
+  });
+
+  const onChangeUsername = (e) =>
+  {
+    setUsername({...username, input: e.target.value});
+
+    // if (username.invalid)
+    // {
+    //   validateUsername();
+    // }
   };
 
-  onChangeUsername = (e) =>
+  const onChangePassword = (e) =>
   {
-    this.setState({usernameInput: e.target.value});
+    setPassword({...password, input: e.target.value});
 
-    if (this.state.invalidUsername)
-    {
-      this.validateUsername();
-    }
+    // if (password.invalid)
+    // {
+    //   validatePassword();
+    // }
   };
 
-  onChangePassword = (e) =>
+  const onChangeConfirmPassword = (e) =>
   {
-    this.setState({passwordInput: e.target.value});
+    setPasswordConfirm({...passwordConfirm, input: e.target.value});
 
-    if (this.state.invalidPassword)
-    {
-      this.validatePassword();
-    }
+    // if (passwordConfirm.invalid)
+    // {
+    //   validatePassword();
+    // }
   };
 
   // Only perform validation after exit focus or currently invalid
-  validateUsername = () =>
-  {
-    if (this.state.usernameInput.search(/[^a-zA-Z_\-0-9]/) >= 0)
-    {
-      this.setState({
-        validUsername: false,
-        invalidUsername: true
-      });
-    }
-    else
-    {
-      this.setState({
-        validUsername: true,
-        invalidUsername: false
-      });
-    }
-  };
+  // const validateUsername = () =>
+  // {
+  //   if (username.input.search(/[^a-zA-Z_\-0-9]/) >= 0)
+  //   {
+  //     setUsername({
+  //       ...username,
+  //       valid: false,
+  //       invalid: true
+  //     });
+  //   }
+  //   else
+  //   {
+  //     setUsername({
+  //       ...username,
+  //       valid: true,
+  //       invalid: false
+  //     });
+  //   }
+  // };
 
   // Only perform validation after exit focus or currently invalid
-  validatePassword = (e) =>
-  {
-    if (this.state.passwordInput.search(/\s/) >= 0)
-    {
-      this.setState({
-        validPassword: false,
-        invalidPassword: true
-      });
-    }
-    else
-    {
-      this.setState({
-        validPassword: true,
-        invalidPassword: false
-      });
-    }
-  };
+  // const validatePassword = () =>
+  // {
+  //   if (password.input.search(/\s/) >= 0)
+  //   {
+  //     setPassword({
+  //       ...password,
+  //       valid: false,
+  //       invalid: true
+  //     });
+  //   }
+  //   else
+  //   {
+  //     setPassword({
+  //       ...password,
+  //       valid: true,
+  //       invalid: false
+  //     });
+  //   }
+  // };
 
-  onSubmit = (e) =>
+  const onSubmit = (e) =>
   {
     e.preventDefault();
 
-    if (this.state.validUsername && this.state.validUsername)
+    if (username.valid && password.valid)
     {
       const user = {
-        username: this.state.usernameInput,
-        password: this.state.passwordInput
+        username: username.input,
+        password: password.input
       };
 
-      // console.log(`Submitted user: ${JSON.stringify(user)}`);
-      // const URL = "";
-      // // TODO Update the console message in catch
-      // axios.post(URL, newItem)
-      //     .then(res =>
-      //     {
-      //       this.setState({});
-      //     })
-      //     .catch(() => console.warn(`Can’t access '${URL}'`));
+      console.log("Submitted user: ", user);
+      const URL = "/api/register";
+      // TODO Update the console message in catch
+      axios.post(URL, user)
+          .then(res =>
+          {
+            // console.log(res.data);
+            switch (res.status)
+            {
+              case 200:
+                  window.location.replace("/login");
+                break;
+              case 409:
+
+              default:
+            }
+          })
+          .catch(() => console.warn(`Could not register user`));
     }
   };
 
   // TODO Add second password input for confirmation
-  render()
-  {
     return (
         <React.Fragment>
           <h2>Register</h2>
-          <Form className="w-50" onSubmit={this.onSubmit}>
+          <Form className="w-50" onSubmit={onSubmit}>
             <FormGroup>
               <Label size="sm">Username: </Label>
               <Input
+                  autoFocus
                   type="text"
                   maxLength="20"
                   bsSize="sm"
-                  valid={this.state.validUsername}
-                  invalid={this.state.invalidUsername}
-                  value={this.state.usernameInput}
-                  onChange={this.onChangeUsername}
-                  onBlur={this.validateUsername}/>
-              <FormFeedback invalid={this.state.invalidUsername.toString()}>
-                No whitespace or special characters allowed, except dash (-) and underscore (_)
-              </FormFeedback>
+                  valid={username.valid}
+                  invalid={username.invalid}
+                  value={username.input}
+                  onChange={onChangeUsername}
+                  />
+              {/*<FormFeedback invalid={state.invalidUsername.toString()}>*/}
+              {/*  No whitespace or special characters allowed, except dash (-) and underscore (_)*/}
+              {/*</FormFeedback>*/}
             </FormGroup>
             <FormGroup>
               <Label size="sm">Password: </Label>
@@ -131,19 +163,31 @@ class Register extends Component
                   type="password"
                   maxLength="30"
                   bsSize="sm"
-                  valid={this.state.validPassword}
-                  invalid={this.state.invalidPassword}
-                  value={this.state.passwordInput}
-                  onChange={this.onChangePassword}
-                  onBlur={this.validatePassword}/>
-              <FormFeedback invalid={this.state.invalidPassword.toString()}>
-                No whitespace allowed
-              </FormFeedback>
+                  valid={password.valid}
+                  invalid={password.invalid}
+                  value={password.input}
+                  onChange={onChangePassword}
+                  />
+            </FormGroup>
+            <FormGroup>
+              <Label size="sm">Confirm Password: </Label>
+              <Input
+                  type="password"
+                  maxLength="30"
+                  bsSize="sm"
+                  valid={passwordConfirm.valid}
+                  invalid={passwordConfirm.invalid}
+                  value={passwordConfirm.input}
+                  onChange={onChangeConfirmPassword}
+
+              />
+              {/*<FormFeedback invalid={state.invalidPassword.toString()}>*/}
+              {/*  No whitespace allowed*/}
+              {/*</FormFeedback>*/}
             </FormGroup>
             <Button size="sm" className="bg-success">Submit</Button>
           </Form>
         </React.Fragment>);
-  }
-}
+};
 
 export default Register;

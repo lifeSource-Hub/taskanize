@@ -7,7 +7,6 @@ import EditModal from "./EditModal";
 (function ()
 {
   // delete axios.defaults.headers.common["authToken"];
-  // axios.defaults.headers.common = {};
   if (localStorage.getItem("authToken"))
   {
     axios.defaults.headers.common["authToken"] = localStorage.getItem("authToken");
@@ -37,7 +36,7 @@ const ListPage = () =>
 
   const getList = () =>
   {
-    const URL = "/api/users/list";
+    const URL = "/api/user/list";
     axios.get(URL)
         .then(res =>
         {
@@ -67,7 +66,7 @@ const ListPage = () =>
 
   const update = (updatedItem) =>
   {
-    const URL = "/api/users/list/" + updatedItem.id;
+    const URL = "/api/user/list/" + updatedItem.id;
 
     axios.put(URL, updatedItem)
         .then(res =>

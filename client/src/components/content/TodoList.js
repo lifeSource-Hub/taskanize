@@ -44,7 +44,7 @@ const TodoList = ({listItems, setListItems, editItem}) =>
 
   const toggleComplete = (selectedItem) =>
   {
-    const URL = "/api/users/list/" + selectedItem._id;
+    const URL = "/api/user/list/" + selectedItem._id;
     axios.post(URL)
         .then(res =>
         {
@@ -55,7 +55,7 @@ const TodoList = ({listItems, setListItems, editItem}) =>
 
   const deleteItem = (selectedItem) =>
   {
-    const URL = "/api/users/list/" + selectedItem._id;
+    const URL = "/api/user/list/" + selectedItem._id;
     axios.delete(URL)
         .then(res =>
         {

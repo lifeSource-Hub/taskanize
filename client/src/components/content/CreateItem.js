@@ -44,7 +44,7 @@ const CreateItem = ({getList}) =>
 
     if (newItem.body !== "")
     {
-      const URL = "/api/users/list/add";
+      const URL = "/api/user/list/add";
 
       axios.post(URL, newItem)
           .then(res =>

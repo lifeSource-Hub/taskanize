@@ -1,12 +1,15 @@
 import React from 'react';
-import {Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
+import {Navbar, NavbarBrand} from "reactstrap";
+import {Link} from "react-router-dom";
 
 const HeaderNavbar = ({isLoggedIn}) =>
 {
-  const logout = () =>
+  const logout = (e) =>
   {
+    e.preventDefault();
     localStorage.removeItem("currentUser");
     localStorage.removeItem("authToken");
+    window.location.replace("/login");
   };
 
   const getNavItem = () =>
@@ -14,15 +17,20 @@ const HeaderNavbar = ({isLoggedIn}) =>
     if (isLoggedIn())
     {
       return (
-          <NavItem className="navItem">
-            <NavLink active href="/login" onClick={logout} className="navLink">Logout</NavLink>
-          </NavItem>);
+          <Link to="/logout" className="accountLink" onClick={logout}>
+            Logout
+          </Link>);
     }
 
     return (
-        <NavItem className="navItem">
-          <NavLink active href="/login" className="navLink">Login</NavLink>
-        </NavItem>);
+        <div>
+          <Link to="/register" className="accountLink">
+            Register
+          </Link>
+          <Link to="/login" className="accountLink">
+            Login
+          </Link>
+        </div>);
   };
 
   return (
@@ -31,24 +39,9 @@ const HeaderNavbar = ({isLoggedIn}) =>
           <NavbarBrand href="/" className="navBrand">
             A MERN Stack Web Application
           </NavbarBrand>
-
           {getNavItem()}
           {/*<NavItem className="navItem">*/}
-          {/*  <NavLink href="/completed" className="navLink">Completed</NavLink>*/}
-          {/*</NavItem>*/}
-          {/*{!!(localStorage.getItem("authToken")) ?*/}
-          {/*    <NavItem className="navItem">*/}
-          {/*      <NavLink active href="/login" onClick={logout} className="navLink">Logout</NavLink>*/}
-          {/*    </NavItem>*/}
-          {/*    :*/}
-          {/*    <NavItem className="navItem">*/}
-          {/*      <NavLink active href="/login" className="navLink">Login</NavLink>*/}
-          {/*    </NavItem>}*/}
-          {/*<NavItem className="navItem">*/}
           {/*  <NavLink href="/register" className="navLink">Register</NavLink>*/}
-          {/*</NavItem>*/}
-          {/*<NavItem className="navItem">*/}
-          {/*  <NavLink href="/badURI" className="navLink">404 Page</NavLink>*/}
           {/*</NavItem>*/}
         </Navbar>
       </header>);

@@ -4,7 +4,7 @@ import "./App.css";
 import HeaderNavbar from "./components/layout/HeaderNavbar";
 import ListPage from "./components/content/ListPage";
 import Login from "./components/content/Login";
-// import Register from "./components/content/Register";
+import Register from "./components/content/Register";
 
 import React from "react";
 import {
@@ -30,7 +30,7 @@ const App = () =>
         <main>
           <Switch>
             <Redirect exact from="/" to="/list"/>
-            {/*<Route exact path="/list" component={TodoList}/>*/}
+            <Route exact path="/register" component={Register}/>
             <Route exact path="/list">
               {isLoggedIn() ? <ListPage/> : <Redirect to="/login"/>}
             </Route>
