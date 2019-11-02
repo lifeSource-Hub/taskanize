@@ -44,12 +44,7 @@ const listSort = (list) =>
  */
 router.get("/", (req, res) =>
 {
-  User.findById(res.locals._id,
-      function (err, doc)
-      {
-        listSort(doc.list);
-        res.json(doc.list);
-      });
+  User.findById(res.locals._id, (err, doc) => res.json(listSort(doc.list)));
 });
 
 /** @route  POST api/user/list/add
@@ -63,8 +58,8 @@ router.post("/add", (req, res) =>
     priority: req.body.priority
   };
 
-  User.updateOne({_id: res.locals._id}, {$push: {list: newItem}})
-      .then(() => res.json({success: true}))
+  User.findOneAndUpdate(res.locals._id, {$push: {list: newItem}}, {new: true})
+      .then((doc) => res.json(listSort(doc.list)))
       .catch(err => res.status(404).json(err));
 });
 
@@ -117,8 +112,8 @@ router.post("/:id", (req, res) =>
  */
 router.delete("/:id", (req, res) =>
 {
-  User.updateOne({_id: res.locals._id}, {$pull: {list: {_id: req.params.id}}}, {"new": true})
-      .then(() => res.json({success: true}))
+  User.findOneAndUpdate(res.locals._id, {$pull: {list: {_id: req.params.id}}}, {new: true})
+      .then((doc) => res.json(listSort(doc.list)))
       .catch(err => res.status(404).json(err));
 });
 

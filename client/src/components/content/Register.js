@@ -4,190 +4,215 @@ import {
   Button,
   Form,
   FormGroup,
-  // FormFeedback,
+  FormFeedback,
   Label,
   Input,
 } from "reactstrap";
 
 const Register = () =>
 {
-  const [username, setUsername] = useState({
-    input: "",
-    valid: false,
-    invalid: false,
-    feedback: ""
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [passConfirm, setPassConfirm] = useState("");
+  const [invalidInput, setInvalidInput] = useState({
+    username: false,
+    password: false,
+    passConfirm: false
   });
 
-  const [password, setPassword] = useState({
-    input: "",
-    valid: false,
-    invalid: false,
-    feedback: ""
-  });
-
-  const [passwordConfirm, setPasswordConfirm] = useState({
-    input: "",
-    valid: false,
-    invalid: false,
-    feedback: ""
+  const [formFeedback, setFormFeedback] = useState({
+    username: "",
+    password: ""
   });
 
   const onChangeUsername = (e) =>
   {
-    setUsername({...username, input: e.target.value});
+    setUsername(e.target.value);
 
-    // if (username.invalid)
-    // {
-    //   validateUsername();
-    // }
+    if (invalidInput.username)
+    {
+      validateUsername(e.target.value);
+    }
   };
 
   const onChangePassword = (e) =>
   {
-    setPassword({...password, input: e.target.value});
+    setPassword(e.target.value);
 
-    // if (password.invalid)
-    // {
-    //   validatePassword();
-    // }
+    if (invalidInput.password)
+    {
+      validatePassword(e.target.value);
+    }
   };
 
-  const onChangeConfirmPassword = (e) =>
+  const onChangePasswordConfirm = (e) =>
   {
-    setPasswordConfirm({...passwordConfirm, input: e.target.value});
+    setPassConfirm(e.target.value);
 
-    // if (passwordConfirm.invalid)
-    // {
-    //   validatePassword();
-    // }
+    if (invalidInput.passConfirm)
+    {
+      validatePasswordMatch(e.target.value);
+    }
   };
 
-  // Only perform validation after exit focus or currently invalid
-  // const validateUsername = () =>
-  // {
-  //   if (username.input.search(/[^a-zA-Z_\-0-9]/) >= 0)
-  //   {
-  //     setUsername({
-  //       ...username,
-  //       valid: false,
-  //       invalid: true
-  //     });
-  //   }
-  //   else
-  //   {
-  //     setUsername({
-  //       ...username,
-  //       valid: true,
-  //       invalid: false
-  //     });
-  //   }
-  // };
+  // Only validate after exit focus or currently invalid
+  const validateUsername = (input = username) =>
+  {
+    const hasDisallowedChars = input.search(/[^a-zA-Z_\-0-9]/) >= 0;
+    const hasMinChars = input.search(/^.{3,18}$/) >= 0;
+    const hasLetterOrNum = input.search(/[a-zA-Z0-9]+/) >= 0;
 
-  // Only perform validation after exit focus or currently invalid
-  // const validatePassword = () =>
-  // {
-  //   if (password.input.search(/\s/) >= 0)
-  //   {
-  //     setPassword({
-  //       ...password,
-  //       valid: false,
-  //       invalid: true
-  //     });
-  //   }
-  //   else
-  //   {
-  //     setPassword({
-  //       ...password,
-  //       valid: true,
-  //       invalid: false
-  //     });
-  //   }
-  // };
+    if (hasDisallowedChars)
+    {
+      setFormFeedback({
+        ...formFeedback, username: "No whitespace or special " +
+            "characters allowed, except dash (-) and underscore (_)"
+      });
+    }
+    else if (!hasMinChars || !hasLetterOrNum)
+    {
+      setFormFeedback({
+        ...formFeedback, username: "Must be 3–18 characters " +
+            "and have at least one alphanumeric character"
+      });
+    }
+
+    setInvalidInput({
+      ...invalidInput,
+      username: (hasDisallowedChars || !hasMinChars || !hasLetterOrNum)
+    });
+  };
+
+  // Only validate after exit focus or currently invalid
+  const validatePassword = (input = password) =>
+  {
+    const hasWhitespace = input.search(/\s/) >= 0;
+    const hasMinChars = input.search(/^.{6,40}$/) >= 0;
+
+    if (hasWhitespace)
+    {
+      setFormFeedback({...formFeedback, password: "No whitespace allowed"});
+    }
+    else if (!hasMinChars)
+    {
+      setFormFeedback({...formFeedback, password: "Must be 6–40 characters"});
+    }
+
+    setInvalidInput({...invalidInput, password: (!hasMinChars || hasWhitespace)});
+  };
+
+  // Only validate after exit focus or currently invalid
+  const validatePasswordMatch = (input = passConfirm) =>
+  {
+    setInvalidInput({...invalidInput, passConfirm: (input !== password)});
+  };
 
   const onSubmit = (e) =>
   {
     e.preventDefault();
 
-    if (username.input && password.input)
+    if (!invalidInput.username && !invalidInput.password && !invalidInput.passConfirm)
     {
       const user = {
-        username: username.input,
-        password: password.input
+        username: username,
+        password: password
       };
 
       console.log("Submitted user: ", user);
       const URL = "/api/register";
-      // TODO Update the console message in catch
+
       axios.post(URL, user)
           .then(res =>
           {
-            // console.log(res.data);
-            switch (res.status)
+            if (res.status === 200)
             {
-              case 200:
-                  window.location.replace("/login");
-                break;
-              case 409:
-
-              default:
+              window.alert("Registration successful! You will now be re-directed to login.");
+              window.location.replace("/login");
             }
           })
-          .catch(() => console.warn(`Could not register user`));
+          .catch((err) =>
+          {
+            if (err.response.status === 409)
+            {
+              setFormFeedback({...formFeedback, username: "That username is taken"});
+              setInvalidInput({...invalidInput, username: true});
+            }
+            else
+            {
+              console.warn(`Could not register user`);
+            }
+          });
     }
   };
 
-  // TODO Add second password input for confirmation
-    return (
-        <React.Fragment>
-          <h2>Register</h2>
-          <Form className="w-50" onSubmit={onSubmit}>
-            <FormGroup>
-              <Label size="sm">Username: </Label>
-              <Input
-                  autoFocus
-                  type="text"
-                  maxLength="20"
-                  bsSize="sm"
-                  valid={username.valid}
-                  invalid={username.invalid}
-                  value={username.input}
-                  onChange={onChangeUsername}
-                  />
-              {/*<FormFeedback invalid={state.invalidUsername.toString()}>*/}
-              {/*  No whitespace or special characters allowed, except dash (-) and underscore (_)*/}
-              {/*</FormFeedback>*/}
-            </FormGroup>
-            <FormGroup>
-              <Label size="sm">Password: </Label>
-              <Input
-                  type="password"
-                  maxLength="30"
-                  bsSize="sm"
-                  valid={password.valid}
-                  invalid={password.invalid}
-                  value={password.input}
-                  onChange={onChangePassword}
-                  />
-            </FormGroup>
-            <FormGroup>
-              <Label size="sm">Confirm Password: </Label>
-              <Input
-                  type="password"
-                  maxLength="30"
-                  bsSize="sm"
-                  valid={passwordConfirm.valid}
-                  invalid={passwordConfirm.invalid}
-                  value={passwordConfirm.input}
-                  onChange={onChangeConfirmPassword}
-
-              />
-              {/*<FormFeedback invalid={state.invalidPassword.toString()}>*/}
-              {/*  No whitespace allowed*/}
-              {/*</FormFeedback>*/}
-            </FormGroup>
-            <Button size="sm" className="bg-success">Submit</Button>
-          </Form>
-        </React.Fragment>);
+  return (
+      <React.Fragment>
+        <h2>Register</h2>
+        <Form className="w-50" onSubmit={onSubmit}>
+          <FormGroup>
+            <Label size="sm">Username: </Label>
+            <Input
+                autoFocus
+                type="text"
+                maxLength="18"
+                bsSize="sm"
+                invalid={invalidInput.username}
+                value={username}
+                onChange={onChangeUsername}
+                onBlur={() =>
+                {
+                  if (username)
+                  {
+                    validateUsername();
+                  }
+                }}/>
+            <FormFeedback valid={!invalidInput.username}>
+              {formFeedback.username}
+            </FormFeedback>
+          </FormGroup>
+          <FormGroup>
+            <Label size="sm">Password: </Label>
+            <Input
+                type="password"
+                maxLength="40"
+                bsSize="sm"
+                invalid={invalidInput.password}
+                value={password}
+                onChange={onChangePassword}
+                onBlur={() =>
+                {
+                  if (password)
+                  {
+                    validatePassword();
+                  }
+                }}/>
+            <FormFeedback valid={!invalidInput.password}>
+              {formFeedback.password}
+            </FormFeedback>
+          </FormGroup>
+          <FormGroup>
+            <Label size="sm">Confirm Password: </Label>
+            <Input
+                type="password"
+                maxLength="40"
+                bsSize="sm"
+                invalid={invalidInput.passConfirm}
+                value={passConfirm}
+                onChange={onChangePasswordConfirm}
+                onBlur={() =>
+                {
+                  if (passConfirm)
+                  {
+                    validatePasswordMatch();
+                  }
+                }}/>
+            <FormFeedback valid={!invalidInput.passConfirm}>
+              Passwords do not match
+            </FormFeedback>
+          </FormGroup>
+          <Button size="sm" className="bg-success">Submit</Button>
+        </Form>
+      </React.Fragment>);
 };
 
 export default Register;

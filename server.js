@@ -4,6 +4,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const mongoose = require('mongoose');
+mongoose.set("useCreateIndex", true);
+mongoose.set('useFindAndModify', false);
 const auth = require("./routes/api/auth");
 const user = require("./routes/api/user");
 const login = require("./routes/api/login");

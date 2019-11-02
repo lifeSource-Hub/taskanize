@@ -8,7 +8,6 @@ const JSRSASign = require("jsrsasign");
  */
 router.all("/*", (req, res, next) =>
 {
-  // console.log(req.method);
   if (req.get("authToken"))
   {
     // For testing response to invalid tokens

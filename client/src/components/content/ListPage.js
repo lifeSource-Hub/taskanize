@@ -4,19 +4,6 @@ import CreateItem from "./CreateItem";
 import TodoList from "./TodoList";
 import EditModal from "./EditModal";
 
-(function ()
-{
-  // delete axios.defaults.headers.common["authToken"];
-  if (localStorage.getItem("authToken"))
-  {
-    axios.defaults.headers.common["authToken"] = localStorage.getItem("authToken");
-  }
-  else
-  {
-    delete axios.defaults.headers.common["authToken"];
-  }
-})();
-
 const ListPage = () =>
 {
   const [listItems, setListItems] = useState([]);
@@ -31,11 +18,6 @@ const ListPage = () =>
 
   useEffect(() =>
   {
-    getList();
-  }, []);
-
-  const getList = () =>
-  {
     const URL = "/api/user/list";
     axios.get(URL)
         .then(res =>
@@ -44,7 +26,7 @@ const ListPage = () =>
           // console.log(res.data)
         })
         .catch(() => console.warn(`Can’t access GET '${URL}'`));
-  };
+  }, []);
 
   const toggle = () =>
   {
@@ -69,10 +51,7 @@ const ListPage = () =>
     const URL = "/api/user/list/" + updatedItem.id;
 
     axios.put(URL, updatedItem)
-        .then(res =>
-        {
-          setListItems(res.data);
-        })
+        .then(res => setListItems(res.data))
         .catch(() => console.warn(`Can’t access PUT '${URL}'`));
   };
 
@@ -84,7 +63,7 @@ const ListPage = () =>
         <p>Incomplete items sorted by date created<br/>
           Completed item sorted by date completed</p>
         <br/>
-        <CreateItem getList={getList}/>
+        <CreateItem setListItems={setListItems}/>
         <br/>
         <TodoList
             listItems={listItems}

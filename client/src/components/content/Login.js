@@ -78,7 +78,7 @@ const Login = () =>
             <Input
                 autoFocus
                 type="text"
-                maxLength="20"
+                maxLength="18"
                 bsSize="sm"
                 value={username}
                 onChange={onChangeUsername}/>
@@ -87,7 +87,7 @@ const Login = () =>
             <Label size="sm">Password: </Label>
             <Input
                 type="password"
-                maxLength="30"
+                maxLength="40"
                 bsSize="sm"
                 value={password}
                 onChange={onChangePassword}/>

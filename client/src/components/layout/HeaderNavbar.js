@@ -17,7 +17,7 @@ const HeaderNavbar = ({isLoggedIn}) =>
     if (isLoggedIn())
     {
       return (
-          <Link to="/logout" className="accountLink" onClick={logout}>
+          <Link to="" className="accountLink" onClick={logout}>
             Logout
           </Link>);
     }

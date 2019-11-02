@@ -19,18 +19,19 @@ router.post("/", (req, res) =>
     password: hash
   });
 
-  // console.log("New User: ", newUser);
-
   newUser.save()
-      .then(item => res.status(201).json(item))
+      .then(item => res.status(200).json(item))
       .catch(err =>
       {
-        console.log(err);
-        res.status(500).json(err);
+        if (err.code === 11000)
+        {
+          res.status(409).json(err);
+        }
+        else
+        {
+          res.status(500).json(err);
+        }
       });
-  // User.updateOne({_id: res.locals._id}, {list: newUser})
-  //     .then(() => res.json({success: true}))
-  //     .catch(err => res.status(404).json(err));
 });
 
 
