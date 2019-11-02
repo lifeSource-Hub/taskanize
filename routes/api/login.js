@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
-const Users = require("../../models/Users");
+const Users = require("../../models/User");
 const bcrypt = require("bcryptjs");
 
-// const salt = bcrypt.genSaltSync(10);
 const jwtHeader = {
   typ: "JWT",
   alg: "HS512"
 };
 
-/** @route  POST api/auth
+/** @route  POST api/login
  *  @desc   Search for user, return JWT on success
  *  @access Public
  */
@@ -18,7 +17,7 @@ router.post("/", (req, res) =>
 {
   if (!req.body.username || !req.body.password)
   {
-    return res.status(400).json({msg: "Required field(s) missing"});
+    return res.status(400).json({msg: "Required fields missing"});
   }
 
   const claims = {
@@ -35,7 +34,6 @@ router.post("/", (req, res) =>
       {
         claims._id = user._id;
 
-        // const hash = bcrypt.hashSync("plaintextPassword", salt);
         const sHeader = JSON.stringify(jwtHeader);
         const sClaims = JSON.stringify(claims);
 

@@ -2,13 +2,12 @@ const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
 
-/** @route  /api/users
+/** @route  /api/user
  *  @desc   Verify user token and attach user id to header
  *  @access Public
  */
 router.all("/*", (req, res, next) =>
 {
-  // console.log(req.method);
   if (req.get("authToken"))
   {
     // For testing response to invalid tokens

@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 // import axios from "axios";
 
-const CreateItem = ({getList}) =>
+const CreateItem = ({setListItems}) =>
 {
   const [dropIsOpen, setDropIsOpen] = useState(false);
   const [newItem, setNewItem] = useState({
@@ -44,18 +44,15 @@ const CreateItem = ({getList}) =>
 
     if (newItem.body !== "")
     {
-      const URL = "/api/users/list/add";
+      const URL = "/api/user/list/add";
 
       axios.post(URL, newItem)
           .then(res =>
           {
             setNewItem(newItem => ({...newItem, body: "",}));
-            getList();
+            setListItems(res.data);
           })
-          .catch(() =>
-          {
-            console.warn(`Can’t access POST '${URL}'`);
-          });
+          .catch(() => console.warn(`Can’t access POST '${URL}'`));
     }
   };
 

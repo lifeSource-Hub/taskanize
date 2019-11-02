@@ -23,7 +23,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 5;
-  justify-content: left;
+  justify-content: space-between;
 
   .navBrand {
     //background-color: #517ccc;
@@ -32,28 +32,38 @@ body {
     text-shadow: 2px 2px 3px #363636;
   }
 
-  .navItem {
-    //background-color: #518ada;
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    width: 140px;
-  }
-
-  .navLink {
-    //background-color: #5178c8;
+  .accountLink {
     color: #13118f;
-    font: 17px "Segoe UI Semibold", sans-serif;
-    margin: 0;
-    padding: 6px;
-    text-align: center;
+    font: 15px "Segoe UI", sans-serif;
+    margin-left: 20px;
 
     &:hover {
+      text-decoration: none;
       color: #2362be;
     }
   }
 }
+
+//.navItem {
+//  //background-color: #518ada;
+//  align-items: center;
+//  display: flex;
+//  height: 100%;
+//  justify-content: center;
+//  width: 140px;
+//}
+//.navLink {
+//  //background-color: #5178c8;
+//  color: #13118f;
+//  font: 17px "Segoe UI Semibold", sans-serif;
+//  margin: 0;
+//  padding: 6px;
+//  text-align: center;
+//
+//  &:hover {
+//    color: #2362be;
+//  }
+//}
 
 main {
   background-color: #d2dae2;
@@ -92,7 +102,6 @@ h1, h2, h3, h4 {
 .listGroup {
   border-radius: .3rem;
   box-shadow: 3px 3px 7px 2px #526179;
-  //font-size: 19px;
 }
 
 .listItem {
@@ -124,6 +133,10 @@ h1, h2, h3, h4 {
 
 .loginForm {
   width: 50%;
+
+  .loginFeedback {
+    color: #ff0000;
+  }
 }
 
 .editModal {

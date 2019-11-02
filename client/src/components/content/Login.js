@@ -13,28 +13,20 @@ import {
 
 const Login = () =>
 {
-  const [username, setUsername] = useState({
-    input: "",
-    valid: false,
-    invalid: false,
-    feedback: ""
-  });
+  const [loginFeedback, setLoginFeedback] = useState(null);
 
-  const [password, setPassword] = useState({
-    input: "",
-    valid: false,
-    invalid: false,
-    feedback: ""
-  });
+  const [username, setUsername] = useState("");
+
+  const [password, setPassword] = useState("");
 
   const onChangeUsername = e =>
   {
-    setUsername({...username, input: e.target.value});
+    setUsername(e.target.value);
   };
 
   const onChangePassword = e =>
   {
-    setPassword({...password, input: e.target.value});
+    setPassword(e.target.value);
   };
 
   const onSubmit = e =>
@@ -42,8 +34,8 @@ const Login = () =>
     e.preventDefault();
 
     const user = {
-      username: username.input,
-      password: password.input
+      username: username,
+      password: password
     };
 
     // console.log("Submitted credentials: ", user);
@@ -59,7 +51,11 @@ const Login = () =>
             window.location.replace("/list");
           }
         })
-        .catch(() => console.warn(`Can’t access POST '${URL}'`));
+        .catch((err) =>
+        {
+          setLoginFeedback(err.response.data.msg);
+          console.warn(`Can’t access POST '${URL}'`)
+        });
   };
 
   return (
@@ -82,33 +78,22 @@ const Login = () =>
             <Input
                 autoFocus
                 type="text"
-                maxLength="20"
+                maxLength="18"
                 bsSize="sm"
-                valid={username.valid}
-                invalid={username.invalid}
-                value={username.input}
+                value={username}
                 onChange={onChangeUsername}/>
-            {/*<FormFeedback invalid={this.state.invalidUsername.toString()}>*/}
-            {/*  No whitespace or special characters allowed, except dash (-) and underscore (_)*/}
-            {/*</FormFeedback>*/}
           </FormGroup>
           <FormGroup>
             <Label size="sm">Password: </Label>
             <Input
                 type="password"
-                maxLength="30"
+                maxLength="40"
                 bsSize="sm"
-                valid={password.valid}
-                invalid={password.invalid}
-                value={password.input}
+                value={password}
                 onChange={onChangePassword}/>
-            {/*<FormFeedback invalid={this.state.invalidPassword.toString()}>*/}
-            {/*  No whitespace allowed*/}
-            {/*</FormFeedback>*/}
           </FormGroup>
-          <Button size="sm" className="bg-success">
-            Login
-          </Button>
+          <p className="loginFeedback">{loginFeedback}</p><br/>
+          <Button size="sm" className="bg-success"> Login </Button>
         </Form>
       </React.Fragment>);
 };
