@@ -58,7 +58,7 @@ router.post("/add", (req, res) =>
     priority: req.body.priority
   };
 
-  User.findOneAndUpdate(res.locals._id, {$push: {list: newItem}}, {new: true})
+  User.findOneAndUpdate({_id: res.locals._id}, {$push: {list: newItem}}, {new: true})
       .then((doc) => res.json(listSort(doc.list)))
       .catch(err => res.status(404).json(err));
 });
@@ -112,7 +112,7 @@ router.post("/:id", (req, res) =>
  */
 router.delete("/:id", (req, res) =>
 {
-  User.findOneAndUpdate(res.locals._id, {$pull: {list: {_id: req.params.id}}}, {new: true})
+  User.findOneAndUpdate({_id: res.locals._id}, {$pull: {list: {_id: req.params.id}}}, {new: true})
       .then((doc) => res.json(listSort(doc.list)))
       .catch(err => res.status(404).json(err));
 });
