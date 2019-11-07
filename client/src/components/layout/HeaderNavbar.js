@@ -1,50 +1,49 @@
-import React from 'react';
-import {Navbar, NavbarBrand} from "reactstrap";
-import {Link} from "react-router-dom";
+import React from "react";
+import { Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 
-const HeaderNavbar = ({isLoggedIn}) =>
-{
-  const logout = (e) =>
-  {
+const HeaderNavbar = ({ isLoggedIn }) => {
+  const logout = e => {
     e.preventDefault();
     localStorage.removeItem("currentUser");
     localStorage.removeItem("authToken");
     window.location.replace("/login");
   };
 
-  const getNavItem = () =>
-  {
-    if (isLoggedIn())
-    {
+  const getNavItem = () => {
+    if (isLoggedIn()) {
       return (
-          <Link to="" className="accountLink" onClick={logout}>
-            Logout
-          </Link>);
+        <NavLink href="" className="logLink" onClick={logout}>
+          Logout
+        </NavLink>
+      );
     }
 
     return (
-        <div>
-          <Link to="/register" className="accountLink">
-            Register
-          </Link>
-          <Link to="/login" className="accountLink">
-            Login
-          </Link>
-        </div>);
+      <NavLink href="/login" className="logLink">
+        Login
+      </NavLink>
+    );
   };
 
   return (
-      <header>
-        <Navbar className="nav">
-          <NavbarBrand href="/" className="navBrand">
-            A MERN Stack Web Application
-          </NavbarBrand>
-          {getNavItem()}
-          {/*<NavItem className="navItem">*/}
-          {/*  <NavLink href="/register" className="navLink">Register</NavLink>*/}
-          {/*</NavItem>*/}
-        </Navbar>
-      </header>);
+    <header>
+      <Navbar className="nav">
+        <NavbarBrand className="navBrand">
+          A MERN Stack Web Application
+        </NavbarBrand>
+        <NavItem>
+          <NavLink className="navLink" href="/home">Home</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="navLink" href="/list">List</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="navLink" href="/contact">Contact</NavLink>
+        </NavItem>
+      </Navbar>
+      <div className="loginTab">{getNavItem()}</div>
+    </header>
+  );
 };
 
 export default HeaderNavbar;

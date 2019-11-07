@@ -59,7 +59,7 @@ router.post("/add", (req, res) =>
   };
 
   User.findOneAndUpdate({_id: res.locals._id}, {$push: {list: newItem}}, {new: true})
-      .then((doc) => res.json(listSort(doc.list)))
+      .then((doc) => res.status(201).json(listSort(doc.list)))
       .catch(err => res.status(404).json(err));
 });
 

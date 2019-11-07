@@ -22,7 +22,8 @@ const Register = () =>
 
   const [formFeedback, setFormFeedback] = useState({
     username: "",
-    password: ""
+    password: "",
+    submission: ""
   });
 
   const onChangeUsername = (e) =>
@@ -118,13 +119,13 @@ const Register = () =>
         password: password
       };
 
-      console.log("Submitted user: ", user);
+      // console.log("Submitted user: ", user);
       const URL = "/api/register";
 
       axios.post(URL, user)
           .then(res =>
           {
-            if (res.status === 200)
+            if (res.status === 201)
             {
               window.alert("Registration successful! You will now be re-directed to login.");
               window.location.replace("/login");
@@ -132,14 +133,24 @@ const Register = () =>
           })
           .catch((err) =>
           {
-            if (err.response.status === 409)
+            switch (err.response.status)
             {
-              setFormFeedback({...formFeedback, username: "That username is taken"});
-              setInvalidInput({...invalidInput, username: true});
-            }
-            else
-            {
-              console.warn(`Could not register user`);
+              case 409:
+                setFormFeedback({...formFeedback, submission: "That username is taken"});
+                setInvalidInput({...invalidInput, username: true});
+                break;
+              case 507:
+                setFormFeedback({
+                  ...formFeedback,
+                  submission: "The maximum number of registered users has been reached. " +
+                      "This is very unusual and likely the result of malicious behavior. " +
+                      "Our developers are working hard to resolve the issue. " +
+                      "We apologize for any inconvenience."
+                });
+                setInvalidInput({...invalidInput, username: true});
+                break;
+              default:
+                console.warn(`Could not register user`);
             }
           });
     }
@@ -148,7 +159,8 @@ const Register = () =>
   return (
       <React.Fragment>
         <h2>Register</h2>
-        <Form className="w-50" onSubmit={onSubmit}>
+        <Form className="registrationForm" onSubmit={onSubmit}>
+          <p className="formErrorResponse">{formFeedback.submission}</p>
           <FormGroup>
             <Label size="sm">Username: </Label>
             <Input
