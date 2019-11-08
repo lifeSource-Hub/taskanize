@@ -157,7 +157,7 @@ const Register = () =>
   };
 
   return (
-      <React.Fragment>
+      <>
         <h2>Register</h2>
         <Form className="registrationForm" onSubmit={onSubmit}>
           <p className="formErrorResponse">{formFeedback.submission}</p>
@@ -224,7 +224,7 @@ const Register = () =>
           </FormGroup>
           <Button size="sm" className="bg-success">Submit</Button>
         </Form>
-      </React.Fragment>);
+      </>);
 };
 
 export default Register;

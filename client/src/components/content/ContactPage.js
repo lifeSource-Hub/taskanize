@@ -1,11 +1,15 @@
-import React from 'react';
+import React from "react";
 
-const ContactPage = () =>
-{
+const ContactPage = () => {
   return (
-    <div>
-      <h3>Contact Page</h3>
-    </div>
+    <>
+      <h3>Contact</h3>
+      <br />
+      <p>
+        Feel free to send me an
+        <a href="mailto:lifeSource@developer-portfolio.dx.am"> email</a>
+      </p>
+    </>
   );
 };
 

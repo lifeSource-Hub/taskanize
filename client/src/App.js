@@ -18,6 +18,7 @@ import PageNotFound from "./components/content/PageNotFound";
 import Footer from "./components/layout/Footer";
 import ContactPage from "./components/content/ContactPage";
 import HomePage from "./components/content/HomePage";
+import MapPage from "./components/content/MapPage";
 
 const App = () =>
 {
@@ -29,13 +30,13 @@ const App = () =>
   return (
       <Router>
         <HeaderNavbar isLoggedIn={isLoggedIn}/>
-
         <main>
           <Switch>
             <Redirect exact from="/" to="/list"/>
             <Route exact path="/home" component={HomePage}/>
             <Route exact path="/contact" component={ContactPage}/>
             <Route exact path="/register" component={Register}/>
+            <Route exact path="/map" component={MapPage}/>
             <Route exact path="/list">
               {isLoggedIn() ? <ListPage/> : <Redirect to="/login"/>}
             </Route>

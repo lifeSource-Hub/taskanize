@@ -56,7 +56,7 @@ const ListPage = () =>
   };
 
   return (
-      <React.Fragment>
+      <>
         <h3 className="shadowedHeading">
           {localStorage.getItem("currentUser")}'s To Do List
         </h3>
@@ -76,7 +76,7 @@ const ListPage = () =>
             updateItem={updateItem}
             setUpdateItem={setUpdateItem}
             update={update}/>
-      </React.Fragment>);
+      </>);
 };
 
 export default ListPage;

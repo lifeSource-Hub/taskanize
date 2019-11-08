@@ -3,9 +3,12 @@ import React from 'react';
 const HomePage = () =>
 {
   return (
-    <div>
+    <>
       <h3>Home</h3>
-    </div>
+      <br/>
+      <p>Welcome to my web application! I built this application with the MERN stack: MongoDB, Express, React,
+        Node.js. It is designed with Reactstrap components and SCSS.</p>
+    </>
   );
 };
 

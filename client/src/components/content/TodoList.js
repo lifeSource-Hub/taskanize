@@ -2,12 +2,12 @@ import React from "react";
 import {
   Button,
   ButtonGroup,
-  Badge,
   ListGroup,
   ListGroupItem
 } from "reactstrap";
-import Octicon, {Check, Pencil, X} from "@primer/octicons-react";
+import Octicon, {Check, Pencil, Trashcan} from "@primer/octicons-react";
 import axios from "axios";
+import CompleteBadge from "./CompleteBadge";
 
 const TodoList = ({listItems, setListItems, editItem}) =>
 {
@@ -40,21 +40,6 @@ const TodoList = ({listItems, setListItems, editItem}) =>
     }
   };
 
-  const getCompleteBadge = isComplete =>
-  {
-    if (isComplete)
-    {
-      return (
-        <Badge className="completedBadge">
-          Complete
-          <button className="setIncomplete">
-            <Octicon className="setIncompleteIcon" icon={X}/>
-          </button>
-        </Badge>
-      );
-    }
-  };
-
   const toggleComplete = selectedItem =>
   {
     const URL = "/api/user/list/" + selectedItem._id;
@@ -76,7 +61,7 @@ const TodoList = ({listItems, setListItems, editItem}) =>
   try
   {
     return (
-      <React.Fragment>
+      <>
         <ListGroup className={listItems.length > 0 ? "listGroup" : ""}>
           {listItems.map(item => (
             <ListGroupItem id={item._id} key={item._id} className="listItem">
@@ -95,7 +80,7 @@ const TodoList = ({listItems, setListItems, editItem}) =>
                       item.complete ? item.dateCompleted : item.dateModified
                     )}
                   </time>
-                  {getCompleteBadge(item.complete)}
+                  <CompleteBadge item={item} toggleComplete={toggleComplete}/>
                 </div>
               </div>
               <ButtonGroup size="sm">
@@ -103,7 +88,7 @@ const TodoList = ({listItems, setListItems, editItem}) =>
                   <Octicon icon={Pencil}/>
                 </Button>
                 <Button color="danger" onClick={deleteItem.bind(null, item)}>
-                  <Octicon icon={X}/>
+                  <Octicon icon={Trashcan}/>
                 </Button>
                 <Button
                   color="success"
@@ -116,12 +101,12 @@ const TodoList = ({listItems, setListItems, editItem}) =>
             </ListGroupItem>
           ))}
         </ListGroup>
-      </React.Fragment>
+      </>
     );
   } catch (e)
   {
     // TODO improve error handling
-    return <p>Error: Failed to load user list</p>;
+    return <p>Error: Could not load list</p>;
   }
 };
 

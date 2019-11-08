@@ -54,7 +54,7 @@ const Login = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <h2>Login</h2>
       <p>
         Please login to access your list.
@@ -104,7 +104,7 @@ const Login = () => {
       <p>
         <Link to="/register">Click here to register</Link>
       </p>
-    </React.Fragment>
+    </>
   );
 };
 

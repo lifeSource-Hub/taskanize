@@ -1,17 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Header extends Component
+const Header = () =>
 {
-  render()
-  {
-    return (
-        <header>
-          {/*<span id="headerLink">*/}
-          {/*  <Link to="/login">Login</Link>*/}
-          {/*</span>*/}
-          <div className="header"><h2>A MERN Stack Web Application</h2></div>
-        </header>);
-  }
-}
+  return (
+    <header className="header">
+      <h2>A MERN Stack Web Application</h2>
+    </header>);
+};
 
 export default Header;

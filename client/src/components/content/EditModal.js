@@ -85,7 +85,7 @@ const EditModal = ({modalIsOpen, toggle, updateItem, setUpdateItem, update}) =>
               </Dropdown>
             </InputGroupAddon>
 
-            <Button size="sm" color="success">Submit</Button>
+            <Button size="sm" color="primary">Submit</Button>
           </InputGroup>
         </Form>
       </ModalBody>

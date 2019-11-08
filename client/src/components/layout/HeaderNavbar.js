@@ -1,16 +1,34 @@
 import React from "react";
-import { Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
+import {Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
+import Octicon, {Person} from "@primer/octicons-react";
 
-const HeaderNavbar = ({ isLoggedIn }) => {
-  const logout = e => {
+const HeaderNavbar = ({isLoggedIn}) =>
+{
+  const logout = e =>
+  {
     e.preventDefault();
     localStorage.removeItem("currentUser");
     localStorage.removeItem("authToken");
     window.location.replace("/login");
   };
 
-  const getNavItem = () => {
-    if (isLoggedIn()) {
+  const getUsername = () =>
+  {
+    if (isLoggedIn())
+    {
+      return (
+        <div className="currentUser">
+          <Octicon icon={Person}/>
+          <p>{localStorage.getItem("currentUser")}</p>
+        </div>
+      );
+    }
+  };
+
+  const getNavItem = () =>
+  {
+    if (isLoggedIn())
+    {
       return (
         <NavLink href="" className="logLink" onClick={logout}>
           Logout
@@ -32,15 +50,27 @@ const HeaderNavbar = ({ isLoggedIn }) => {
           A MERN Stack Web Application
         </NavbarBrand>
         <NavItem>
-          <NavLink className="navLink" href="/home">Home</NavLink>
+          <NavLink className="navLink" href="/home">
+            Home
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="navLink" href="/list">List</NavLink>
+          <NavLink className="navLink" href="/list">
+            List
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="navLink" href="/contact">Contact</NavLink>
+          <NavLink className="navLink" href="/map">
+            Map
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="navLink" href="/contact">
+            Contact
+          </NavLink>
         </NavItem>
       </Navbar>
+      {getUsername()}
       <div className="loginTab">{getNavItem()}</div>
     </header>
   );
