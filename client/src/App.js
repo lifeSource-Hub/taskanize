@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import HeaderNavbar from "./components/layout/HeaderNavbar";
-import ListPage from "./components/content/ListPage";
+import ListPage from "./components/content/todoList/ListPage";
 import Login from "./components/content/Login";
 import Register from "./components/content/Register";
 
@@ -18,7 +18,7 @@ import PageNotFound from "./components/content/PageNotFound";
 import Footer from "./components/layout/Footer";
 import ContactPage from "./components/content/ContactPage";
 import HomePage from "./components/content/HomePage";
-import MapPage from "./components/content/MapPage";
+import MapPage from "./components/content/googleMap/MapPage";
 
 const App = () =>
 {

@@ -38,6 +38,7 @@ body #root {
 .nav .navLink {
   color: #13118f;
   font: 18px "Segoe UI Semibold", sans-serif;
+  margin-left: 20px;
 }
 .nav .navLink:hover {
   color: #2362be;
@@ -121,6 +122,28 @@ h1, h2, h3, h4 {
   box-shadow: 3px 3px 7px 2px #526179;
 }
 
+.dropMenu {
+  width: 100%;
+  min-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.dropMenu button {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: #6f42c1;
+}
+
 .listItem {
   align-items: flex-start;
   display: flex;
@@ -131,10 +154,10 @@ h1, h2, h3, h4 {
 }
 .listItem .itemInfo p {
   display: inline;
-  font-size: 15px;
+  font-size: 14px;
 }
 .listItem .itemInfo time {
-  font-size: 14px;
+  font-size: 13px;
   text-transform: lowercase;
 }
 

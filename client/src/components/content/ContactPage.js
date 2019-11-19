@@ -1,13 +1,16 @@
 import React from "react";
 
-const ContactPage = () => {
+const ContactPage = () =>
+{
   return (
     <>
       <h3>Contact</h3>
-      <br />
+      <br/>
       <p>
-        Feel free to send me an
-        <a href="mailto:lifeSource@developer-portfolio.dx.am"> email</a>
+        You can email me at&nbsp;
+        <a href="mailto:lifeSource@developer-portfolio.dx.am">
+          lifeSource@developer-portfolio.dx.am
+        </a>
       </p>
     </>
   );

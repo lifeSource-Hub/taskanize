@@ -56,7 +56,7 @@ const HeaderNavbar = ({isLoggedIn}) =>
         </NavItem>
         <NavItem>
           <NavLink className="navLink" href="/list">
-            List
+            My Task List
           </NavLink>
         </NavItem>
         <NavItem>
