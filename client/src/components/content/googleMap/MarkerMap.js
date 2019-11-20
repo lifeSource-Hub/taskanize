@@ -1,12 +1,13 @@
 /* global google */
 import React, {useEffect, useState} from "react";
 import {GoogleApiWrapper, InfoWindow, Map, Marker} from "google-maps-react";
+// import {GOOGLE_API_DEV_KEY} from "../../../env";
 
 const dataURL = "https://data.mo.gov/resource/rzpp-6ftc.json?$limit=1";
 const geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-const key = "AIzaSyCJsRP-UHO0Q9_jnbx-Oi5DWipA2oO-dh4";
+const API_KEY = "AIzaSyCJsRP-UHO0Q9_jnbx-Oi5DWipA2oO-dh4";
 
-export const MarkerMap = () =>
+export const MarkerMap = ({API_KEY}) =>
 {
   const [heatMapPoints, setHeatMapPoints] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -16,29 +17,29 @@ export const MarkerMap = () =>
     // getHeatMapPoints();
 
     // getGeocodeCoords(geocodeURL, key, promise);
-    // fetchData(dataURL)
-    //   .then(data =>
-    //   {
-    //     // console.log(data);
-    //     return extractAddresses(data);
-    //   })
-    //   .then(addresses =>
-    //   {
-    //     // console.log(addresses);
-    //     // getGeocodeCoords(geocodeURL, key, addresses);
-    //
-    //     return getGeocodeCoords(geocodeURL, key, addresses);
-    //   })
-    //   .catch(err => console.log(err));
+    fetchData(dataURL)
+      .then(data =>
+      {
+        // console.log(data);
+        return extractAddresses(data);
+      })
+      .then(addresses =>
+      {
+        // console.log(addresses);
+        // getGeocodeCoords(geocodeURL, API_KEY, addresses);
+
+        return getGeocodeCoords(geocodeURL, API_KEY, addresses);
+      })
+      .catch(err => console.log(err));
   }, []);
 
-  const getHeatMapPoints = async () =>
-  {
-    const data = await fetchData(dataURL);
-    const addresses = await extractAddresses(data);
-    await getGeocodeCoords(geocodeURL, key, addresses);
-    // const addresses = await getGeocodeCoords(geocodeURL, key, addresses);
-  };
+  // const getHeatMapPoints = async () =>
+  // {
+  //   const data = await fetchData(dataURL);
+  //   const addresses = await extractAddresses(data);
+  //   await getGeocodeCoords(geocodeURL, API_KEY, addresses);
+  //   // const addresses = await getGeocodeCoords(geocodeURL, key, addresses);
+  // };
 
   const fetchData = async URL =>
   {
@@ -139,6 +140,6 @@ export const MarkerMap = () =>
 };
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyCJsRP-UHO0Q9_jnbx-Oi5DWipA2oO-dh4",
+  apiKey: API_KEY,
   libraries: ["visualization"]
 })(MarkerMap);
