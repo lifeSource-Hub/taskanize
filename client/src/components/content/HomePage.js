@@ -6,8 +6,8 @@ const HomePage = () =>
     <>
       <h3>Home</h3>
       <br/>
-      <p>Welcome to my web application! I built this application with the MERN stack: MongoDB, Express, React,
-        Node.js. It is styled with Reactstrap components and SCSS.</p>
+      <p>Welcome to my web application! I built this application with the MERN stack: MongoDB,
+        Express.js, React, Node.js. It is styled with Reactstrap components and SCSS.</p>
     </>
   );
 };
