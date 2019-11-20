@@ -7,16 +7,13 @@ const dataURL = "https://data.mo.gov/resource/rzpp-6ftc.json?$limit=1";
 const geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 const API_KEY = "AIzaSyCJsRP-UHO0Q9_jnbx-Oi5DWipA2oO-dh4";
 
-export const HeatLayerMap = ({API_KEY}) =>
+export const HeatLayerMap = () =>
 {
   const [heatMapPoints, setHeatMapPoints] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() =>
   {
-    // getHeatMapPoints();
-
-    // getGeocodeCoords(geocodeURL, key, promise);
     fetchData(dataURL)
       .then(data =>
       {
@@ -26,20 +23,10 @@ export const HeatLayerMap = ({API_KEY}) =>
       .then(addresses =>
       {
         // console.log(addresses);
-        // getGeocodeCoords(geocodeURL, API_KEY, addresses);
-
         return getGeocodeCoords(geocodeURL, API_KEY, addresses);
       })
       .catch(err => console.log(err));
   }, []);
-
-  // const getHeatMapPoints = async () =>
-  // {
-  //   const data = await fetchData(dataURL);
-  //   const addresses = await extractAddresses(data);
-  //   await getGeocodeCoords(geocodeURL, API_KEY, addresses);
-  //   // const addresses = await getGeocodeCoords(geocodeURL, key, addresses);
-  // };
 
   const fetchData = async URL =>
   {
@@ -67,7 +54,6 @@ export const HeatLayerMap = ({API_KEY}) =>
 
       addresses.push(address);
     }
-
     // console.log("Addresses: ", addresses);
     return addresses;
   };

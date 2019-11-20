@@ -7,7 +7,7 @@ const dataURL = "https://data.mo.gov/resource/rzpp-6ftc.json?$limit=1";
 const geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 const API_KEY = "AIzaSyCJsRP-UHO0Q9_jnbx-Oi5DWipA2oO-dh4";
 
-export const MarkerMap = ({API_KEY}) =>
+export const MarkerMap = () =>
 {
   const [heatMapPoints, setHeatMapPoints] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
