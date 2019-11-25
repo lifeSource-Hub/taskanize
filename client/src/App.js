@@ -19,6 +19,7 @@ import Footer from "./components/layout/Footer";
 import ContactPage from "./components/content/ContactPage";
 import HomePage from "./components/content/HomePage";
 import MapPage from "./components/content/googleMap/MapPage";
+import Reminder from "./components/content/Reminder";
 
 const App = () =>
 {
@@ -39,6 +40,9 @@ const App = () =>
             <Route exact path="/map" component={MapPage}/>
             <Route exact path="/list">
               {isLoggedIn() ? <ListPage/> : <Redirect to="/login"/>}
+            </Route>
+            <Route exact path="/reminder">
+              {isLoggedIn() ? <Reminder/> : <Redirect to="/login"/>}
             </Route>
             <Route exact path="/login">
               {isLoggedIn() ? <Redirect to="/list"/> : <Login/>}

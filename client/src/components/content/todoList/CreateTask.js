@@ -46,8 +46,7 @@ const CreateTask = ({getPriorityColor, setListItems}) =>
     {
       const URL = "/api/user/list/add";
 
-      axios
-        .post(URL, newItem)
+      axios.post(URL, newItem)
         .then(res =>
         {
           setNewItem(newItem => ({...newItem, body: ""}));
@@ -56,16 +55,6 @@ const CreateTask = ({getPriorityColor, setListItems}) =>
         .catch(() => console.warn(`Can’t access POST '${URL}'`));
     }
   };
-
-  // const high = () =>
-  // {
-  //   return (
-  //     <>
-  //       <span></span>
-  //       High
-  //     </>
-  //   );
-  // };
 
   return (
     <Form inline onSubmit={onSubmit}>

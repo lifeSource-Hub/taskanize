@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
-const Users = require("../../models/User");
+const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 
 const jwtHeader = {
@@ -26,7 +26,7 @@ router.post("/", (req, res) =>
   };
   // console.log(claims);
 
-  Users.findOne({username: claims.username}, (err, user) =>
+  User.findOne({username: claims.username}, (err, user) =>
   {
     if (user)
     {

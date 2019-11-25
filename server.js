@@ -8,6 +8,7 @@ mongoose.set("useCreateIndex", true);
 mongoose.set('useFindAndModify', false);
 const auth = require("./routes/api/auth");
 const user = require("./routes/api/user");
+const email = require("./routes/api/email");
 const login = require("./routes/api/login");
 const register = require("./routes/api/register");
 const port = process.env.PORT || 5000;
@@ -21,7 +22,8 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("MongoDB Connected..."))
     .catch(err => console.log(err));
 
-app.use("/api/user/list", auth, user);
+app.use("/api/user", auth, user);
+app.use("/api/email", auth, email);
 app.use("/api/login", login);
 app.use("/api/register", register);
 

@@ -47,7 +47,7 @@ const HeaderNavbar = ({isLoggedIn}) =>
     <header>
       <Navbar className="nav">
         <NavbarBrand className="navBrand">
-          A MERN Stack Web Application
+          LifeSource
         </NavbarBrand>
         <NavItem>
           <NavLink className="navLink" href="/home">
@@ -56,12 +56,17 @@ const HeaderNavbar = ({isLoggedIn}) =>
         </NavItem>
         <NavItem>
           <NavLink className="navLink" href="/list">
-            My Task List
+            My Tasks
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink className="navLink" href="/reminder">
+            Set Reminder
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink className="navLink" href="/map">
-            Map
+            Google Map
           </NavLink>
         </NavItem>
         <NavItem>

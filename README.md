@@ -1,6 +1,7 @@
 # mern-app #
-<p>A web application where you can create and organize tasks.</p>
-<p>See it on Heroku: [https://taskanize.herokuapp.com]</p>
+My MERN web application, which has various utilities. Development is ongoing.
+
+See it on Heroku: [https://taskanize.herokuapp.com]
 
 ## Built With ##
 * MongoDB
@@ -9,6 +10,7 @@
 * Node.js
 
 #### Screenshots ####
+Note: These screenshots do not necessarily reflect the latest update 
 
 ![Screenshot of app](appScreenshot1.png)
 ![Screenshot of app](appScreenshot2.png)

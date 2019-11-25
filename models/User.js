@@ -38,10 +38,18 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  emailVerified: {
+    type: Boolean,
+    default: false
+  },
+  email: {
+    type: String,
+    default: ""
+  },
   list: [listSchema]
 });
 
 module.exports = Users = mongoose.model(
-    "users",
-    userSchema,
-    "users");
+  "users",
+  userSchema,
+  "users");
