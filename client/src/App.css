@@ -44,11 +44,26 @@ body #root {
   color: #2362be;
 }
 
+.currentUser {
+  align-items: center;
+  display: flex;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  user-select: none;
+  z-index: 6;
+}
+.currentUser p {
+  display: inline;
+  font: 16px "Segoe UI", Arial, sans-serif;
+  margin: 0 0 0 10px;
+}
+
 .loginTab {
   background-color: #83b2dd;
   border-bottom-left-radius: 6px;
   box-shadow: -1px 2px 4px 0 #526179;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 60px;
 }
@@ -61,32 +76,17 @@ body #root {
   text-decoration: none;
 }
 
-.currentUser {
-  align-items: center;
-  display: flex;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  user-select: none;
-  z-index: 6;
-}
-.currentUser p {
-  display: inline;
-  font: 16px "Segoe UI", Arial, sans-serif;
-  margin: 0 0 0 10px;
-}
-
 main {
   background-color: #d2dae2;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   display: block;
   font: 16px "Segoe UI", Arial, sans-serif;
-  height: fit-content;
-  margin: 60px auto 29px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1020px;
   min-width: 240px;
-  padding: 35px 55px 35px 55px;
+  padding: 95px 55px 35px 55px;
 }
 
 hr {
@@ -161,6 +161,8 @@ h1, h2, h3, h4 {
 .listGroup {
   border-radius: 0.3rem;
   box-shadow: 3px 3px 7px 2px #526179;
+  overflow-y: auto;
+  max-height: 690px;
 }
 
 .dropMenu {
@@ -245,6 +247,16 @@ h1, h2, h3, h4 {
 }
 .infoWindow :last-child {
   margin: 0;
+}
+
+.loading {
+  background-color: #a1a7ae;
+  border-radius: 2px;
+  padding: 10px;
+  position: absolute;
+  left: 37%;
+  top: 45%;
+  z-index: 3;
 }
 
 footer {

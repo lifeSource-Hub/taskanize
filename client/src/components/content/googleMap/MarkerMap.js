@@ -1,17 +1,19 @@
 /* global google */
 import React, {useEffect, useState} from "react";
+import {Spinner} from "reactstrap";
 import {GoogleApiWrapper, Map, Marker, InfoWindow} from "google-maps-react";
 import {API_KEY} from "./APIKeys";
 // import {GOOGLE_API_DEV_KEY} from "../../../env";
 
 const uuidv4 = require("uuid/v4");
-const dataURL = "https://data.mo.gov/resource/ghmj-sbt9.json?$limit=60"; // 90 records
+const dataURL = "https://data.mo.gov/resource/ghmj-sbt9.json?$limit=4"; // 90 records
 const geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 const centerOfMO = {lat: 38.4852778, lng: -92.6191666};
 
 export const MarkerMap = () =>
 {
   const [points, setPoints] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() =>
   {
@@ -73,26 +75,28 @@ export const MarkerMap = () =>
     for (let i = 0; i < info.addresses.length; i++)
     {
       if (i % 2 === 0)
-      {const encodedAddr = encodeURI(info.addresses[i]);
-      const geocodeReq = URL + encodedAddr + "&key=" + key;
-      // console.log("Request: ", geocodeReq);
-
-      const res = await fetch(geocodeReq);
-      const data = await res.json();
-
-      if (data.results[0])
       {
-        // console.log("Data: ", data);
-        let lat = Number(data.results[0].geometry.location["lat"]);
-        let lng = Number(data.results[0].geometry.location["lng"]);
+        const encodedAddr = encodeURI(info.addresses[i]);
+        const geocodeReq = URL + encodedAddr + "&key=" + key;
+        // console.log("Request: ", geocodeReq);
 
-        pointInfo.push({
-          infoKey: uuidv4(),
-          isVisible: false,
-          infoText: info.infoText[i],
-          position: {lat: lat, lng: lng}
-        });
-      }}
+        const res = await fetch(geocodeReq);
+        const data = await res.json();
+
+        if (data.results[0])
+        {
+          // console.log("Data: ", data);
+          let lat = Number(data.results[0].geometry.location["lat"]);
+          let lng = Number(data.results[0].geometry.location["lng"]);
+
+          pointInfo.push({
+            infoKey: uuidv4(),
+            isVisible: false,
+            infoText: info.infoText[i],
+            position: {lat: lat, lng: lng}
+          });
+        }
+      }
     }
     // console.log("PointInfo: ", pointInfo);
     // pointInfo = ([
@@ -132,6 +136,7 @@ export const MarkerMap = () =>
     //   }
     // ]);
     setPoints(pointInfo);
+    setIsLoading(false);
   };
 
   const toPascalCase = (str) =>
@@ -168,42 +173,45 @@ export const MarkerMap = () =>
   };
 
   return (
-    <Map
-      google={google}
-      initialCenter={centerOfMO}
-      zoom={7}
-      onClick={onClickMap}>
-      {points.map((point, index) => (
-        <Marker
-          key={uuidv4()}
-          position={point.position}
-          title={point.infoText.name}
-          onClick={toggleInfoWindow.bind(null, index)}/>))}
-      {points.map(point => (
-        <InfoWindow
-          key={point.infoKey}
-          position={point.position}
-          pixelOffset={new google.maps.Size(0, -42)}
-          visible={point.isVisible}>
-          <div className="infoWindow">
-            <h5>{point.infoText.name}</h5>
-            <h6>{point.infoText.address}</h6>
-            <div className="infoWindowBody">
-              <p><b>Facility phone:</b>&nbsp;{point.infoText.facility_phone}</p>
-              <p><b>Helpline:</b>&nbsp;{point.infoText.helpline_phone}</p>
-              <p><b>Hours:</b>&nbsp;{point.infoText.hours}</p>
-              <p>
-                <b>Website:</b>&nbsp;
-                {point.infoText.website.substring(0, 4) === "http" ?
-                  <a target="_blank" rel="noopener noreferrer"
-                     href={point.infoText.website}>{point.infoText.website}</a> :
-                  point.infoText.website}
-              </p>
-              <p><b>Counties served</b>:&nbsp;{point.infoText.countiesServed}  </p>
+    <>
+      {isLoading ? <h3 className="loading">Loading Markers <Spinner color="dark"/></h3> : null}
+      <Map
+        google={google}
+        initialCenter={centerOfMO}
+        zoom={7}
+        onClick={onClickMap}>
+        {points.map((point, index) => (
+          <Marker
+            key={uuidv4()}
+            position={point.position}
+            title={point.infoText.name}
+            onClick={toggleInfoWindow.bind(null, index)}/>))}
+        {points.map(point => (
+          <InfoWindow
+            key={point.infoKey}
+            position={point.position}
+            pixelOffset={new google.maps.Size(0, -42)}
+            visible={point.isVisible}>
+            <div className="infoWindow">
+              <h5>{point.infoText.name}</h5>
+              <h6>{point.infoText.address}</h6>
+              <div className="infoWindowBody">
+                <p><b>Facility phone:</b>&nbsp;{point.infoText.facility_phone}</p>
+                <p><b>Helpline:</b>&nbsp;{point.infoText.helpline_phone}</p>
+                <p><b>Hours:</b>&nbsp;{point.infoText.hours}</p>
+                <p>
+                  <b>Website:</b>&nbsp;
+                  {point.infoText.website.substring(0, 4) === "http" ?
+                    <a target="_blank" rel="noopener noreferrer"
+                       href={point.infoText.website}>{point.infoText.website}</a> :
+                    point.infoText.website}
+                </p>
+                <p><b>Counties served</b>:&nbsp;{point.infoText.countiesServed}  </p>
+              </div>
             </div>
-          </div>
-        </InfoWindow>))}
-    </Map>
+          </InfoWindow>))}
+      </Map>
+    </>
   );
 };
 
