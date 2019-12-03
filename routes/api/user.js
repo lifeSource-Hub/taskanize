@@ -38,20 +38,20 @@ const listSort = (list) =>
   return list;
 };
 
-/** @route  GET api/user/list
+/** @route  GET api/user/tasks
  *  @desc   Get user's list
  *  @access Public
  */
-router.get("/list", (req, res) =>
+router.get("/tasks", (req, res) =>
 {
   User.findById(res.locals._id, (err, doc) => res.json(listSort(doc.list)));
 });
 
-/** @route  POST api/user/list/add
+/** @route  POST api/user/tasks/add
  *  @desc   Add new item to user's list
  *  @access Public
  */
-router.post("/list/add", (req, res) =>
+router.post("/tasks/add", (req, res) =>
 {
   const newItem = {
     body: req.body.body,
@@ -63,11 +63,11 @@ router.post("/list/add", (req, res) =>
     .catch(err => res.status(404).json(err));
 });
 
-/** @route  PUT api/user/list/:id
+/** @route  PUT api/user/tasks/:id
  *  @desc   Update item in user's list
  *  @access Public
  */
-router.put("/list/:id", (req, res) =>
+router.put("/tasks/:id", (req, res) =>
 {
   User.findById(res.locals._id)
     .then(doc =>
@@ -85,11 +85,11 @@ router.put("/list/:id", (req, res) =>
     .catch(err => res.status(404).json(err));
 });
 
-/** @route  POST api/user/list/:id
+/** @route  POST api/user/tasks/:id
  *  @desc   Toggle completed field
  *  @access Public
  */
-router.post("/list/:id", (req, res) =>
+router.post("/tasks/:id", (req, res) =>
 {
   User.findById(res.locals._id)
     .then(doc =>
@@ -106,65 +106,33 @@ router.post("/list/:id", (req, res) =>
     .catch(err => res.status(404).json(err));
 });
 
-/** @route  DELETE api/user/list/:id
+/** @route  DELETE api/user/tasks/:id
  *  @desc   Delete item from user's list
  *  @access Public
  */
-router.delete("/list/:id", (req, res) =>
+router.delete("/tasks/:id", (req, res) =>
 {
   User.findOneAndUpdate({_id: res.locals._id}, {$pull: {list: {_id: req.params.id}}}, {new: true})
     .then((doc) => res.json(listSort(doc.list)))
     .catch(err => res.status(404).json(err));
 });
 
-// TODO Complete function
-/** @route  GET api/user/email/check
- *  @desc   Check if user email address is on file
+/** @route  PUT api/user/email
+ *  @desc   Set user email
  *  @access Public
  */
-router.get("/email/check", (req, res) =>
+router.put("/email", (req, res) =>
 {
-  // console.log(res.locals._id);
-
-  User.findById(res.locals._id, (err, doc) =>
-  {
-    // console.log(typeof doc.email, ": ", doc.email);
-
-    if (doc.email !== "")
+  User.findById(res.locals._id)
+    .then(doc =>
     {
-      console.log("Has email");
-    }
-    else
-    {
-      console.log("No email");
-    }
-    res.json({});
-  });
-});
+      doc.email = req.body.address;
 
-// TODO Complete function
-/** @route  GET api/user/email/verify
- *  @desc   Check verification status of user's email
- *  @access Public
- */
-router.get("/email/verify", (req, res) =>
-{
-  // console.log(res.locals._id);
-
-  User.findById(res.locals._id, (err, doc) =>
-  {
-    // console.log(typeof doc.emailVerified, ": ", doc.emailVerified);
-
-    if (doc.emailVerified)
-    {
-      console.log("Verified");
-    }
-    else
-    {
-      console.log("Not verified");
-    }
-    res.json({});
-  });
+      doc.save()
+        .then(() => res.status(208).json({}))
+        .catch(err => res.status(404).json(err));
+    })
+    .catch(err => res.status(404).json(err));
 });
 
 module.exports = router;

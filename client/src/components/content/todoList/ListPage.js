@@ -18,7 +18,7 @@ const ListPage = () =>
 
   useEffect(() =>
   {
-    const URL = "/api/user/list";
+    const URL = "/api/user/tasks";
     axios.get(URL)
       .then(res =>
       {
@@ -63,7 +63,7 @@ const ListPage = () =>
 
   const update = (updatedItem) =>
   {
-    const URL = "/api/user/list/" + updatedItem.id;
+    const URL = "/api/user/tasks/" + updatedItem.id;
 
     axios.put(URL, updatedItem)
       .then(res => setListItems(res.data))
@@ -73,7 +73,7 @@ const ListPage = () =>
   return (
     <>
       <h3 className="shadowedHeading">
-        {localStorage.getItem("currentUser")}'s Tasks
+        {localStorage.getItem("currentUser")}'s Task List
       </h3>
       <p>Incomplete tasks are sorted by date created<br/>
         Completed tasks are sorted by date completed</p>

@@ -22,7 +22,7 @@ const TaskList = ({getPriorityColor, listItems, setListItems, editItem}) =>
 
   const toggleComplete = selectedItem =>
   {
-    const URL = "/api/user/list/" + selectedItem._id;
+    const URL = "/api/user/tasks/" + selectedItem._id;
     axios
       .post(URL)
       .then(res => setListItems(res.data))
@@ -31,7 +31,7 @@ const TaskList = ({getPriorityColor, listItems, setListItems, editItem}) =>
 
   const deleteItem = selectedItem =>
   {
-    const URL = "/api/user/list/" + selectedItem._id;
+    const URL = "/api/user/tasks/" + selectedItem._id;
     axios
       .delete(URL)
       .then(res => setListItems(res.data))

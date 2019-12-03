@@ -102,6 +102,10 @@ h1, h2, h3, h4 {
   font-family: Georgia, sans-serif;
 }
 
+.note {
+  font-size: 14px;
+}
+
 .loginForm {
   width: 50%;
 }
@@ -156,6 +160,11 @@ h1, h2, h3, h4 {
 }
 .reminderForm .input-group {
   margin-bottom: 10px;
+}
+
+.scheduleFeedback {
+  color: #ff0000;
+  margin-left: 80px;
 }
 
 .listGroup {
