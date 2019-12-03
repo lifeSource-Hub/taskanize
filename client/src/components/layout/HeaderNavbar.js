@@ -55,18 +55,18 @@ const HeaderNavbar = ({isLoggedIn}) =>
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="navLink" href="/list">
-            My Tasks
+          <NavLink className="navLink" href="/tasks">
+            Tasks
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="navLink" href="/reminder">
-            Set Reminder
+          <NavLink className="navLink" href="/reminders">
+            Reminders
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink className="navLink" href="/map">
-            Google Map
+          <NavLink className="navLink" href="/locations">
+            Locations
           </NavLink>
         </NavItem>
         <NavItem>

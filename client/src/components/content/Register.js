@@ -67,14 +67,14 @@ const Register = () =>
     {
       setFormFeedback({
         ...formFeedback, username: "No whitespace or special " +
-            "characters allowed, except dash (-) and underscore (_)"
+          "characters allowed, except dash (-) and underscore (_)"
       });
     }
     else if (!hasMinChars || !hasLetterOrNum)
     {
       setFormFeedback({
         ...formFeedback, username: "Must be 3–18 characters " +
-            "and have at least one alphanumeric character"
+          "and have at least one alphanumeric character"
       });
     }
 
@@ -123,108 +123,108 @@ const Register = () =>
       const URL = "/api/register";
 
       axios.post(URL, user)
-          .then(res =>
+        .then(res =>
+        {
+          if (res.status === 201)
           {
-            if (res.status === 201)
-            {
-              window.alert("Registration successful! You will now be re-directed to login.");
-              window.location.replace("/login");
-            }
-          })
-          .catch((err) =>
+            window.alert("Registration successful! You will now be re-directed to login.");
+            window.location.replace("/login");
+          }
+        })
+        .catch((err) =>
+        {
+          switch (err.response.status)
           {
-            switch (err.response.status)
-            {
-              case 409:
-                setFormFeedback({...formFeedback, submission: "That username is taken"});
-                setInvalidInput({...invalidInput, username: true});
-                break;
-              case 507:
-                setFormFeedback({
-                  ...formFeedback,
-                  submission: "The maximum number of registered users has been reached. " +
-                      "This is very unusual and likely the result of malicious behavior. " +
-                      "Our developers are working hard to resolve the issue. " +
-                      "We apologize for any inconvenience."
-                });
-                setInvalidInput({...invalidInput, username: true});
-                break;
-              default:
-                console.warn(`Could not register user`);
-            }
-          });
+            case 409:
+              setFormFeedback({...formFeedback, submission: "That username is taken"});
+              setInvalidInput({...invalidInput, username: true});
+              break;
+            case 507:
+              setFormFeedback({
+                ...formFeedback,
+                submission: "The maximum number of registered users has been reached. " +
+                  "This is very unusual and likely the result of malicious behavior. " +
+                  "Our developers are working hard to resolve the issue. " +
+                  "We apologize for any inconvenience."
+              });
+              setInvalidInput({...invalidInput, username: true});
+              break;
+            default:
+              console.warn(`Could not register user`);
+          }
+        });
     }
   };
 
   return (
-      <>
-        <h2>Register</h2>
-        <Form className="registrationForm" onSubmit={onSubmit}>
-          <p className="formErrorResponse">{formFeedback.submission}</p>
-          <FormGroup>
-            <Label size="sm">Username: </Label>
-            <Input
-                autoFocus
-                type="text"
-                maxLength="18"
-                bsSize="sm"
-                invalid={invalidInput.username}
-                value={username}
-                onChange={onChangeUsername}
-                onBlur={() =>
-                {
-                  if (username)
-                  {
-                    validateUsername();
-                  }
-                }}/>
-            <FormFeedback valid={!invalidInput.username}>
-              {formFeedback.username}
-            </FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label size="sm">Password: </Label>
-            <Input
-                type="password"
-                maxLength="40"
-                bsSize="sm"
-                invalid={invalidInput.password}
-                value={password}
-                onChange={onChangePassword}
-                onBlur={() =>
-                {
-                  if (password)
-                  {
-                    validatePassword();
-                  }
-                }}/>
-            <FormFeedback valid={!invalidInput.password}>
-              {formFeedback.password}
-            </FormFeedback>
-          </FormGroup>
-          <FormGroup>
-            <Label size="sm">Confirm Password: </Label>
-            <Input
-                type="password"
-                maxLength="40"
-                bsSize="sm"
-                invalid={invalidInput.passConfirm}
-                value={passConfirm}
-                onChange={onChangePasswordConfirm}
-                onBlur={() =>
-                {
-                  if (passConfirm)
-                  {
-                    validatePasswordMatch();
-                  }
-                }}/>
-            <FormFeedback valid={!invalidInput.passConfirm}>
-              Passwords do not match
-            </FormFeedback>
-          </FormGroup>
-          <Button size="sm" className="bg-success">Submit</Button>
-        </Form>
-      </>);
+    <>
+      <h2>Register</h2>
+      <Form className="registrationForm" onSubmit={onSubmit}>
+        <p className="formErrorResponse">{formFeedback.submission}</p>
+        <FormGroup>
+          <Label size="sm">Username: </Label>
+          <Input
+            autoFocus
+            type="text"
+            maxLength="18"
+            bsSize="sm"
+            invalid={invalidInput.username}
+            value={username}
+            onChange={onChangeUsername}
+            onBlur={() =>
+            {
+              if (username)
+              {
+                validateUsername();
+              }
+            }}/>
+          <FormFeedback valid={!invalidInput.username}>
+            {formFeedback.username}
+          </FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label size="sm">Password: </Label>
+          <Input
+            type="password"
+            maxLength="40"
+            bsSize="sm"
+            invalid={invalidInput.password}
+            value={password}
+            onChange={onChangePassword}
+            onBlur={() =>
+            {
+              if (password)
+              {
+                validatePassword();
+              }
+            }}/>
+          <FormFeedback valid={!invalidInput.password}>
+            {formFeedback.password}
+          </FormFeedback>
+        </FormGroup>
+        <FormGroup>
+          <Label size="sm">Confirm Password: </Label>
+          <Input
+            type="password"
+            maxLength="40"
+            bsSize="sm"
+            invalid={invalidInput.passConfirm}
+            value={passConfirm}
+            onChange={onChangePasswordConfirm}
+            onBlur={() =>
+            {
+              if (passConfirm)
+              {
+                validatePasswordMatch();
+              }
+            }}/>
+          <FormFeedback valid={!invalidInput.passConfirm}>
+            Passwords do not match
+          </FormFeedback>
+        </FormGroup>
+        <Button size="sm" className="bg-success">Submit</Button>
+      </Form>
+    </>);
 };
 
 export default Register;

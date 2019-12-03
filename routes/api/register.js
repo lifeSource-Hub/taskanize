@@ -29,18 +29,18 @@ router.post("/", (req, res) =>
       });
 
       newUser.save()
-          .then(item => res.status(201).json(item))
-          .catch(err =>
+        .then(item => res.status(201).json(item))
+        .catch(err =>
+        {
+          if (err.code === 11000)
           {
-            if (err.code === 11000)
-            {
-              res.status(409).json(err);
-            }
-            else
-            {
-              res.status(500).json(err);
-            }
-          });
+            res.status(409).json(err);
+          }
+          else
+          {
+            res.status(500).json(err);
+          }
+        });
     }
   });
 });

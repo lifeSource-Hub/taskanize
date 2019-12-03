@@ -22,6 +22,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("MongoDB Connected..."))
     .catch(err => console.log(err));
 
+app.use("/api/auth", auth);
 app.use("/api/user", auth, user);
 app.use("/api/email", auth, email);
 app.use("/api/login", login);

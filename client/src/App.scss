@@ -118,6 +118,10 @@ h1, h2, h3, h4 {
   font-family: Georgia, sans-serif;
 }
 
+.note {
+  font-size: 14px;
+}
+
 //region Login Page
 //-----------------------------------------------------------------------------
 .loginForm {
@@ -186,6 +190,11 @@ h1, h2, h3, h4 {
   .input-group {
     margin-bottom: 10px;
   }
+}
+
+.scheduleFeedback {
+  color: #ff0000;
+  margin-left: 80px;
 }
 
 //-----------------------------------------------------------------------------

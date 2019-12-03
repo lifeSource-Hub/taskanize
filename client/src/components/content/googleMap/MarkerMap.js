@@ -6,7 +6,7 @@ import {API_KEY} from "./APIKeys";
 // import {GOOGLE_API_DEV_KEY} from "../../../env";
 
 const uuidv4 = require("uuid/v4");
-const dataURL = "https://data.mo.gov/resource/ghmj-sbt9.json?$limit=4"; // 90 records
+const dataURL = "https://data.mo.gov/resource/ghmj-sbt9.json?$limit=60"; // 90 records
 const geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 const centerOfMO = {lat: 38.4852778, lng: -92.6191666};
 

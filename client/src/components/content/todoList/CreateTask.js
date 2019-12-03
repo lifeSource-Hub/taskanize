@@ -12,7 +12,6 @@ import {
   DropdownItem
 } from "reactstrap";
 import axios from "axios";
-// import axios from "axios";
 
 const CreateTask = ({getPriorityColor, setListItems}) =>
 {
@@ -44,7 +43,7 @@ const CreateTask = ({getPriorityColor, setListItems}) =>
 
     if (newItem.body !== "")
     {
-      const URL = "/api/user/list/add";
+      const URL = "/api/user/tasks/add";
 
       axios.post(URL, newItem)
         .then(res =>

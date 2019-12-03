@@ -39,13 +39,6 @@ router.post("/", (req, res) =>
 
         const sJWT = JSRSASign.jws.JWS.sign("HS512", sHeader, sClaims, process.env.JWT_KEY);
 
-        // console.log(JSRSASign.jws.JWS.verifyJWT(sJWT, process.env.JWT_KEY, {alg: ["HS512"]}));
-        // const aJWT = sJWT.split(".");
-        // const uHeader = JSRSASign.b64utos(aJWT[0]);
-        // const uClaim = JSRSASign.b64utos(aJWT[1]);
-        // const pHeader = JSRSASign.jws.JWS.readSafeJSONString(uHeader);
-        // const pClaim = JSRSASign.jws.JWS.readSafeJSONString(uClaim);
-
         return res.status(200).json(sJWT);
       }
 
