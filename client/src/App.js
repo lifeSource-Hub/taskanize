@@ -13,7 +13,7 @@ import HeaderNavbar from "./components/layout/HeaderNavbar";
 import Login from "./components/content/Login";
 import Register from "./components/content/Register";
 import Footer from "./components/layout/Footer";
-import ListPage from "./components/content/todoList/ListPage";
+import TaskPage from "./components/content/taskList/TaskPage";
 import PageNotFound from "./components/content/PageNotFound";
 import ContactPage from "./components/content/ContactPage";
 import HomePage from "./components/content/HomePage";
@@ -38,15 +38,14 @@ const App = () =>
       <HeaderNavbar isLoggedIn={isLoggedIn}/>
       <main>
         <Switch>
-          <Redirect exact from="/" to="/tasks"/>
-          <Route exact path="/home" component={HomePage}/>
+          <Route exact path="/" component={HomePage}/>
           <Route exact path="/contact" component={ContactPage}/>
           <Route exact path="/locations" component={MapPage}/>
           <Route exact path="/verified">
             {isHashValid() ? <VerifiedPage/> : <PageNotFound/>}
           </Route>
           <Route exact path="/tasks">
-            {isLoggedIn() ? <ListPage/> : <Redirect to="/login"/>}
+            {isLoggedIn() ? <TaskPage/> : <Redirect to="/login"/>}
           </Route>
           <Route exact path="/reminders">
             {isLoggedIn() ? <Reminder/> : <Redirect to="/login"/>}

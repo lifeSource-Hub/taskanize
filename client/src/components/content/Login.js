@@ -63,9 +63,6 @@ const Login = () =>
     <>
       <h2>Login</h2>
       <p>
-        Please login to access your list.
-        <br/>
-        <br/>
         Want to explore the site without creating an account? Then use the guest account provided
         below.
       </p>

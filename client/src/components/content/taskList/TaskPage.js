@@ -4,7 +4,7 @@ import CreateTask from "./CreateTask";
 import TaskList from "./TaskList";
 import EditModal from "./EditModal";
 
-const ListPage = () =>
+const TaskPage = () =>
 {
   const [listItems, setListItems] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -96,4 +96,4 @@ const ListPage = () =>
     </>);
 };
 
-export default ListPage;
+export default TaskPage;

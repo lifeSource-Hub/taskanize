@@ -50,7 +50,7 @@ const HeaderNavbar = ({isLoggedIn}) =>
           LifeSource
         </NavbarBrand>
         <NavItem>
-          <NavLink className="navLink" href="/home">
+          <NavLink className="navLink" href="/">
             Home
           </NavLink>
         </NavItem>

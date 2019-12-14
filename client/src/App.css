@@ -73,7 +73,6 @@ body #root {
 }
 .loginTab .logLink:hover {
   color: #2362be;
-  text-decoration: none;
 }
 
 main {
@@ -100,6 +99,10 @@ legend {
 
 h1, h2, h3, h4 {
   font-family: Georgia, sans-serif;
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 .note {
@@ -269,16 +272,24 @@ h1, h2, h3, h4 {
 }
 
 footer {
+  font-size: 18px;
   align-items: center;
   background: linear-gradient(to right, #517ccc, #a1d3ff, #517ccc);
   bottom: 0;
   display: flex;
-  height: 30px;
+  height: 45px;
   justify-content: center;
   position: fixed;
   text-align: center;
   width: 100%;
   z-index: 5;
+  margin: 0;
+}
+footer a {
+  margin-left: 30px;
+}
+footer .githubIconLink {
+  color: #000000;
 }
 
 /*# sourceMappingURL=App.css.map */

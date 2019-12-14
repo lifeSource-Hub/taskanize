@@ -6,12 +6,14 @@ const ContactPage = () =>
     <>
       <h3>Contact</h3>
       <br/>
-      <p>
-        You can email me at&nbsp;
-        <a href="mailto:lifeSource@developer-portfolio.dx.am">
-          lifeSource@developer-portfolio.dx.am
-        </a>
-      </p>
+      <div>
+        <p>
+        Email:&nbsp;
+          <a href="mailto:lifesourcedev@gmail.com">
+            lifesourcedev@gmail.com
+          </a>
+        </p>
+      </div>
     </>
   );
 };
