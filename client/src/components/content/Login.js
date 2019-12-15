@@ -48,7 +48,8 @@ const Login = () =>
         if (res.status === 200)
         {
           localStorage.setItem("currentUser", user.username);
-          localStorage.setItem("authToken", res.data);
+          localStorage.setItem("authToken", res.data.authToken);
+          localStorage.setItem("userId", res.data.userId);
           window.location.replace("/tasks");
         }
       })

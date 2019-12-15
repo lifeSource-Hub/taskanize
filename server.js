@@ -26,6 +26,7 @@ app.use("/api/auth", auth);
 app.use("/api/user", auth, user);
 app.use("/api/email", auth, email);
 app.use("/api/login", login);
+app.use("/api/user/email/verify", email);
 app.use("/api/register", register);
 
 // Serve static assets if in production
@@ -40,7 +41,7 @@ if (process.env.NODE_ENV === "production")
     {
       if (err)
       {
-        res.status(500).send(err)
+        res.status(500).send(err);
       }
     })
   });

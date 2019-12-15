@@ -13,35 +13,31 @@ router.post("/", (req, res) =>
 {
   User.countDocuments({}, (err, count) =>
   {
-    console.log(count);
-
     if (count > 50)
     {
-      res.status(507).json(count);
+      return res.status(507).json(count);
     }
-    else
-    {
-      const hash = bcrypt.hashSync(req.body.password, salt);
 
-      const newUser = new User({
-        username: req.body.username,
-        password: hash
-      });
+    const hash = bcrypt.hashSync(req.body.password, salt);
 
-      newUser.save()
-        .then(item => res.status(201).json(item))
-        .catch(err =>
+    const newUser = new User({
+      username: req.body.username,
+      password: hash
+    });
+
+    newUser.save()
+      .then(item => res.status(201).json(item))
+      .catch(err =>
+      {
+        if (err.code === 11000)
         {
-          if (err.code === 11000)
-          {
-            res.status(409).json(err);
-          }
-          else
-          {
-            res.status(500).json(err);
-          }
-        });
-    }
+          res.status(409).json(err);
+        }
+        else
+        {
+          res.status(500).json(err);
+        }
+      });
   });
 });
 

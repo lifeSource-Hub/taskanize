@@ -14,7 +14,7 @@ dayjs.extend(customParseFormat);
 
 const Reminder = () =>
 {
-  const [unverifiedAddr, setUnverifiedAddr] = useState({address: ""});
+  const [unverifiedAddr, setUnverifiedAddr] = useState("");
   const [userEmailIsVerified, setUserEmailIsVerified] = useState(null);
   const [scheduleFeedback, setScheduleFeedback] = useState("");
   const [schedule, setSchedule] = useState({
@@ -42,7 +42,7 @@ const Reminder = () =>
   const onChangeUserEmail = e =>
   {
     e.persist();
-    setUnverifiedAddr({address: e.target.value});
+    setUnverifiedAddr(e.target.value);
   };
 
   const onChangeDate = e =>
@@ -72,18 +72,20 @@ const Reminder = () =>
   const onSubmitUnverifiedAddr = e =>
   {
     e.preventDefault();
-    const URL = "/api/email/verify";
+    const URL = "/api/email/verify/send";
 
     // TODO validate input
     if (unverifiedAddr)
     {
-      axios.post(URL, unverifiedAddr)
+      const userRequest = {
+        id: localStorage.getItem("userId"),
+        address: unverifiedAddr,
+      };
+
+      axios.post(URL, userRequest)
         .then(res =>
         {
-          if (res.data)
-          {
-            console.log("Verification email sent");
-          }
+          // TODO change state to render email sent notice to user
         })
         .catch(() => console.warn(`Can’t access PUT '${URL}'`));
     }
@@ -128,6 +130,7 @@ const Reminder = () =>
     }
   };
 
+  // TODO refactor for cleaner code
   return (
     <>
       <h2>Set a Reminder</h2>
@@ -191,7 +194,7 @@ const Reminder = () =>
                 <Input
                   type="text"
                   bsSize="sm"
-                  value={unverifiedAddr.address}
+                  value={unverifiedAddr}
                   onChange={onChangeUserEmail}/>
               </InputGroup>
               <Button size="sm" className="bg-success">Submit</Button>
