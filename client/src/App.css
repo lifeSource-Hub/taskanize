@@ -124,6 +124,11 @@ a:hover {
   font-size: 15px;
 }
 
+.verificationResponse {
+  text-align: center;
+  font-size: 18px;
+}
+
 .emailRequestBox {
   background-color: #c3cbd3;
   border: 1px solid #000000;
@@ -140,9 +145,6 @@ a:hover {
   margin-right: 5px;
   text-align: right;
   width: 75px;
-}
-.emailRequestBox p {
-  color: #ff0000;
 }
 .emailRequestBox .emailRequestForm {
   width: 60%;

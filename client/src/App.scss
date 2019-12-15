@@ -153,6 +153,16 @@ a {
 //-----------------------------------------------------------------------------
 //endregion
 
+//region VerifiedLandingPage Page
+//-----------------------------------------------------------------------------
+.verificationResponse {
+  text-align: center;
+  font-size: 18px;
+}
+
+//-----------------------------------------------------------------------------
+//endregion
+
 //region Reminder Page
 //-----------------------------------------------------------------------------
 @mixin reminderBtnLbl {
@@ -176,10 +186,6 @@ a {
   margin-bottom: 30px;
   margin-top: 30px;
   padding: 15px;
-
-  p {
-    color: #ff0000;
-  }
 
   .emailRequestForm {
     width: 60%;

@@ -5,8 +5,8 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 
 const jwtHeader = {
+  alg: "HS512",
   typ: "JWT",
-  alg: "HS512"
 };
 
 /** @route  POST api/login
@@ -24,7 +24,6 @@ router.post("/", (req, res) =>
     username: req.body.username,
     password: req.body.password
   };
-  // console.log(claims);
 
   User.findOne({username: claims.username}, (err, user) =>
   {
@@ -39,10 +38,10 @@ router.post("/", (req, res) =>
 
         const sJWT = JSRSASign.jws.JWS.sign("HS512", sHeader, sClaims, process.env.JWT_KEY);
 
-        return res.status(200).json(sJWT);
+        return res.status(200).json({userId: user._id, authToken: sJWT});
       }
 
-      return res.status(404).json({msg: "Password does not match"});
+      return res.status(404).json({msg: "Username and/or password are incorrect"});
     }
     else if (err)
     {
@@ -50,7 +49,7 @@ router.post("/", (req, res) =>
     }
     else
     {
-      return res.status(404).json({msg: "User not found"});
+      return res.status(404).json({msg: "Username and/or password are incorrect"});
     }
   });
 });

@@ -19,7 +19,7 @@ import ContactPage from "./components/content/ContactPage";
 import HomePage from "./components/content/HomePage";
 import MapPage from "./components/content/googleMap/MapPage";
 import Reminder from "./components/content/Reminder";
-import VerifiedPage from "./components/content/VerifiedPage";
+import VerificationLandingPage from "./components/content/VerificationLandingPage";
 
 const App = () =>
 {
@@ -41,9 +41,7 @@ const App = () =>
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/contact" component={ContactPage}/>
           <Route exact path="/locations" component={MapPage}/>
-          <Route exact path="/verified">
-            {isHashValid() ? <VerifiedPage/> : <PageNotFound/>}
-          </Route>
+          <Route exact strict path="/user/email/verify" component={VerificationLandingPage}/>
           <Route exact path="/tasks">
             {isLoggedIn() ? <TaskPage/> : <Redirect to="/login"/>}
           </Route>

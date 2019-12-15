@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const JSRSASign = require("jsrsasign");
+const dayjs = require("dayjs");
 
 const User = require("../../models/User");
 
@@ -129,10 +130,53 @@ router.put("/email", (req, res) =>
       doc.email = req.body.address;
 
       doc.save()
-        .then(() => res.status(208).json({}))
+        .then(() => res.status(208).end())
         .catch(err => res.status(404).json(err));
     })
     .catch(err => res.status(404).json(err));
+});
+
+/** @route  POST api/user/email/verify
+ *  @desc   Process email verification request
+ *  @access Public
+ */
+router.post("/email/verify", (req, res) =>
+{
+  try
+  {
+    const aJWT = req.body.token.split(".");
+    const uClaim = JSRSASign.b64utos(aJWT[1]);
+    const pClaim = JSRSASign.jws.JWS.readSafeJSONString(uClaim);
+
+    const exp = dayjs.unix(pClaim.expiration); // .format("MM-DD-YYYY hh:mma")
+
+    if (exp.isBefore(dayjs()))
+    {
+      return res.status(400).json("The provided verification token has expired");
+    }
+
+    User.findById(pClaim.id)
+      .then(doc =>
+      {
+        if (doc.emailVerified)
+        {
+          return res.status(400)
+            .json("The email address associated with this account has already been verified");
+        }
+
+        doc.emailVerified = true;
+        doc.email = pClaim.address;
+
+        doc.save()
+          .then(() => res.status(200).end())
+          .catch(err => res.status(404).json(err));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+  catch
+  {
+    return res.status(500).json("The verification token could not be processed");
+  }
 });
 
 module.exports = router;
