@@ -1,5 +1,5 @@
-# mern-app #
-My MERN web application, which has various utilities. Development is ongoing.
+# taskanize #
+My MERN stack web application, which has various utilities. Development is ongoing.
 
 See it on Heroku: [https://taskanize.herokuapp.com]
 
